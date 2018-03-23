@@ -39,7 +39,7 @@
             // 
             // bt_Abrir
             // 
-            this.bt_Abrir.Location = new System.Drawing.Point(315, 12);
+            this.bt_Abrir.Location = new System.Drawing.Point(12, 12);
             this.bt_Abrir.Name = "bt_Abrir";
             this.bt_Abrir.Size = new System.Drawing.Size(116, 28);
             this.bt_Abrir.TabIndex = 0;
@@ -49,7 +49,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Location = new System.Drawing.Point(386, 127);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -60,11 +60,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(443, 219);
+            this.ClientSize = new System.Drawing.Size(705, 334);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.bt_Abrir);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "PreNomina";
             this.ResumeLayout(false);
             this.PerformLayout();
 
