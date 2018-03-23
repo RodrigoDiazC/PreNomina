@@ -14,7 +14,7 @@ namespace TimeChecker
         // Data privada ----------------------------------
         private string Nombre = null;
         private TiemposDia[] Dias = null;
-    
+
         // Constructor -----------------------------------
         public Empleado(string atributos)
         {
@@ -26,10 +26,18 @@ namespace TimeChecker
 
             // Elimina informacion no util
             tokens = borrarBasura(tokens);
-            
+
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
-            
+
+            HorasLaborales horas = new HorasLaborales();
+            horas.entrada1 = DateTime.Parse("08:00");
+            horas.salida1 = DateTime.Parse("13:00");
+            horas.entrada2 = DateTime.Parse("14:00");
+            horas.salida2 = DateTime.Parse("18:00");
+
+            TimeSpan e = getExtra(horas, 0);
+
         }
 
         // Metodos publicos ------------------------------
@@ -49,22 +57,60 @@ namespace TimeChecker
         {
             return this.Dias.Length;
         }
+        public TimeSpan getRetardo(HorasLaborales horas, int index)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "RETARDO")
+                {
+                    span += t.entrada1.Hora.Subtract(horas.entrada1);
+                }
+
+                if (t.entrada2.status == "RETARDO")
+                {
+                    span += t.entrada2.Hora.Subtract(horas.entrada2);
+                }
+            }
+               
+            return span;
+        }
+        public TimeSpan getExtra(HorasLaborales horas, int index)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.salida1.Hora > horas.salida1)
+                {
+                    span += t.salida1.Hora.Subtract(horas.salida1);
+                }
+
+                if (t.salida2.Hora > horas.salida2)
+                {
+                    span += t.salida2.Hora.Subtract(horas.salida2);
+                }
+            }
+
+            return span;
+        }
 
         // Metodos privados
         private TiemposDia[] extraerDiasDeTokens(string[] registro)
         {
             Acceso entrada1 = new Acceso();
-            Acceso salida1  = new Acceso();
+            Acceso salida1 = new Acceso();
             Acceso entrada2 = new Acceso();
-            Acceso salida2  = new Acceso();
+            Acceso salida2 = new Acceso();
             DateTime dia = DateTime.Now;
             int elemento = 0;
 
             TiemposDia[] diasInfo = new TiemposDia[(registro.Length) / 4];
 
-            for(int i=0; i < (registro.Length)/4; i++)
+            for (int i = 0; i < (registro.Length) / 4; i++)
             {
-                for(int j=0; j < 4; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     string[] split = registro[elemento].Split(' ');
 
@@ -78,7 +124,7 @@ namespace TimeChecker
                     if (!split.Contains("A"))
                     {
                         // En caso de nuevo dia
-                        if(j == 0)
+                        if (j == 0)
                         {
                             // Asigna hora
                             DateTime.TryParse(split[1], out aux);
@@ -105,7 +151,7 @@ namespace TimeChecker
                     else if (split.Contains("ENTRADA2")) entrada2 = temp;
                     else if (split.Contains("SALIDA2")) salida2 = temp;
 
-                    elemento ++;
+                    elemento++;
                 }
 
                 diasInfo[i] = new TiemposDia(dia, entrada1, salida1, entrada2, salida2);
