@@ -14,18 +14,18 @@ namespace TimeChecker
 {
     public partial class Form1 : Form
     {
-
         // Variables globales
         Empleado[] gEmpleados = new Empleado[] { };
+        Analizador analizador = new Analizador();
 
         public Form1()
         {
             InitializeComponent();
+
         }
 
         private void bt_Abrir_Click(object sender, EventArgs e)
         {
-            Analizador analizador = new Analizador();
 
             openFileDialog.InitialDirectory = @"C:\";
             openFileDialog.Title = "Seleccionar el PDF a escanear";
@@ -35,25 +35,100 @@ namespace TimeChecker
             openFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
             openFileDialog.RestoreDirectory = true;
             openFileDialog.ShowDialog();
-            textBox1.Text = ExtractTextFromPdf(openFileDialog.FileName);
 
             gEmpleados = analizador.getEmpleados(ExtractTextFromPdf(openFileDialog.FileName));
 
+            showEmpleadoInfo(gEmpleados);
         }
 
-        public static string ExtractTextFromPdf(string path)
+        // Muestra informacion de los usuarios
+        private void showEmpleadoInfo(Empleado[] empleadosArray)
+        {
+
+          // Formatea las columnas de los días utilizando el primer empleado
+            generateTable(empleadosArray[0].getDias(), empleadosArray);
+
+        }
+
+        // Herramientas
+        private static string ExtractTextFromPdf(string path)
         {
             using (PdfReader reader = new PdfReader(path))
             {
                 StringBuilder text = new StringBuilder();
 
-                for(int i = 1; i <= reader.NumberOfPages; i++)
+                for (int i = 1; i <= reader.NumberOfPages; i++)
                 {
-                     text.Append(PdfTextExtractor.GetTextFromPage(reader, i));
+                    text.Append(PdfTextExtractor.GetTextFromPage(reader, i));
                 }
 
                 return text.ToString();
             }
+        }
+
+        private void generateTable(TiemposDia[] dias, Empleado[] empleados)
+        {
+
+            // Genera los headers dinamicamente -------------------------------------------------------
+            DataTable dt = new DataTable();
+            
+            dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
+            dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
+            
+            foreach(TiemposDia t in dias)
+            {
+                dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
+            }
+
+            dt.Columns.Add(new DataColumn("TOT", typeof(TimeSpan)));
+            dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
+            dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
+            dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
+
+
+            // llena la ingormacion -------------------------------------------------------
+            int i = 0, k = 0;
+
+            // Obtiene las horas de trabajo
+            HorasLaborales horasL = new HorasLaborales();
+            horasL.entrada1 = DateTime.Parse("08:00");
+            horasL.salida1 = DateTime.Parse("13:00");
+            horasL.entrada2 = DateTime.Parse("14:00");
+            horasL.salida2 = DateTime.Parse("18:00");
+
+            // Acumulador de retardo
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (Empleado e in empleados)
+            {
+                // Nombre del empleado
+                DataRow dr = dt.NewRow();
+                dr[k++] = e.getNombre();
+                // Departamento
+                dr[k++] = "Ingenieria";
+           
+                foreach (TiemposDia t in e.getDias())
+                {
+                    // Tiempo de retardo en cada día
+                    dr[k++] = e.getRetardo(horasL, i);
+                    // Acumula retardo para columna TOT
+                    span += e.getRetardo(horasL, i);
+
+                    i ++;
+                }
+
+                // Columna TOT
+                dr[k++] = span;
+
+              
+                i = 0;
+                k = 0;
+                // Añade fila
+                dt.Rows.Add(dr);
+            }
+
+
+            this.dataGrid.DataSource = dt;
         }
 
     }

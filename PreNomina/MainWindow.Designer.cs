@@ -30,7 +30,8 @@
         {
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.bt_Abrir = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.dataGrid = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -47,26 +48,28 @@
             this.bt_Abrir.UseVisualStyleBackColor = true;
             this.bt_Abrir.Click += new System.EventHandler(this.bt_Abrir_Click);
             // 
-            // textBox1
+            // dataGrid
             // 
-            this.textBox1.Location = new System.Drawing.Point(386, 127);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(297, 195);
-            this.textBox1.TabIndex = 1;
+            this.dataGrid.AllowUserToAddRows = false;
+            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dataGrid.Location = new System.Drawing.Point(182, 0);
+            this.dataGrid.MultiSelect = false;
+            this.dataGrid.Name = "dataGrid";
+            this.dataGrid.Size = new System.Drawing.Size(802, 365);
+            this.dataGrid.TabIndex = 1;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(705, 334);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(984, 365);
+            this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.bt_Abrir);
             this.Name = "Form1";
             this.Text = "PreNomina";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -74,7 +77,7 @@
 
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button bt_Abrir;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.DataGridView dataGrid;
     }
 }
 

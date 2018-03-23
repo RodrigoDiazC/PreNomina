@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Analizador.cs" />
     <Compile Include="Empleado.cs" />
+    <Compile Include="HorasLaborales.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
