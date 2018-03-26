@@ -68,6 +68,9 @@ namespace TimeChecker
         private void generateTable(TiemposDia[] dias, Empleado[] empleados)
         {
 
+            // Tamaño de celda automático
+            dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
             // Genera los headers dinamicamente -------------------------------------------------------
             DataTable dt = new DataTable();
             
@@ -76,10 +79,10 @@ namespace TimeChecker
             
             foreach(TiemposDia t in dias)
             {
-                dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
+                dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(double)));
             }
-
-            dt.Columns.Add(new DataColumn("TOT", typeof(TimeSpan)));
+            
+            dt.Columns.Add(new DataColumn("TOT", typeof(double)));
             dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
             dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
             dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
@@ -107,12 +110,12 @@ namespace TimeChecker
                 foreach (TiemposDia t in e.getDias())
                 {
                     // Tiempo de retardo en cada día
-                    dr[k++] = e.getRetardoDia(horasL, i);
+                    dr[k++] = Math.Round(e.getRetardoDia(horasL, i).TotalMinutes, 0);
                     i ++;
                 }
 
                 // Columna TOT
-                dr[k++] = e.getRetardoSemanal(horasL);
+                dr[k++] = Math.Round(e.getRetardoSemanal(horasL).TotalMinutes, 0);
 
                 // Columna Puntualidad
                 if (e.getRetardoSemanal(horasL) > horasL.limiteRetardo)
@@ -132,7 +135,6 @@ namespace TimeChecker
                 i = 0;
                 k = 0;
             }
-
 
             this.dataGrid.DataSource = dt;
         }
