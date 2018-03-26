@@ -115,10 +115,10 @@ namespace TimeChecker
                 }
 
                 // Columna TOT
-                dr[k++] = Math.Round(e.getRetardoSemanal(horasL).TotalMinutes, 0);
+                dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
 
                 // Columna Puntualidad
-                if (e.getRetardoSemanal(horasL) > horasL.limiteRetardo)
+                if (e.getRetardoTotal(horasL) > horasL.limiteRetardo)
                 {
                     dr[k++] = false;
                 }

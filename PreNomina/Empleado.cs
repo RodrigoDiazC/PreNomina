@@ -14,6 +14,9 @@ namespace TimeChecker
         // Data privada ----------------------------------
         private string Nombre = null;
         private TiemposDia[] Dias = null;
+        private bool Puntualidad = true;
+        private bool Asistencia = true;
+        private bool Bono = true;
 
         // Constructor -----------------------------------
         public Empleado(string atributos)
@@ -36,7 +39,6 @@ namespace TimeChecker
             horas.entrada2 = DateTime.Parse("14:00");
             horas.salida2 = DateTime.Parse("18:00");
 
-            TimeSpan e = getExtra(horas, 0);
 
         }
 
@@ -57,7 +59,7 @@ namespace TimeChecker
         {
             return this.Dias.Length;
         }
-        public TimeSpan getRetardoSemanal(HorasLaborales horas)
+        public TimeSpan getRetardoTotal(HorasLaborales horas)
         {
             TimeSpan span = TimeSpan.Parse("0");
 
