@@ -83,7 +83,8 @@ namespace TimeChecker
 
             // Genera los headers dinamicamente -------------------------------------------------------
             DataTable dt = new DataTable();
-            
+
+            dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
             dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
             
@@ -103,9 +104,11 @@ namespace TimeChecker
 
             foreach (Empleado e in empleados)
             {
-                // Nombre del empleado
+                // ID
                 DataRow dr = dt.NewRow();
-                dr[k++] = e.getNombre();
+                dr[k++] = e.ID;
+                // Nombre del empleado
+                dr[k++] = e.Nombre;
                 // Departamento
                 dr[k++] = "Ingenieria";
            
@@ -119,9 +122,9 @@ namespace TimeChecker
                 // Columna TOT
                 dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
                 // Columna Puntualidad
-                dr[k++] = e.checkPuntualidad(this.horasL);
+                dr[k++] = e.Puntualidad;
                 // Asistencia
-                dr[k++] = e.checkAsistencia();
+                dr[k++] = e.Asistencia;
                 // Bono (Se asigna manualmente)
                 dr[k++] = false;
                 // Añade fila
@@ -133,10 +136,8 @@ namespace TimeChecker
 
             // Envía datos a control
             this.dataGrid.DataSource = dt;
-
-            // Inmoviliza primer columna
-            this.dataGrid.Columns[0].Frozen = true;
-
+            // Inmoviliza columna de nombre
+            this.dataGrid.Columns["Nombre del empleado"].Frozen = true;
             // Resalta las filas sin asistencia, puntualidad
             highlightTable();
 

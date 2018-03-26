@@ -8,7 +8,6 @@ namespace TimeChecker
 {
     class Empleado
     {
-
         // Data privada ----------------------------------
         private string listaAtributos;
 
@@ -18,13 +17,16 @@ namespace TimeChecker
         public bool Puntualidad { get; set; }
         public bool Asistencia { get; set; }
         public bool Bono { get; set; }
+        public int ID { get; set; }
 
         // Constructor -----------------------------------
-        public Empleado(string atributos, HorasLaborales horarioLaboral)
+        public Empleado(string atributos, int identifier, HorasLaborales horarioLaboral)
         {
             this.listaAtributos = atributos;
             string[] tokens = atributos.Split(new[] { "\n" }, StringSplitOptions.None);
 
+            // ID para facilitar modificación de los objetos
+            this.ID = identifier;
             // Extrae el nombre del empleado
             this.Nombre = tokens[0];
             // Elimina informacion no util
@@ -35,7 +37,6 @@ namespace TimeChecker
             Puntualidad = this.checkPuntualidad(horarioLaboral);
             // Obtiene asistencia
             Asistencia = this.checkAsistencia();
-
         }
 
         // Metodos publicos ------------------------------
