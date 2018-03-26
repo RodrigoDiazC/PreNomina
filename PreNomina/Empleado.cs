@@ -16,7 +16,7 @@ namespace TimeChecker
         public List<TiemposDia> Dias { get; set; }
         public bool Puntualidad { get; set; }
         public bool Asistencia { get; set; }
-        public bool Bono { get; set; }
+        public bool Desempeno { get; set; }
         public int ID { get; set; }
 
         // Constructor -----------------------------------

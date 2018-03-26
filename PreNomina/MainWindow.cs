@@ -18,7 +18,7 @@ namespace TimeChecker
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
         HorasLaborales horasL = new HorasLaborales();
-           
+
         public Form1()
         {
             InitializeComponent();
@@ -79,17 +79,20 @@ namespace TimeChecker
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
             dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
-            
-            foreach(TiemposDia t in empleados[0].Dias)
+
+            foreach (TiemposDia t in empleados[0].Dias)
             {
                 dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(double)));
             }
-            
+
             dt.Columns.Add(new DataColumn("TOT", typeof(double)));
             dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
             dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
             dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
 
+            // Propiedades de lectura escritura para cada columna
+            dt.Columns["ID"].ReadOnly = true;
+            dt.Columns["TOT"].ReadOnly = true;
 
             // llena la ingormacion -------------------------------------------------------
             int i = 0, k = 0;
@@ -103,12 +106,12 @@ namespace TimeChecker
                 dr[k++] = e.Nombre;
                 // Departamento
                 dr[k++] = "Ingenieria";
-           
+
                 foreach (TiemposDia t in e.Dias)
                 {
                     // Tiempo de retardo en cada día
                     dr[k++] = Math.Round(e.getRetardoDia(horasL, i).TotalMinutes, 0);
-                    i ++;
+                    i++;
                 }
 
                 // Columna TOT
@@ -148,9 +151,36 @@ namespace TimeChecker
         // Modificar empleados y volver a leer informacion ante cambios en la tabla
         private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            // Obtiene ID del empleado
+            int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
+
             // Modifica propiedad del empleado
+            switch (this.dataGrid.Columns[e.ColumnIndex].Name)
+            {
+                case "Nombre del empleado":
+                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Nombre = (string)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    break;
 
+                case "Puntualidad":
+                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Puntualidad = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    break;
 
+                case "Asistencia":
+                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Asistencia = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    break;
+
+                case "Desempeño":
+                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Desempeno = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    break;
+
+                default:
+                    MessageBox.Show("No se puede cambiar esta propiedad. Intente cambiarla en la vista detallada.");
+                    break;
+            }
+
+            // Carga los valores modificados
+            generateTable(gEmpleados);
+            // Resalta informacion
             highlightTable();
         }
         // Vuelve a resaltar la información 
