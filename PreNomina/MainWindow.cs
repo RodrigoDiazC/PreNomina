@@ -119,8 +119,13 @@ namespace TimeChecker
 
                 // Columna Puntualidad
                 if (e.getRetardoSemanal(horasL) > horasL.limiteRetardo)
-                     dr[k++] = false;
-                else dr[k++] = true;
+                {
+                    dr[k++] = false;
+                }
+                else
+                {
+                    dr[k++] = true;
+                }
 
                 // Asistencia
                 dr[k++] = e.getAsistencia();
@@ -137,9 +142,16 @@ namespace TimeChecker
             }
 
             this.dataGrid.DataSource = dt;
+
+            // Resalta las filas sin asistencia, puntualidad
+            foreach(DataGridViewRow row in this.dataGrid.Rows)
+            {
+
+                if((bool)row.Cells["Puntualidad"].Value == false || (bool)row.Cells["Asistencia"].Value == false)
+                {
+                    row.DefaultCellStyle.BackColor = Color.LightSalmon;
+                }
+            }
         }
-       
-
-
     }
 }
