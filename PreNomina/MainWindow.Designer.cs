@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.bt_Abrir = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
@@ -41,9 +40,9 @@
             // 
             // bt_Abrir
             // 
-            this.bt_Abrir.Location = new System.Drawing.Point(12, 12);
+            this.bt_Abrir.Location = new System.Drawing.Point(3, 12);
             this.bt_Abrir.Name = "bt_Abrir";
-            this.bt_Abrir.Size = new System.Drawing.Size(116, 28);
+            this.bt_Abrir.Size = new System.Drawing.Size(125, 28);
             this.bt_Abrir.TabIndex = 0;
             this.bt_Abrir.Text = "Abrir archivo";
             this.bt_Abrir.UseVisualStyleBackColor = true;
@@ -52,19 +51,13 @@
             // dataGrid
             // 
             this.dataGrid.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.dataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Location = new System.Drawing.Point(134, 12);
-            this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(838, 190);
+            this.dataGrid.Size = new System.Drawing.Size(838, 341);
             this.dataGrid.TabIndex = 1;
+            this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
+            this.dataGrid.Sorted += new System.EventHandler(this.dataGrid_Sorted);
             // 
             // Form1
             // 

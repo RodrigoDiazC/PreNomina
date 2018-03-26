@@ -9,12 +9,12 @@ namespace TimeChecker
 
     class TiemposDia
     {
-        // Data privada
-        public DateTime dia;
-        public Acceso entrada1;
-        public Acceso salida1;
-        public Acceso entrada2;
-        public Acceso salida2;
+        // Data publica
+        public DateTime dia { get; set; }
+        public Acceso entrada1 { get; set; }
+        public Acceso salida1 { get; set; }
+        public Acceso entrada2 { get; set; }
+        public Acceso salida2 { get; set; }
 
         // Constructor
         public TiemposDia(DateTime day, Acceso ent1, Acceso sal1, Acceso ent2, Acceso sal2)

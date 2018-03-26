@@ -77,7 +77,7 @@ namespace TimeChecker
         }
         private void generateTable(List<TiemposDia> dias, List<Empleado> empleados)
         {
-            /*
+            
             // Tamaño de celda automático
             this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
@@ -109,7 +109,7 @@ namespace TimeChecker
                 // Departamento
                 dr[k++] = "Ingenieria";
            
-                foreach (TiemposDia t in e.getDias())
+                foreach (TiemposDia t in e.Dias)
                 {
                     // Tiempo de retardo en cada día
                     dr[k++] = Math.Round(e.getRetardoDia(horasL, i).TotalMinutes, 0);
@@ -138,21 +138,30 @@ namespace TimeChecker
             this.dataGrid.Columns[0].Frozen = true;
 
             // Resalta las filas sin asistencia, puntualidad
-            foreach(DataGridViewRow row in this.dataGrid.Rows)
+            highlightTable();
+
+        }
+        private void highlightTable()
+        {
+            // Resalta las filas sin asistencia, puntualidad
+            foreach (DataGridViewRow row in this.dataGrid.Rows)
             {
-                if((bool)row.Cells["Puntualidad"].Value == false || (bool)row.Cells["Asistencia"].Value == false)
+                if ((bool)row.Cells["Puntualidad"].Value == false || (bool)row.Cells["Asistencia"].Value == false)
                 {
                     row.DefaultCellStyle.BackColor = Color.LightSalmon;
                 }
             }
-        */
-
-            var bindingList = new BindingList<Empleado>(empleados);
-            var source = new BindingSource(bindingList, null);
-            dataGrid.DataSource = source;
-
-            //dataGrid.DataSource = eList;
-         
         }
+        // Modificar empleados y volver a leer informacion ante cambios en la tabla
+        private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            highlightTable();
+        }
+        // Vuelve a resaltar la información 
+        private void dataGrid_Sorted(object sender, EventArgs e)
+        {
+            highlightTable();
+        }
+
     }
 }

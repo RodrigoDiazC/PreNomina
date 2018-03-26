@@ -47,13 +47,6 @@ namespace TimeChecker
         {
             return this.Dias[index];
         }
-
-        /*public TiemposDia[] getDias()
-        {
-            return this.Dias;
-        }
-        */
-
         public int getCantDias()
         {
             return this.Dias.Count;
