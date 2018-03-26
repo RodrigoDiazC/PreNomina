@@ -141,12 +141,15 @@ namespace TimeChecker
                 k = 0;
             }
 
+            // Envía datos a control
             this.dataGrid.DataSource = dt;
+
+            // Inmoviliza primer columna
+            this.dataGrid.Columns[0].Frozen = true;
 
             // Resalta las filas sin asistencia, puntualidad
             foreach(DataGridViewRow row in this.dataGrid.Rows)
             {
-
                 if((bool)row.Cells["Puntualidad"].Value == false || (bool)row.Cells["Asistencia"].Value == false)
                 {
                     row.DefaultCellStyle.BackColor = Color.LightSalmon;
