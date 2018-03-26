@@ -111,6 +111,24 @@ namespace TimeChecker
 
             return span;
         }
+        public bool getAsistencia()
+        {
+            int acc1 = 0, acc2 = 0;
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "NOREGISTRO") acc1++;
+                if (t.entrada2.status == "NOREGISTRO") acc1++;
+                if (t.salida1.status == "NOREGISTRO")  acc1++;
+                if (t.salida2.status == "NOREGISTRO")  acc1++;
+
+                if (acc1 >= 4) acc2++;
+                acc1 = 0;
+            }
+
+            if (acc2 >= 4) return false;
+            else return true;
+        }
 
         // Metodos privados
         private TiemposDia[] extraerDiasDeTokens(string[] registro)

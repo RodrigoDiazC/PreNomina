@@ -94,6 +94,7 @@ namespace TimeChecker
             horasL.salida1 = DateTime.Parse("13:00");
             horasL.entrada2 = DateTime.Parse("14:00");
             horasL.salida2 = DateTime.Parse("18:00");
+            horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
 
             foreach (Empleado e in empleados)
             {
@@ -113,15 +114,23 @@ namespace TimeChecker
                 // Columna TOT
                 dr[k++] = e.getRetardoSemanal(horasL);
 
-                i = 0;
-                k = 0;
+                // Columna Puntualidad
+                if (e.getRetardoSemanal(horasL) > horasL.limiteRetardo)
+                     dr[k++] = false;
+                else dr[k++] = true;
 
-                // Columna
+                // Asistencia
+                dr[k++] = e.getAsistencia();
 
-
+                // Bono (Se asigna manualmente)
+                dr[k++] = false;
 
                 // Añade fila
                 dt.Rows.Add(dr);
+
+                // Resetea contadores
+                i = 0;
+                k = 0;
             }
 
 
