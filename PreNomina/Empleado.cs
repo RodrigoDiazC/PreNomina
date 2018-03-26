@@ -57,7 +57,7 @@ namespace TimeChecker
         {
             return this.Dias.Length;
         }
-        public TimeSpan getRetardo(HorasLaborales horas, int index)
+        public TimeSpan getRetardoSemanal(HorasLaborales horas)
         {
             TimeSpan span = TimeSpan.Parse("0");
 
@@ -73,7 +73,23 @@ namespace TimeChecker
                     span += t.entrada2.Hora.Subtract(horas.entrada2);
                 }
             }
-               
+
+            return span;
+        }
+        public TimeSpan getRetardoDia(HorasLaborales horas, int index)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            if (this.Dias[index].entrada1.status == "RETARDO")
+            {
+                span += this.Dias[index].entrada1.Hora.Subtract(horas.entrada1);
+            }
+
+            if (this.Dias[index].entrada2.status == "RETARDO")
+            {
+                span += this.Dias[index].entrada2.Hora.Subtract(horas.entrada2);
+            }
+
             return span;
         }
         public TimeSpan getExtra(HorasLaborales horas, int index)

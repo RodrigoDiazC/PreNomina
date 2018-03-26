@@ -96,9 +96,6 @@ namespace TimeChecker
             horasL.entrada2 = DateTime.Parse("14:00");
             horasL.salida2 = DateTime.Parse("18:00");
 
-            // Acumulador de retardo
-            TimeSpan span = TimeSpan.Parse("0");
-
             foreach (Empleado e in empleados)
             {
                 // Nombre del empleado
@@ -110,17 +107,13 @@ namespace TimeChecker
                 foreach (TiemposDia t in e.getDias())
                 {
                     // Tiempo de retardo en cada día
-                    dr[k++] = e.getRetardo(horasL, i);
-                    // Acumula retardo para columna TOT
-                    span += e.getRetardo(horasL, i);
-
+                    dr[k++] = e.getRetardoDia(horasL, i);
                     i ++;
                 }
 
                 // Columna TOT
-                dr[k++] = span;
+                dr[k++] = e.getRetardoSemanal(horasL);
 
-              
                 i = 0;
                 k = 0;
                 // Añade fila
