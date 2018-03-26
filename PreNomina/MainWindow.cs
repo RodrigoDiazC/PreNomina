@@ -65,7 +65,6 @@ namespace TimeChecker
                 return text.ToString();
             }
         }
-
         private void generateTable(TiemposDia[] dias, Empleado[] empleados)
         {
 
@@ -116,6 +115,11 @@ namespace TimeChecker
 
                 i = 0;
                 k = 0;
+
+                // Columna
+
+
+
                 // Añade fila
                 dt.Rows.Add(dr);
             }
@@ -123,6 +127,8 @@ namespace TimeChecker
 
             this.dataGrid.DataSource = dt;
         }
+       
+
 
     }
 }

@@ -12,5 +12,6 @@ namespace TimeChecker
         public DateTime salida1;
         public DateTime entrada2;
         public DateTime salida2;
+        public DateTime limiteRetardo;
     }
 }
