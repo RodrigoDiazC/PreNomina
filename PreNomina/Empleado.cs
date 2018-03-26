@@ -57,7 +57,7 @@ namespace TimeChecker
         {
             return this.Dias.Length;
         }
-        public TimeSpan getRetardoSemanal(HorasLaborales horas, int index)
+        public TimeSpan getRetardo(HorasLaborales horas, int index)
         {
             TimeSpan span = TimeSpan.Parse("0");
 
