@@ -50,14 +50,7 @@ namespace TimeChecker
             this.gEmpleados = analizador.getEmpleados(ExtractTextFromPdf(openFileDialog.FileName), horasL);
 
             // Muestra empleados en tabla
-            showEmpleadoInfo(gEmpleados);
-        }
-
-        // Muestra informacion de los usuarios
-        private void showEmpleadoInfo(List<Empleado> empleadosArray)
-        {
-            // Formatea las columnas de los días utilizando el primer empleado
-            generateTable(empleadosArray[0].Dias, empleadosArray);   
+            generateTable(gEmpleados);
         }
 
         // Herramientas
@@ -75,9 +68,8 @@ namespace TimeChecker
                 return text.ToString();
             }
         }
-        private void generateTable(List<TiemposDia> dias, List<Empleado> empleados)
+        private void generateTable(List<Empleado> empleados)
         {
-            
             // Tamaño de celda automático
             this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
@@ -88,7 +80,7 @@ namespace TimeChecker
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
             dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
             
-            foreach(TiemposDia t in dias)
+            foreach(TiemposDia t in empleados[0].Dias)
             {
                 dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(double)));
             }
@@ -156,6 +148,9 @@ namespace TimeChecker
         // Modificar empleados y volver a leer informacion ante cambios en la tabla
         private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
+            // Modifica propiedad del empleado
+
+
             highlightTable();
         }
         // Vuelve a resaltar la información 
