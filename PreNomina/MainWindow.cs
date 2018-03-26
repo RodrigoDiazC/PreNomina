@@ -17,16 +17,19 @@ namespace TimeChecker
         // Variables globales
         Empleado[] gEmpleados = new Empleado[] { };
         Analizador analizador = new Analizador();
-
+        HorasLaborales horasL = new HorasLaborales();
+           
         public Form1()
         {
             InitializeComponent();
 
         }
 
+        // Abre PDF
         private void bt_Abrir_Click(object sender, EventArgs e)
         {
 
+            // Abre archivo PDF
             openFileDialog.InitialDirectory = @"C:\";
             openFileDialog.Title = "Seleccionar el PDF a escanear";
             openFileDialog.CheckFileExists = true;
@@ -36,8 +39,17 @@ namespace TimeChecker
             openFileDialog.RestoreDirectory = true;
             openFileDialog.ShowDialog();
 
-            gEmpleados = analizador.getEmpleados(ExtractTextFromPdf(openFileDialog.FileName));
+            // Setea los horarios laborales
+            this.horasL.entrada1 = DateTime.Parse("08:00");
+            this.horasL.salida1 = DateTime.Parse("13:00");
+            this.horasL.entrada2 = DateTime.Parse("14:00");
+            this.horasL.salida2 = DateTime.Parse("18:00");
+            this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
 
+            // Obtiene empleados
+            this.gEmpleados = analizador.getEmpleados(ExtractTextFromPdf(openFileDialog.FileName), horasL);
+
+            // Muestra empleados en tabla
             showEmpleadoInfo(gEmpleados);
         }
 
@@ -69,7 +81,7 @@ namespace TimeChecker
         {
 
             // Tamaño de celda automático
-            dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
             // Genera los headers dinamicamente -------------------------------------------------------
             DataTable dt = new DataTable();
@@ -91,14 +103,6 @@ namespace TimeChecker
             // llena la ingormacion -------------------------------------------------------
             int i = 0, k = 0;
 
-            // Obtiene las horas de trabajo
-            HorasLaborales horasL = new HorasLaborales();
-            horasL.entrada1 = DateTime.Parse("08:00");
-            horasL.salida1 = DateTime.Parse("13:00");
-            horasL.entrada2 = DateTime.Parse("14:00");
-            horasL.salida2 = DateTime.Parse("18:00");
-            horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
-
             foreach (Empleado e in empleados)
             {
                 // Nombre del empleado
@@ -116,26 +120,14 @@ namespace TimeChecker
 
                 // Columna TOT
                 dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
-
                 // Columna Puntualidad
-                if (e.getRetardoTotal(horasL) > horasL.limiteRetardo)
-                {
-                    dr[k++] = false;
-                }
-                else
-                {
-                    dr[k++] = true;
-                }
-
+                dr[k++] = e.getPuntualidad(this.horasL);
                 // Asistencia
                 dr[k++] = e.getAsistencia();
-
                 // Bono (Se asigna manualmente)
                 dr[k++] = false;
-
                 // Añade fila
                 dt.Rows.Add(dr);
-
                 // Resetea contadores
                 i = 0;
                 k = 0;
@@ -156,5 +148,7 @@ namespace TimeChecker
                 }
             }
         }
+
+
     }
 }

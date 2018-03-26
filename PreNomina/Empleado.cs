@@ -19,26 +19,21 @@ namespace TimeChecker
         private bool Bono = true;
 
         // Constructor -----------------------------------
-        public Empleado(string atributos)
+        public Empleado(string atributos, HorasLaborales horarioLaboral)
         {
             this.listaAtributos = atributos;
             string[] tokens = atributos.Split(new[] { "\n" }, StringSplitOptions.None);
 
             // Extrae el nombre del empleado
             this.Nombre = tokens[0];
-
             // Elimina informacion no util
             tokens = borrarBasura(tokens);
-
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
-
-            HorasLaborales horas = new HorasLaborales();
-            horas.entrada1 = DateTime.Parse("08:00");
-            horas.salida1 = DateTime.Parse("13:00");
-            horas.entrada2 = DateTime.Parse("14:00");
-            horas.salida2 = DateTime.Parse("18:00");
-
+            // Obtiene si fue puntual
+            Puntualidad = this.getPuntualidad(horarioLaboral);
+            // Obtiene asistencia
+            Asistencia = this.getAsistencia();
 
         }
 
@@ -131,7 +126,44 @@ namespace TimeChecker
             if (acc2 >= 1) return false;
             else return true;
         }
+        public bool getPuntualidad(HorasLaborales horas)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
 
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "RETARDO")
+                {
+                    span += t.entrada1.Hora.Subtract(horas.entrada1);
+                }
+
+                if (t.entrada2.status == "RETARDO")
+                {
+                    span += t.entrada2.Hora.Subtract(horas.entrada2);
+                }
+            }
+
+            if (span >= horas.limiteRetardo) return false;
+            else return true;
+        }
+        public bool getBono()
+        {
+            return this.Bono;
+        }
+        public void setDia(TiemposDia nuevoHorario, int index)
+        {
+            this.Dias[index] = nuevoHorario;
+
+
+        }
+        public void setAsistencia(bool value)
+        {
+            this.Asistencia = value;
+        }
+        public void setBono(bool value)
+        {
+            this.Bono = value;
+        }
         // Metodos privados
         private TiemposDia[] extraerDiasDeTokens(string[] registro)
         {
