@@ -126,7 +126,7 @@ namespace TimeChecker
                 acc1 = 0;
             }
 
-            if (acc2 >= 4) return false;
+            if (acc2 >= 1) return false;
             else return true;
         }
 

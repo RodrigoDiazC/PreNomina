@@ -52,11 +52,10 @@
             // 
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Right;
-            this.dataGrid.Location = new System.Drawing.Point(182, 0);
+            this.dataGrid.Location = new System.Drawing.Point(134, 12);
             this.dataGrid.MultiSelect = false;
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(802, 365);
+            this.dataGrid.Size = new System.Drawing.Size(838, 190);
             this.dataGrid.TabIndex = 1;
             // 
             // Form1
