@@ -15,7 +15,7 @@ namespace TimeChecker
     public partial class Form1 : Form
     {
         // Variables globales
-        Empleado[] gEmpleados = new Empleado[] { };
+        List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
         HorasLaborales horasL = new HorasLaborales();
            
@@ -54,12 +54,10 @@ namespace TimeChecker
         }
 
         // Muestra informacion de los usuarios
-        private void showEmpleadoInfo(Empleado[] empleadosArray)
+        private void showEmpleadoInfo(List<Empleado> empleadosArray)
         {
-
-          // Formatea las columnas de los días utilizando el primer empleado
-            generateTable(empleadosArray[0].getDias(), empleadosArray);
-
+            // Formatea las columnas de los días utilizando el primer empleado
+            generateTable(empleadosArray[0].Dias, empleadosArray);   
         }
 
         // Herramientas
@@ -77,9 +75,9 @@ namespace TimeChecker
                 return text.ToString();
             }
         }
-        private void generateTable(TiemposDia[] dias, Empleado[] empleados)
+        private void generateTable(List<TiemposDia> dias, List<Empleado> empleados)
         {
-
+            /*
             // Tamaño de celda automático
             this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
@@ -121,9 +119,9 @@ namespace TimeChecker
                 // Columna TOT
                 dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
                 // Columna Puntualidad
-                dr[k++] = e.getPuntualidad(this.horasL);
+                dr[k++] = e.checkPuntualidad(this.horasL);
                 // Asistencia
-                dr[k++] = e.getAsistencia();
+                dr[k++] = e.checkAsistencia();
                 // Bono (Se asigna manualmente)
                 dr[k++] = false;
                 // Añade fila
@@ -147,8 +145,14 @@ namespace TimeChecker
                     row.DefaultCellStyle.BackColor = Color.LightSalmon;
                 }
             }
+        */
+
+            var bindingList = new BindingList<Empleado>(empleados);
+            var source = new BindingSource(bindingList, null);
+            dataGrid.DataSource = source;
+
+            //dataGrid.DataSource = eList;
+         
         }
-
-
     }
 }

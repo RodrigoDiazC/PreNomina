@@ -8,15 +8,16 @@ namespace TimeChecker
 {
     class Empleado
     {
-        // Data publica ----------------------------------
-        public string listaAtributos;
 
         // Data privada ----------------------------------
-        private string Nombre = null;
-        private TiemposDia[] Dias = null;
-        private bool Puntualidad = true;
-        private bool Asistencia = true;
-        private bool Bono = true;
+        private string listaAtributos;
+
+        // Data Publica
+        public string Nombre { get; set; }
+        public List<TiemposDia> Dias { get; set; }
+        public bool Puntualidad { get; set; }
+        public bool Asistencia { get; set; }
+        public bool Bono { get; set; }
 
         // Constructor -----------------------------------
         public Empleado(string atributos, HorasLaborales horarioLaboral)
@@ -31,9 +32,9 @@ namespace TimeChecker
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
             // Obtiene si fue puntual
-            Puntualidad = this.getPuntualidad(horarioLaboral);
+            Puntualidad = this.checkPuntualidad(horarioLaboral);
             // Obtiene asistencia
-            Asistencia = this.getAsistencia();
+            Asistencia = this.checkAsistencia();
 
         }
 
@@ -46,13 +47,16 @@ namespace TimeChecker
         {
             return this.Dias[index];
         }
-        public TiemposDia[] getDias()
+
+        /*public TiemposDia[] getDias()
         {
             return this.Dias;
         }
+        */
+
         public int getCantDias()
         {
-            return this.Dias.Length;
+            return this.Dias.Count;
         }
         public TimeSpan getRetardoTotal(HorasLaborales horas)
         {
@@ -108,7 +112,8 @@ namespace TimeChecker
 
             return span;
         }
-        public bool getAsistencia()
+        
+        public bool checkAsistencia()
         {
             int acc1 = 0, acc2 = 0;
 
@@ -126,7 +131,7 @@ namespace TimeChecker
             if (acc2 >= 1) return false;
             else return true;
         }
-        public bool getPuntualidad(HorasLaborales horas)
+        public bool checkPuntualidad(HorasLaborales horas)
         {
             TimeSpan span = TimeSpan.Parse("0");
 
@@ -146,26 +151,13 @@ namespace TimeChecker
             if (span >= horas.limiteRetardo) return false;
             else return true;
         }
-        public bool getBono()
-        {
-            return this.Bono;
-        }
         public void setDia(TiemposDia nuevoHorario, int index)
         {
             this.Dias[index] = nuevoHorario;
+        }
 
-
-        }
-        public void setAsistencia(bool value)
-        {
-            this.Asistencia = value;
-        }
-        public void setBono(bool value)
-        {
-            this.Bono = value;
-        }
         // Metodos privados
-        private TiemposDia[] extraerDiasDeTokens(string[] registro)
+        private List<TiemposDia> extraerDiasDeTokens(string[] registro)
         {
             Acceso entrada1 = new Acceso();
             Acceso salida1 = new Acceso();
@@ -173,6 +165,8 @@ namespace TimeChecker
             Acceso salida2 = new Acceso();
             DateTime dia = DateTime.Now;
             int elemento = 0;
+
+            List<TiemposDia> diasList = new List<TiemposDia>();
 
             TiemposDia[] diasInfo = new TiemposDia[(registro.Length) / 4];
 
@@ -223,10 +217,11 @@ namespace TimeChecker
                 }
 
                 diasInfo[i] = new TiemposDia(dia, entrada1, salida1, entrada2, salida2);
-
             }
 
-            return diasInfo;
+            foreach(TiemposDia t in diasInfo) { diasList.Add(t); }
+
+            return diasList;
         }
         private string[] borrarBasura(string[] lista)
         {

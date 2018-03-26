@@ -15,7 +15,7 @@ namespace TimeChecker
         // No es necesario contructor
 
         // Metodos Publicos ------------------------------------
-        public Empleado[] getEmpleados(string texto, HorasLaborales horarioLaboral)
+        public List<Empleado> getEmpleados(string texto, HorasLaborales horarioLaboral)
         {
             // Busca fecha de inicio
             string toBeSearched = "Desde:";
@@ -38,7 +38,7 @@ namespace TimeChecker
                 empleados[i-1] = new Empleado(tokens[i], horarioLaboral);
             }
 
-            return empleados;
+            return empleados.ToList();
         }
         public DateTime getFechaInicio() { return fechaInicio; }
         public DateTime getFechaFin() { return fechaFin; }
