@@ -10,5 +10,6 @@ namespace TimeChecker
     {
         public DateTime Hora { get; set; }
         public string status { get; set; }
+        public string observaciones { get; set; }
     }
 }
