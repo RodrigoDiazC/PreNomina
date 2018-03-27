@@ -28,7 +28,6 @@ namespace TimeChecker
         // Abre PDF
         private void bt_Abrir_Click(object sender, EventArgs e)
         {
-
             // Abre archivo PDF
             openFileDialog.InitialDirectory = @"C:\";
             openFileDialog.Title = "Seleccionar el PDF a escanear";
@@ -51,6 +50,9 @@ namespace TimeChecker
 
             // Muestra empleados en tabla
             generateTable(gEmpleados);
+
+            // Elimina la información de la tabla inferior
+            dataGrid1.DataSource = null;
         }
 
         // Herramientas
@@ -189,5 +191,95 @@ namespace TimeChecker
             highlightTable();
         }
 
+        // Despliega información del usuario
+        private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Elimina la información
+                dataGrid1.DataSource = null;
+
+                // ------------------------- Obtiene la información del empleado seleccionado y la despliega en datagrif
+                // Obtiene ID del empleado
+                int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
+
+                // Tamaño de celda automático
+                this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+                // Genera los headers de los días dinamicamente -------------------------------------------------------
+                DataTable dt = new DataTable();
+
+                dt.Columns.Add(new DataColumn("Acceso", typeof(string)));
+
+                foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+                {
+                    foreach (TiemposDia t in em.Dias)
+                    {
+                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
+                    }
+                }
+
+                // Propiedades de lectura escritura para cada columna
+                dt.Columns[0].ReadOnly = true;
+
+                // LLena la tabla de informacion --------------------------------------------------------------------------------
+                foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+                {
+                    DataRow drEntrada1 = dt.NewRow();
+                    DataRow drSalida1 = dt.NewRow();
+                    DataRow drEntrada2 = dt.NewRow();
+                    DataRow drSalida2 = dt.NewRow();
+
+                    drEntrada1[0] = "Entrada 1";
+
+                    for (int i = 0; i < em.Dias.Count; i++)
+                    {
+                        if (em.Dias[i].entrada1.status == "NOREGISTRO") drEntrada1[i + 1] = TimeSpan.Parse("00:00");
+                        else drEntrada1[i + 1] = em.Dias[i].entrada1.Hora.TimeOfDay;
+                    }
+
+                    drSalida1[0] = "Salida 1";
+
+                    for (int i = 0; i < em.Dias.Count; i++)
+                    {
+                        if (em.Dias[i].salida1.status == "NOREGISTRO") drSalida1[i + 1] = TimeSpan.Parse("00:00");
+                        else drSalida1[i + 1] = em.Dias[i].salida1.Hora.TimeOfDay;
+                    }
+
+                    drEntrada2[0] = "Entrada 2";
+
+                    for (int i = 0; i < em.Dias.Count; i++)
+                    {
+                        if (em.Dias[i].entrada2.status == "NOREGISTRO") drEntrada2[i + 1] = TimeSpan.Parse("00:00");
+                        else drEntrada2[i + 1] = em.Dias[i].entrada2.Hora.TimeOfDay;
+                    }
+
+                    drSalida2[0] = "Salida 2";
+
+                    for (int i = 0; i < em.Dias.Count; i++)
+                    {
+                        if (em.Dias[i].salida2.status == "NOREGISTRO") drSalida2[i + 1] = TimeSpan.Parse("00:00");
+                        else drSalida2[i + 1] = em.Dias[i].salida2.Hora.TimeOfDay;
+                    }
+
+                    dt.Rows.Add(drEntrada1);
+                    dt.Rows.Add(drSalida1);
+                    dt.Rows.Add(drEntrada2);
+                    dt.Rows.Add(drSalida2);
+                }
+
+                // Envía datos a control
+                this.dataGrid1.DataSource = dt;
+                // Inmoviliza columna de nombre
+                this.dataGrid1.Columns[0].Frozen = true;
+                // Resalta las filas sin asistencia, puntualidad
+                highlightTable();
+            }
+            catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
+            {
+
+            }
+            
+        }
     }
 }
