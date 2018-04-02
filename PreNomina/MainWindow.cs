@@ -163,6 +163,8 @@ namespace TimeChecker
             this.cb_Puntualidad.Checked = em.Puntualidad;
             this.cb_Desempeno.Checked = em.Desempeno;
             this.tb_NombreEmpleado.Text = em.Nombre;
+            this.lb_TotRet.Text = ((int)em.getRetardoTotal(horasL).TotalMinutes).ToString();
+            this.lb_TotExc.Text = ((int)em.getExtraTotal(horasL).TotalMinutes).ToString();
         }
 
         // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria

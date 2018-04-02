@@ -45,9 +45,19 @@
             this.cb_Retardos = new System.Windows.Forms.CheckBox();
             this.cb_Anticipo = new System.Windows.Forms.CheckBox();
             this.cb_Excedente = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lb_TotRet = new System.Windows.Forms.Label();
+            this.lb_TotExc = new System.Windows.Forms.Label();
+            this.tb_Acceso = new System.Windows.Forms.TextBox();
+            this.lb_Acceso = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -64,9 +74,11 @@
             // dataGrid
             // 
             this.dataGrid.AllowUserToAddRows = false;
+            this.dataGrid.AllowUserToResizeRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Location = new System.Drawing.Point(12, 46);
             this.dataGrid.Name = "dataGrid";
+            this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersVisible = false;
             this.dataGrid.Size = new System.Drawing.Size(270, 307);
             this.dataGrid.TabIndex = 1;
@@ -128,7 +140,7 @@
             // 
             this.cb_Puntualidad.AutoSize = true;
             this.cb_Puntualidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Puntualidad.Location = new System.Drawing.Point(558, 334);
+            this.cb_Puntualidad.Location = new System.Drawing.Point(9, 81);
             this.cb_Puntualidad.Name = "cb_Puntualidad";
             this.cb_Puntualidad.Size = new System.Drawing.Size(92, 19);
             this.cb_Puntualidad.TabIndex = 6;
@@ -139,7 +151,7 @@
             // 
             this.cb_Asistencia.AutoSize = true;
             this.cb_Asistencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Asistencia.Location = new System.Drawing.Point(656, 333);
+            this.cb_Asistencia.Location = new System.Drawing.Point(9, 106);
             this.cb_Asistencia.Name = "cb_Asistencia";
             this.cb_Asistencia.Size = new System.Drawing.Size(81, 19);
             this.cb_Asistencia.TabIndex = 6;
@@ -150,7 +162,7 @@
             // 
             this.cb_Desempeno.AutoSize = true;
             this.cb_Desempeno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Desempeno.Location = new System.Drawing.Point(743, 334);
+            this.cb_Desempeno.Location = new System.Drawing.Point(9, 131);
             this.cb_Desempeno.Name = "cb_Desempeno";
             this.cb_Desempeno.Size = new System.Drawing.Size(94, 19);
             this.cb_Desempeno.TabIndex = 6;
@@ -159,15 +171,15 @@
             // 
             // tb_NombreEmpleado
             // 
-            this.tb_NombreEmpleado.Location = new System.Drawing.Point(297, 333);
+            this.tb_NombreEmpleado.Location = new System.Drawing.Point(6, 46);
             this.tb_NombreEmpleado.Name = "tb_NombreEmpleado";
-            this.tb_NombreEmpleado.Size = new System.Drawing.Size(242, 20);
+            this.tb_NombreEmpleado.Size = new System.Drawing.Size(273, 20);
             this.tb_NombreEmpleado.TabIndex = 8;
             // 
             // lb_Nombre
             // 
             this.lb_Nombre.AutoSize = true;
-            this.lb_Nombre.Location = new System.Drawing.Point(294, 317);
+            this.lb_Nombre.Location = new System.Drawing.Point(6, 26);
             this.lb_Nombre.Name = "lb_Nombre";
             this.lb_Nombre.Size = new System.Drawing.Size(47, 13);
             this.lb_Nombre.TabIndex = 9;
@@ -209,19 +221,98 @@
             this.cb_Excedente.UseVisualStyleBackColor = true;
             this.cb_Excedente.CheckedChanged += new System.EventHandler(this.cb_Excedente_CheckedChanged);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.lb_TotExc);
+            this.groupBox1.Controls.Add(this.lb_TotRet);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.tb_NombreEmpleado);
+            this.groupBox1.Controls.Add(this.lb_Nombre);
+            this.groupBox1.Controls.Add(this.cb_Puntualidad);
+            this.groupBox1.Controls.Add(this.cb_Asistencia);
+            this.groupBox1.Controls.Add(this.cb_Desempeno);
+            this.groupBox1.Location = new System.Drawing.Point(296, 179);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(296, 174);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Info General";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lb_Acceso);
+            this.groupBox2.Controls.Add(this.tb_Acceso);
+            this.groupBox2.Location = new System.Drawing.Point(598, 179);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(374, 174);
+            this.groupBox2.TabIndex = 13;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Info de selección";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(123, 85);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Tot. Retardo (min):";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(144, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 15);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Tot. Exc. (min):";
+            // 
+            // lb_TotRet
+            // 
+            this.lb_TotRet.AutoSize = true;
+            this.lb_TotRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TotRet.Location = new System.Drawing.Point(238, 85);
+            this.lb_TotRet.Name = "lb_TotRet";
+            this.lb_TotRet.Size = new System.Drawing.Size(0, 15);
+            this.lb_TotRet.TabIndex = 11;
+            // 
+            // lb_TotExc
+            // 
+            this.lb_TotExc.AutoSize = true;
+            this.lb_TotExc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TotExc.Location = new System.Drawing.Point(238, 110);
+            this.lb_TotExc.Name = "lb_TotExc";
+            this.lb_TotExc.Size = new System.Drawing.Size(0, 15);
+            this.lb_TotExc.TabIndex = 11;
+            // 
+            // tb_Acceso
+            // 
+            this.tb_Acceso.Location = new System.Drawing.Point(6, 46);
+            this.tb_Acceso.Name = "tb_Acceso";
+            this.tb_Acceso.Size = new System.Drawing.Size(119, 20);
+            this.tb_Acceso.TabIndex = 8;
+            // 
+            // lb_Acceso
+            // 
+            this.lb_Acceso.AutoSize = true;
+            this.lb_Acceso.Location = new System.Drawing.Point(6, 26);
+            this.lb_Acceso.Name = "lb_Acceso";
+            this.lb_Acceso.Size = new System.Drawing.Size(0, 13);
+            this.lb_Acceso.TabIndex = 12;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 365);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cb_Excedente);
             this.Controls.Add(this.cb_Anticipo);
             this.Controls.Add(this.cb_Retardos);
-            this.Controls.Add(this.lb_Nombre);
-            this.Controls.Add(this.tb_NombreEmpleado);
-            this.Controls.Add(this.cb_Desempeno);
-            this.Controls.Add(this.cb_Asistencia);
-            this.Controls.Add(this.cb_Puntualidad);
             this.Controls.Add(this.lb_Horarios);
             this.Controls.Add(this.lb_Empleados);
             this.Controls.Add(this.toolStrip1);
@@ -234,6 +325,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,6 +352,14 @@
         private System.Windows.Forms.CheckBox cb_Retardos;
         private System.Windows.Forms.CheckBox cb_Anticipo;
         private System.Windows.Forms.CheckBox cb_Excedente;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label lb_TotExc;
+        private System.Windows.Forms.Label lb_TotRet;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lb_Acceso;
+        private System.Windows.Forms.TextBox tb_Acceso;
     }
 }
 

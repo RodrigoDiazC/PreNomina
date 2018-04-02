@@ -87,7 +87,7 @@ namespace TimeChecker
 
             return span;
         }
-        public TimeSpan getExtra(HorasLaborales horas, int index)
+        public TimeSpan getExtraTotal(HorasLaborales horas)
         {
             TimeSpan span = TimeSpan.Parse("0");
 
