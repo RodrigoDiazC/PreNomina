@@ -28,12 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.bt_Abrir = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.dataGrid1 = new System.Windows.Forms.DataGridView();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
+            this.lb_Empleados = new System.Windows.Forms.Label();
+            this.lb_Horarios = new System.Windows.Forms.Label();
+            this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
+            this.cb_Asistencia = new System.Windows.Forms.CheckBox();
+            this.cb_Desempeno = new System.Windows.Forms.CheckBox();
+            this.lb_Atributos = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -42,21 +52,19 @@
             // 
             // bt_Abrir
             // 
-            this.bt_Abrir.Location = new System.Drawing.Point(3, 12);
+            this.bt_Abrir.Location = new System.Drawing.Point(0, 0);
             this.bt_Abrir.Name = "bt_Abrir";
-            this.bt_Abrir.Size = new System.Drawing.Size(125, 28);
-            this.bt_Abrir.TabIndex = 0;
-            this.bt_Abrir.Text = "Abrir archivo";
-            this.bt_Abrir.UseVisualStyleBackColor = true;
-            this.bt_Abrir.Click += new System.EventHandler(this.bt_Abrir_Click);
+            this.bt_Abrir.Size = new System.Drawing.Size(75, 23);
+            this.bt_Abrir.TabIndex = 4;
             // 
             // dataGrid
             // 
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(134, 12);
+            this.dataGrid.Location = new System.Drawing.Point(12, 46);
             this.dataGrid.Name = "dataGrid";
-            this.dataGrid.Size = new System.Drawing.Size(838, 168);
+            this.dataGrid.RowHeadersVisible = false;
+            this.dataGrid.Size = new System.Drawing.Size(270, 307);
             this.dataGrid.TabIndex = 1;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
@@ -66,16 +74,103 @@
             // 
             this.dataGrid1.AllowUserToAddRows = false;
             this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid1.Location = new System.Drawing.Point(134, 186);
+            this.dataGrid1.Location = new System.Drawing.Point(296, 46);
             this.dataGrid1.Name = "dataGrid1";
-            this.dataGrid1.Size = new System.Drawing.Size(838, 142);
+            this.dataGrid1.Size = new System.Drawing.Size(676, 137);
             this.dataGrid1.TabIndex = 2;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsb_Abrir});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(984, 25);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsb_Abrir
+            // 
+            this.tsb_Abrir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_Abrir.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Abrir.Image")));
+            this.tsb_Abrir.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Abrir.Name = "tsb_Abrir";
+            this.tsb_Abrir.Size = new System.Drawing.Size(79, 22);
+            this.tsb_Abrir.Text = "Abrir archivo";
+            this.tsb_Abrir.Click += new System.EventHandler(this.tsb_Abrir_Click);
+            // 
+            // lb_Empleados
+            // 
+            this.lb_Empleados.AutoSize = true;
+            this.lb_Empleados.Location = new System.Drawing.Point(12, 25);
+            this.lb_Empleados.Name = "lb_Empleados";
+            this.lb_Empleados.Size = new System.Drawing.Size(98, 13);
+            this.lb_Empleados.TabIndex = 5;
+            this.lb_Empleados.Text = "Lista de empleados";
+            // 
+            // lb_Horarios
+            // 
+            this.lb_Horarios.AutoSize = true;
+            this.lb_Horarios.Location = new System.Drawing.Point(293, 25);
+            this.lb_Horarios.Name = "lb_Horarios";
+            this.lb_Horarios.Size = new System.Drawing.Size(97, 13);
+            this.lb_Horarios.TabIndex = 5;
+            this.lb_Horarios.Text = "Detalle de registros";
+            // 
+            // cb_Puntualidad
+            // 
+            this.cb_Puntualidad.AutoSize = true;
+            this.cb_Puntualidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_Puntualidad.Location = new System.Drawing.Point(296, 238);
+            this.cb_Puntualidad.Name = "cb_Puntualidad";
+            this.cb_Puntualidad.Size = new System.Drawing.Size(92, 19);
+            this.cb_Puntualidad.TabIndex = 6;
+            this.cb_Puntualidad.Text = "Puntualidad";
+            this.cb_Puntualidad.UseVisualStyleBackColor = true;
+            // 
+            // cb_Asistencia
+            // 
+            this.cb_Asistencia.AutoSize = true;
+            this.cb_Asistencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_Asistencia.Location = new System.Drawing.Point(296, 263);
+            this.cb_Asistencia.Name = "cb_Asistencia";
+            this.cb_Asistencia.Size = new System.Drawing.Size(81, 19);
+            this.cb_Asistencia.TabIndex = 6;
+            this.cb_Asistencia.Text = "Asistencia";
+            this.cb_Asistencia.UseVisualStyleBackColor = true;
+            // 
+            // cb_Desempeno
+            // 
+            this.cb_Desempeno.AutoSize = true;
+            this.cb_Desempeno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_Desempeno.Location = new System.Drawing.Point(296, 288);
+            this.cb_Desempeno.Name = "cb_Desempeno";
+            this.cb_Desempeno.Size = new System.Drawing.Size(94, 19);
+            this.cb_Desempeno.TabIndex = 6;
+            this.cb_Desempeno.Text = "Desempeño";
+            this.cb_Desempeno.UseVisualStyleBackColor = true;
+            // 
+            // lb_Atributos
+            // 
+            this.lb_Atributos.AutoSize = true;
+            this.lb_Atributos.Location = new System.Drawing.Point(293, 212);
+            this.lb_Atributos.Name = "lb_Atributos";
+            this.lb_Atributos.Size = new System.Drawing.Size(48, 13);
+            this.lb_Atributos.TabIndex = 7;
+            this.lb_Atributos.Text = "Atributos";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 365);
+            this.Controls.Add(this.lb_Atributos);
+            this.Controls.Add(this.cb_Desempeno);
+            this.Controls.Add(this.cb_Asistencia);
+            this.Controls.Add(this.cb_Puntualidad);
+            this.Controls.Add(this.lb_Horarios);
+            this.Controls.Add(this.lb_Empleados);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.dataGrid1);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.bt_Abrir);
@@ -83,7 +178,10 @@
             this.Text = "PreNomina";
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -93,6 +191,14 @@
         private System.Windows.Forms.Button bt_Abrir;
         private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.DataGridView dataGrid1;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tsb_Abrir;
+        private System.Windows.Forms.Label lb_Empleados;
+        private System.Windows.Forms.Label lb_Horarios;
+        private System.Windows.Forms.CheckBox cb_Puntualidad;
+        private System.Windows.Forms.CheckBox cb_Asistencia;
+        private System.Windows.Forms.CheckBox cb_Desempeno;
+        private System.Windows.Forms.Label lb_Atributos;
     }
 }
 

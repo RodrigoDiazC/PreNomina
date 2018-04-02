@@ -26,7 +26,7 @@ namespace TimeChecker
         }
 
         // Abre PDF
-        private void bt_Abrir_Click(object sender, EventArgs e)
+        private void tsb_Abrir_Click(object sender, EventArgs e)
         {
             // Abre archivo PDF
             openFileDialog.InitialDirectory = @"C:\";
@@ -80,21 +80,23 @@ namespace TimeChecker
 
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
-            dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
+            //dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
 
+            /*
             foreach (TiemposDia t in empleados[0].Dias)
             {
                 dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(double)));
             }
+            */
 
-            dt.Columns.Add(new DataColumn("TOT", typeof(double)));
-            dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
-            dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
-            dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
+            //dt.Columns.Add(new DataColumn("TOT", typeof(double)));
+            //dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
+            //dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
+            //dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
 
             // Propiedades de lectura escritura para cada columna
             dt.Columns["ID"].ReadOnly = true;
-            dt.Columns["TOT"].ReadOnly = true;
+            //dt.Columns["TOT"].ReadOnly = true;
 
             // llena la ingormacion -------------------------------------------------------
             int i = 0, k = 0;
@@ -107,23 +109,25 @@ namespace TimeChecker
                 // Nombre del empleado
                 dr[k++] = e.Nombre;
                 // Departamento
-                dr[k++] = "Ingenieria";
+                //dr[k++] = "Ingenieria";
 
+                /*
                 foreach (TiemposDia t in e.Dias)
                 {
                     // Tiempo de retardo en cada día
                     dr[k++] = Math.Round(e.getRetardoDia(horasL, i).TotalMinutes, 0);
                     i++;
                 }
+                */
 
                 // Columna TOT
-                dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
+                // dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
                 // Columna Puntualidad
-                dr[k++] = e.Puntualidad;
+                //dr[k++] = e.Puntualidad;
                 // Asistencia
-                dr[k++] = e.Asistencia;
+                //dr[k++] = e.Asistencia;
                 // Bono (Se asigna manualmente)
-                dr[k++] = false;
+                //dr[k++] = false;
                 // Añade fila
                 dt.Rows.Add(dr);
                 // Resetea contadores
@@ -134,9 +138,9 @@ namespace TimeChecker
             // Envía datos a control
             this.dataGrid.DataSource = dt;
             // Inmoviliza columna de nombre
-            this.dataGrid.Columns["Nombre del empleado"].Frozen = true;
+            // this.dataGrid.Columns["Nombre del empleado"].Frozen = true;
             // Resalta las filas sin asistencia, puntualidad
-            highlightTable();
+            // highlightTable();
 
         }
         private void highlightTable()
@@ -194,92 +198,102 @@ namespace TimeChecker
         // Despliega información del usuario
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            // Elimina la información
+            dataGrid1.DataSource = null;
+            // Obtiene ID del empleado
+            int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
+            // Tamaño de celda automático
+            this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+            foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+            {
+                fillTablaRegistros(em);
+                setPAD(em);
+            }
+        }
+
+        // Tabla de detalle de registros
+        private void fillTablaRegistros(Empleado em)
+        {
             try
             {
-                // Elimina la información
-                dataGrid1.DataSource = null;
-
+                //-------------------------------------------------- TABLA
                 // ------------------------- Obtiene la información del empleado seleccionado y la despliega en datagrif
-                // Obtiene ID del empleado
-                int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
-
-                // Tamaño de celda automático
-                this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-
                 // Genera los headers de los días dinamicamente -------------------------------------------------------
                 DataTable dt = new DataTable();
 
                 dt.Columns.Add(new DataColumn("Acceso", typeof(string)));
 
-                foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+                foreach (TiemposDia t in em.Dias)
                 {
-                    foreach (TiemposDia t in em.Dias)
-                    {
-                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
-                    }
+                    dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
                 }
 
                 // Propiedades de lectura escritura para cada columna
                 dt.Columns[0].ReadOnly = true;
 
-                // LLena la tabla de informacion --------------------------------------------------------------------------------
-                foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+                DataRow drEntrada1 = dt.NewRow();
+                DataRow drSalida1 = dt.NewRow();
+                DataRow drEntrada2 = dt.NewRow();
+                DataRow drSalida2 = dt.NewRow();
+
+                drEntrada1[0] = "Entrada 1";
+
+                for (int i = 0; i < em.Dias.Count; i++)
                 {
-                    DataRow drEntrada1 = dt.NewRow();
-                    DataRow drSalida1 = dt.NewRow();
-                    DataRow drEntrada2 = dt.NewRow();
-                    DataRow drSalida2 = dt.NewRow();
-
-                    drEntrada1[0] = "Entrada 1";
-
-                    for (int i = 0; i < em.Dias.Count; i++)
-                    {
-                        if (em.Dias[i].entrada1.status == "NOREGISTRO") drEntrada1[i + 1] = TimeSpan.Parse("00:00");
-                        else drEntrada1[i + 1] = em.Dias[i].entrada1.Hora.TimeOfDay;
-                    }
-
-                    drSalida1[0] = "Salida 1";
-
-                    for (int i = 0; i < em.Dias.Count; i++)
-                    {
-                        if (em.Dias[i].salida1.status == "NOREGISTRO") drSalida1[i + 1] = TimeSpan.Parse("00:00");
-                        else drSalida1[i + 1] = em.Dias[i].salida1.Hora.TimeOfDay;
-                    }
-
-                    drEntrada2[0] = "Entrada 2";
-
-                    for (int i = 0; i < em.Dias.Count; i++)
-                    {
-                        if (em.Dias[i].entrada2.status == "NOREGISTRO") drEntrada2[i + 1] = TimeSpan.Parse("00:00");
-                        else drEntrada2[i + 1] = em.Dias[i].entrada2.Hora.TimeOfDay;
-                    }
-
-                    drSalida2[0] = "Salida 2";
-
-                    for (int i = 0; i < em.Dias.Count; i++)
-                    {
-                        if (em.Dias[i].salida2.status == "NOREGISTRO") drSalida2[i + 1] = TimeSpan.Parse("00:00");
-                        else drSalida2[i + 1] = em.Dias[i].salida2.Hora.TimeOfDay;
-                    }
-
-                    dt.Rows.Add(drEntrada1);
-                    dt.Rows.Add(drSalida1);
-                    dt.Rows.Add(drEntrada2);
-                    dt.Rows.Add(drSalida2);
+                    if (em.Dias[i].entrada1.status == "NOREGISTRO") drEntrada1[i + 1] = TimeSpan.Parse("00:00");
+                    else drEntrada1[i + 1] = em.Dias[i].entrada1.Hora.TimeOfDay;
                 }
+
+                drSalida1[0] = "Salida 1";
+
+                for (int i = 0; i < em.Dias.Count; i++)
+                {
+                    if (em.Dias[i].salida1.status == "NOREGISTRO") drSalida1[i + 1] = TimeSpan.Parse("00:00");
+                    else drSalida1[i + 1] = em.Dias[i].salida1.Hora.TimeOfDay;
+                }
+
+                drEntrada2[0] = "Entrada 2";
+
+                for (int i = 0; i < em.Dias.Count; i++)
+                {
+                    if (em.Dias[i].entrada2.status == "NOREGISTRO") drEntrada2[i + 1] = TimeSpan.Parse("00:00");
+                    else drEntrada2[i + 1] = em.Dias[i].entrada2.Hora.TimeOfDay;
+                }
+
+                drSalida2[0] = "Salida 2";
+
+                for (int i = 0; i < em.Dias.Count; i++)
+                {
+                    if (em.Dias[i].salida2.status == "NOREGISTRO") drSalida2[i + 1] = TimeSpan.Parse("00:00");
+                    else drSalida2[i + 1] = em.Dias[i].salida2.Hora.TimeOfDay;
+                }
+
+                dt.Rows.Add(drEntrada1);
+                dt.Rows.Add(drSalida1);
+                dt.Rows.Add(drEntrada2);
+                dt.Rows.Add(drSalida2);
+
 
                 // Envía datos a control
                 this.dataGrid1.DataSource = dt;
                 // Inmoviliza columna de nombre
                 this.dataGrid1.Columns[0].Frozen = true;
-                // Resalta las filas sin asistencia, puntualidad
-                highlightTable();
+
             }
             catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
             {
 
             }
-            
+
+        }
+        
+        //Setea atributos de puntualidad, asistencia y desempeño
+        private void setPAD(Empleado em)
+        {
+            this.cb_Asistencia.Checked = em.Asistencia;
+            this.cb_Puntualidad.Checked = em.Puntualidad;
+            this.cb_Desempeno.Checked = em.Desempeno;
         }
     }
 }
