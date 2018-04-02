@@ -15,6 +15,7 @@ namespace TimeChecker
         public Acceso salida1 { get; set; }
         public Acceso entrada2 { get; set; }
         public Acceso salida2 { get; set; }
+        public int status = 0;
 
         // Constructor
         public TiemposDia(DateTime day, Acceso ent1, Acceso sal1, Acceso ent2, Acceso sal2)
