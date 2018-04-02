@@ -56,87 +56,6 @@ namespace TimeChecker
             dataGrid1.DataSource = null;
         }
 
-        // Herramientas
-        private static string ExtractTextFromPdf(string path)
-        {
-            using (PdfReader reader = new PdfReader(path))
-            {
-                StringBuilder text = new StringBuilder();
-
-                for (int i = 1; i <= reader.NumberOfPages; i++)
-                {
-                    text.Append(PdfTextExtractor.GetTextFromPage(reader, i));
-                }
-
-                return text.ToString();
-            }
-        }
-        private void generateTable(List<Empleado> empleados)
-        {
-            // Tamaño de celda automático
-            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-
-            // Genera los headers dinamicamente -------------------------------------------------------
-            DataTable dt = new DataTable();
-
-            dt.Columns.Add(new DataColumn("ID", typeof(int)));
-            dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
-
-            // Propiedades de lectura escritura para cada columna
-            dt.Columns["ID"].ReadOnly = true;
-
-            // llena la ingormacion -------------------------------------------------------
-            int i = 0, k = 0;
-
-            foreach (Empleado e in empleados)
-            {
-                // ID
-                DataRow dr = dt.NewRow();
-                dr[k++] = e.ID;
-                dr[k++] = e.Nombre;
-                dt.Rows.Add(dr);
-                i = 0;
-                k = 0;
-            }
-
-            // Envía datos a control
-            this.dataGrid.DataSource = dt;
-
-        }
-        private void highlightTable()
-        {
-    
-            for (int i = 0; i < this.dataGrid1.Rows.Count; i++)
-            {
-                for (int j = 1; j < this.dataGrid1.Columns.Count; j++)
-                {
-
-                    TimeSpan check = new TimeSpan();
-            
-                    switch (i)
-                    {
-                        case 0:
-                            check = horasL.entrada1.TimeOfDay;
-                            break;
-                        case 1:
-                            continue;
-                        case 2:
-                            check = horasL.entrada2.TimeOfDay;
-                            break;
-                        case 3:
-                            continue;
-                    }
-
-                    if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value > check)
-                    {
-                        this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.Salmon;
-                    }
-                }
-
-            }
-
-        }
-
         // Despliega información del usuario
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -229,8 +148,6 @@ namespace TimeChecker
                 this.dataGrid1.DataSource = dt;
                 // Inmoviliza columna de nombre
                 this.dataGrid1.Columns[0].Frozen = true;
-                // Resalta
-                highlightTable();
             }
             catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
             {
@@ -254,5 +171,123 @@ namespace TimeChecker
 
 
         }
+
+
+        // Herramientas
+        private static string ExtractTextFromPdf(string path)
+        {
+            using (PdfReader reader = new PdfReader(path))
+            {
+                StringBuilder text = new StringBuilder();
+
+                for (int i = 1; i <= reader.NumberOfPages; i++)
+                {
+                    text.Append(PdfTextExtractor.GetTextFromPage(reader, i));
+                }
+
+                return text.ToString();
+            }
+        }
+        private void generateTable(List<Empleado> empleados)
+        {
+            // Tamaño de celda automático
+            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+            // Genera los headers dinamicamente -------------------------------------------------------
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add(new DataColumn("ID", typeof(int)));
+            dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
+
+            // Propiedades de lectura escritura para cada columna
+            dt.Columns["ID"].ReadOnly = true;
+
+            // llena la ingormacion -------------------------------------------------------
+            int i = 0, k = 0;
+
+            foreach (Empleado e in empleados)
+            {
+                // ID
+                DataRow dr = dt.NewRow();
+                dr[k++] = e.ID;
+                dr[k++] = e.Nombre;
+                dt.Rows.Add(dr);
+                i = 0;
+                k = 0;
+            }
+
+            // Envía datos a control
+            this.dataGrid.DataSource = dt;
+
+        }
+        private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente
+        {
+
+            for (int i = 0; i < this.dataGrid1.Rows.Count; i++)
+            {
+                for (int j = 1; j < this.dataGrid1.Columns.Count; j++)
+                {
+                    TimeSpan check = new TimeSpan();
+
+                    switch (i)
+                    {
+                        case 0:
+                            check = horasL.entrada1.TimeOfDay;
+                            break;
+                        case 1:
+                            check = horasL.salida1.TimeOfDay;
+                            break;
+                        case 2:
+                            check = horasL.entrada2.TimeOfDay;
+                            break;
+                        case 3:
+                            check = horasL.salida2.TimeOfDay;
+                            break;
+                    }
+
+                    // Modos -----------------------------------------------------------------------
+
+                    if ((mode == 1) && (i == 0 || i == 2)) // Retardo
+                    {
+                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value > check)
+                        {
+                            if(clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                            else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.Salmon;
+                        }
+                    }
+
+                    if ((mode == 2) && (i == 1 || i == 3)) // Anticipo
+                    {
+                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value < check)
+                        {
+                            if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                            else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.MediumPurple;
+                        }
+                    }
+
+                    if ((mode == 3) && (i == 1 || i == 3)) // Excedente
+                    {
+                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value > check)
+                        {
+                            if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                            else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
+                        }
+                    }
+                }
+            }
+        }
+        private void cb_Retardos_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightTable(1, !this.cb_Retardos.Checked);
+        }
+        private void cb_Anticipo_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightTable(2, !this.cb_Anticipo.Checked);
+        }
+        private void cb_Excedente_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightTable(3, !this.cb_Excedente.Checked);
+        }
+
     }
 }
