@@ -226,7 +226,15 @@ namespace TimeChecker
 
                 foreach (TiemposDia t in em.Dias)
                 {
-                    dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
+                    try
+                    {
+                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
+                    }
+                    catch (System.Data.DuplicateNameException e)
+                    {
+                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString()+ " (repetido)", typeof(TimeSpan)));
+
+                    }
                 }
 
                 // Propiedades de lectura escritura para cada columna
@@ -287,7 +295,7 @@ namespace TimeChecker
             }
 
         }
-        
+
         //Setea atributos de puntualidad, asistencia y desempeño
         private void setPAD(Empleado em)
         {
