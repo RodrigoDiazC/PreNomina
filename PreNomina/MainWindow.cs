@@ -101,19 +101,42 @@ namespace TimeChecker
 
             // Envía datos a control
             this.dataGrid.DataSource = dt;
-         
+
         }
         private void highlightTable()
         {
-            // Resalta las filas sin asistencia, puntualidad
-            foreach (DataGridViewRow row in this.dataGrid.Rows)
+    
+            for (int i = 0; i < this.dataGrid1.Rows.Count; i++)
             {
-                if ((bool)row.Cells["Puntualidad"].Value == false || (bool)row.Cells["Asistencia"].Value == false)
+                for (int j = 1; j < this.dataGrid1.Columns.Count; j++)
                 {
-                    row.DefaultCellStyle.BackColor = Color.LightSalmon;
+
+                    TimeSpan check = new TimeSpan();
+            
+                    switch (i)
+                    {
+                        case 0:
+                            check = horasL.entrada1.TimeOfDay;
+                            break;
+                        case 1:
+                            continue;
+                        case 2:
+                            check = horasL.entrada2.TimeOfDay;
+                            break;
+                        case 3:
+                            continue;
+                    }
+
+                    if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value > check)
+                    {
+                        this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.Salmon;
+                    }
                 }
+
             }
+
         }
+
         // Modificar empleados y volver a leer informacion ante cambios en la tabla
         private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -147,11 +170,6 @@ namespace TimeChecker
             // Carga los valores modificados
             generateTable(gEmpleados);
             // Resalta informacion
-            highlightTable();
-        }
-        // Vuelve a resaltar la información 
-        private void dataGrid_Sorted(object sender, EventArgs e)
-        {
             highlightTable();
         }
 
@@ -192,7 +210,7 @@ namespace TimeChecker
                     }
                     catch (System.Data.DuplicateNameException e)
                     {
-                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString()+ " (repetido)", typeof(TimeSpan)));
+                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString() + " (repetido)", typeof(TimeSpan)));
 
                     }
                 }
@@ -247,7 +265,8 @@ namespace TimeChecker
                 this.dataGrid1.DataSource = dt;
                 // Inmoviliza columna de nombre
                 this.dataGrid1.Columns[0].Frozen = true;
-
+                // Resalta
+                highlightTable();
             }
             catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
             {
@@ -268,10 +287,7 @@ namespace TimeChecker
         // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria
         private void dataGrid1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
-            {
 
-            }
 
         }
     }

@@ -69,7 +69,6 @@
             this.dataGrid.TabIndex = 1;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             this.dataGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellValueChanged);
-            this.dataGrid.Sorted += new System.EventHandler(this.dataGrid_Sorted);
             // 
             // dataGrid1
             // 
