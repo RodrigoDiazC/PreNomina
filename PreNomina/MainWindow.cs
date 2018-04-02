@@ -137,42 +137,6 @@ namespace TimeChecker
 
         }
 
-        // Modificar empleados y volver a leer informacion ante cambios en la tabla
-        private void dataGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            // Obtiene ID del empleado
-            int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
-
-            // Modifica propiedad del empleado
-            switch (this.dataGrid.Columns[e.ColumnIndex].Name)
-            {
-                case "Nombre del empleado":
-                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Nombre = (string)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                    break;
-
-                case "Puntualidad":
-                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Puntualidad = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                    break;
-
-                case "Asistencia":
-                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Asistencia = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                    break;
-
-                case "Desempeño":
-                    foreach (Empleado em in gEmpleados.Where(x => x.ID == ID)) em.Desempeno = (bool)this.dataGrid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
-                    break;
-
-                default:
-                    MessageBox.Show("No se puede cambiar esta propiedad. Intente cambiarla en la vista detallada.");
-                    break;
-            }
-
-            // Carga los valores modificados
-            generateTable(gEmpleados);
-            // Resalta informacion
-            highlightTable();
-        }
-
         // Despliega información del usuario
         private void dataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
