@@ -219,10 +219,38 @@ namespace TimeChecker
         }
         private string[] groupDias(string[] lista)
         {
+
+            int i = 0, k = 0;
+            string[] result = { };
+
+            // Borra información innecesaria
             var list = new List<string>(lista);
             list.RemoveAll(basuraEnLista);
 
-            return list.ToArray();
+            string perro = string.Join("", list);
+
+            foreach(char c in perro)
+            {
+                if (c == '/') i++;
+            }
+
+            i = i / 2;
+
+            string[] dias = new string[i];
+
+            // Agrupa un dia por renglon
+            for (int j = 0; j < i; j++)
+            {
+                do
+                {
+                    dias[j] += list[k] + '\n';
+                    k++;
+                    if (k >= list.Count) break;
+
+                } while (list[k][2] != '/');
+            }
+
+            return dias;
         }
         private static bool basuraEnLista(string v)
         {
