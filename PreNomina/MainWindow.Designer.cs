@@ -52,12 +52,23 @@
             this.lb_TotRet = new System.Windows.Forms.Label();
             this.lb_TotExc = new System.Windows.Forms.Label();
             this.tb_Acceso = new System.Windows.Forms.TextBox();
-            this.lb_Acceso = new System.Windows.Forms.Label();
+            this.lb_Sta = new System.Windows.Forms.Label();
+            this.lb_Status = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_Observaciones = new System.Windows.Forms.TextBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.rb_Asistencia = new System.Windows.Forms.RadioButton();
+            this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
+            this.rb_Permiso = new System.Windows.Forms.RadioButton();
+            this.rb_Falta = new System.Windows.Forms.RadioButton();
+            this.rb_Vacaciones = new System.Windows.Forms.RadioButton();
+            this.rb_Incapacidad = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -241,14 +252,17 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.lb_Acceso);
+            this.groupBox2.Controls.Add(this.tb_Observaciones);
+            this.groupBox2.Controls.Add(this.lb_Status);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.lb_Sta);
             this.groupBox2.Controls.Add(this.tb_Acceso);
             this.groupBox2.Location = new System.Drawing.Point(598, 179);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(374, 174);
+            this.groupBox2.Size = new System.Drawing.Size(374, 77);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Info de selección";
+            this.groupBox2.Text = "Info de Registro";
             // 
             // label1
             // 
@@ -290,24 +304,132 @@
             // 
             // tb_Acceso
             // 
-            this.tb_Acceso.Location = new System.Drawing.Point(6, 46);
+            this.tb_Acceso.Location = new System.Drawing.Point(6, 41);
             this.tb_Acceso.Name = "tb_Acceso";
-            this.tb_Acceso.Size = new System.Drawing.Size(119, 20);
+            this.tb_Acceso.Size = new System.Drawing.Size(108, 20);
             this.tb_Acceso.TabIndex = 8;
             // 
-            // lb_Acceso
+            // lb_Sta
             // 
-            this.lb_Acceso.AutoSize = true;
-            this.lb_Acceso.Location = new System.Drawing.Point(6, 26);
-            this.lb_Acceso.Name = "lb_Acceso";
-            this.lb_Acceso.Size = new System.Drawing.Size(0, 13);
-            this.lb_Acceso.TabIndex = 12;
+            this.lb_Sta.AutoSize = true;
+            this.lb_Sta.Location = new System.Drawing.Point(3, 21);
+            this.lb_Sta.Name = "lb_Sta";
+            this.lb_Sta.Size = new System.Drawing.Size(40, 13);
+            this.lb_Sta.TabIndex = 12;
+            this.lb_Sta.Text = "Status:";
+            // 
+            // lb_Status
+            // 
+            this.lb_Status.AutoSize = true;
+            this.lb_Status.Location = new System.Drawing.Point(49, 21);
+            this.lb_Status.Name = "lb_Status";
+            this.lb_Status.Size = new System.Drawing.Size(0, 13);
+            this.lb_Status.TabIndex = 12;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(139, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(81, 13);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Observaciones:";
+            // 
+            // tb_Observaciones
+            // 
+            this.tb_Observaciones.Location = new System.Drawing.Point(142, 41);
+            this.tb_Observaciones.Name = "tb_Observaciones";
+            this.tb_Observaciones.Size = new System.Drawing.Size(226, 20);
+            this.tb_Observaciones.TabIndex = 13;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.rb_Incapacidad);
+            this.groupBox4.Controls.Add(this.rb_Falta);
+            this.groupBox4.Controls.Add(this.rb_Vacaciones);
+            this.groupBox4.Controls.Add(this.rb_Permiso);
+            this.groupBox4.Controls.Add(this.rb_TrabajoF);
+            this.groupBox4.Controls.Add(this.rb_Asistencia);
+            this.groupBox4.Location = new System.Drawing.Point(598, 260);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(284, 93);
+            this.groupBox4.TabIndex = 14;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Info de Día";
+            this.groupBox4.Validated += new System.EventHandler(this.groupBox4_Validated);
+            // 
+            // rb_Asistencia
+            // 
+            this.rb_Asistencia.AutoSize = true;
+            this.rb_Asistencia.Location = new System.Drawing.Point(12, 30);
+            this.rb_Asistencia.Name = "rb_Asistencia";
+            this.rb_Asistencia.Size = new System.Drawing.Size(73, 17);
+            this.rb_Asistencia.TabIndex = 13;
+            this.rb_Asistencia.TabStop = true;
+            this.rb_Asistencia.Text = "Asistencia";
+            this.rb_Asistencia.UseVisualStyleBackColor = true;
+            // 
+            // rb_TrabajoF
+            // 
+            this.rb_TrabajoF.AutoSize = true;
+            this.rb_TrabajoF.Location = new System.Drawing.Point(12, 53);
+            this.rb_TrabajoF.Name = "rb_TrabajoF";
+            this.rb_TrabajoF.Size = new System.Drawing.Size(103, 17);
+            this.rb_TrabajoF.TabIndex = 13;
+            this.rb_TrabajoF.TabStop = true;
+            this.rb_TrabajoF.Text = "Trabajo Foraneo";
+            this.rb_TrabajoF.UseVisualStyleBackColor = true;
+            // 
+            // rb_Permiso
+            // 
+            this.rb_Permiso.AutoSize = true;
+            this.rb_Permiso.Location = new System.Drawing.Point(208, 30);
+            this.rb_Permiso.Name = "rb_Permiso";
+            this.rb_Permiso.Size = new System.Drawing.Size(62, 17);
+            this.rb_Permiso.TabIndex = 13;
+            this.rb_Permiso.TabStop = true;
+            this.rb_Permiso.Text = "Permiso";
+            this.rb_Permiso.UseVisualStyleBackColor = true;
+            // 
+            // rb_Falta
+            // 
+            this.rb_Falta.AutoSize = true;
+            this.rb_Falta.Location = new System.Drawing.Point(208, 52);
+            this.rb_Falta.Name = "rb_Falta";
+            this.rb_Falta.Size = new System.Drawing.Size(48, 17);
+            this.rb_Falta.TabIndex = 13;
+            this.rb_Falta.TabStop = true;
+            this.rb_Falta.Text = "Falta";
+            this.rb_Falta.UseVisualStyleBackColor = true;
+            // 
+            // rb_Vacaciones
+            // 
+            this.rb_Vacaciones.AutoSize = true;
+            this.rb_Vacaciones.Location = new System.Drawing.Point(121, 30);
+            this.rb_Vacaciones.Name = "rb_Vacaciones";
+            this.rb_Vacaciones.Size = new System.Drawing.Size(81, 17);
+            this.rb_Vacaciones.TabIndex = 13;
+            this.rb_Vacaciones.TabStop = true;
+            this.rb_Vacaciones.Text = "Vacaciones";
+            this.rb_Vacaciones.UseVisualStyleBackColor = true;
+            // 
+            // rb_Incapacidad
+            // 
+            this.rb_Incapacidad.AutoSize = true;
+            this.rb_Incapacidad.Location = new System.Drawing.Point(121, 53);
+            this.rb_Incapacidad.Name = "rb_Incapacidad";
+            this.rb_Incapacidad.Size = new System.Drawing.Size(84, 17);
+            this.rb_Incapacidad.TabIndex = 13;
+            this.rb_Incapacidad.TabStop = true;
+            this.rb_Incapacidad.Text = "Incapacidad";
+            this.rb_Incapacidad.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 365);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.cb_Excedente);
@@ -329,6 +451,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -358,8 +482,18 @@
         private System.Windows.Forms.Label lb_TotRet;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lb_Acceso;
+        private System.Windows.Forms.Label lb_Sta;
         private System.Windows.Forms.TextBox tb_Acceso;
+        private System.Windows.Forms.Label lb_Status;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tb_Observaciones;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.RadioButton rb_Asistencia;
+        private System.Windows.Forms.RadioButton rb_Incapacidad;
+        private System.Windows.Forms.RadioButton rb_Falta;
+        private System.Windows.Forms.RadioButton rb_Vacaciones;
+        private System.Windows.Forms.RadioButton rb_Permiso;
+        private System.Windows.Forms.RadioButton rb_TrabajoF;
     }
 }
 

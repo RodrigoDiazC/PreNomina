@@ -19,6 +19,7 @@ namespace TimeChecker
         Analizador analizador = new Analizador();
         HorasLaborales horasL = new HorasLaborales();
         int currentEmpleadoID = 1;
+        int currentDay = 1;
 
         public Form1()
         {
@@ -156,7 +157,7 @@ namespace TimeChecker
 
         }
 
-        //Setea atributos de puntualidad, asistencia y desempeño
+        //Setea atributos del empleado en la interfaz
         private void setEmpleadoPropiedadesUI(Empleado em)
         {
             this.cb_Asistencia.Checked = em.Asistencia;
@@ -167,10 +168,73 @@ namespace TimeChecker
             this.lb_TotExc.Text = ((int)em.getExtraTotal(horasL).TotalMinutes).ToString();
         }
 
+        //Setea atributos de la casilla seleccionada
+        private void setEmpleadoTimeUI(Empleado em, int diaIndx, int acceso) //acceso 0 Entrada1 1 Salida1 2 Entrada2 3 Salida2
+        {
+            // Informacion del registro
+            switch (acceso)
+            {
+                case 0:
+                    this.lb_Status.Text = em.Dias[diaIndx].entrada1.status;
+                    this.tb_Observaciones.Text = em.Dias[diaIndx].entrada1.observaciones;
+                    this.tb_Acceso.Text = em.Dias[diaIndx].entrada1.Hora.ToShortTimeString();
+                    break;
+                case 1:
+                    this.lb_Status.Text = em.Dias[diaIndx].salida1.status;
+                    this.tb_Observaciones.Text = em.Dias[diaIndx].salida1.observaciones;
+                    this.tb_Acceso.Text = em.Dias[diaIndx].salida1.Hora.ToShortTimeString();
+                    break;
+                case 2:
+                    this.lb_Status.Text = em.Dias[diaIndx].entrada2.status;
+                    this.tb_Observaciones.Text = em.Dias[diaIndx].entrada2.observaciones;
+                    this.tb_Acceso.Text = em.Dias[diaIndx].entrada2.Hora.ToShortTimeString();
+                    break;
+                case 3:
+                    this.lb_Status.Text = em.Dias[diaIndx].salida2.status;
+                    this.tb_Observaciones.Text = em.Dias[diaIndx].salida2.observaciones;
+                    this.tb_Acceso.Text = em.Dias[diaIndx].salida2.Hora.ToShortTimeString();
+                    break;
+            }
+
+            // Información del día
+            this.groupBox4.Text = "Información del día " + em.Dias[diaIndx].dia.ToLongDateString();
+
+            switch (em.Dias[diaIndx].status)
+            {
+                case "A":
+                    this.rb_Asistencia.Checked = true;
+                    break;
+                case "TF":
+                    this.rb_TrabajoF.Checked = true;
+                    break;
+                case "P":
+                    this.rb_Permiso.Checked = true;
+                    break;
+                case "F":
+                    this.rb_Falta.Checked = true;
+                    break;
+                case "V":
+                    this.rb_Vacaciones.Checked = true;
+                    break;
+                case "I":
+                    this.rb_Incapacidad.Checked = true;
+                    break;
+            }
+
+
+        }
+
+
+
+
         // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria
         private void dataGrid1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
+            {
+                this.currentDay = e.ColumnIndex;
+                setEmpleadoTimeUI(em, e.ColumnIndex - 1, e.RowIndex);
+            }
 
         }
 
@@ -253,7 +317,7 @@ namespace TimeChecker
                     {
                         if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value > check)
                         {
-                            if(clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                            if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
                             else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.Salmon;
                         }
                     }
@@ -291,5 +355,10 @@ namespace TimeChecker
             highlightTable(3, !this.cb_Excedente.Checked);
         }
 
+        private void groupBox4_Validated(object sender, EventArgs e)
+        {
+            GroupBox g = sender as GroupBox;
+            var a = from RadioButton r in g.Controls where r.Checked == true select r.Name;
+        }
     }
 }
