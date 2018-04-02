@@ -30,7 +30,7 @@ namespace TimeChecker
             // Extrae el nombre del empleado
             this.Nombre = tokens[0];
             // Elimina informacion no util
-            tokens = borrarBasura(tokens);
+            tokens = groupDias(tokens);
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
             // Obtiene si fue puntual
@@ -217,7 +217,7 @@ namespace TimeChecker
 
             return diasList;
         }
-        private string[] borrarBasura(string[] lista)
+        private string[] groupDias(string[] lista)
         {
             var list = new List<string>(lista);
             list.RemoveAll(basuraEnLista);
