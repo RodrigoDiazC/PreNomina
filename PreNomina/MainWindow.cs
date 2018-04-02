@@ -168,7 +168,7 @@ namespace TimeChecker
             foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
             {
                 fillTablaRegistros(em);
-                setPAD(em);
+                setEmpleadoPropiedadesUI(em);
             }
         }
 
@@ -257,11 +257,22 @@ namespace TimeChecker
         }
 
         //Setea atributos de puntualidad, asistencia y desempeño
-        private void setPAD(Empleado em)
+        private void setEmpleadoPropiedadesUI(Empleado em)
         {
             this.cb_Asistencia.Checked = em.Asistencia;
             this.cb_Puntualidad.Checked = em.Puntualidad;
             this.cb_Desempeno.Checked = em.Desempeno;
+            this.tb_NombreEmpleado.Text = em.Nombre;
+        }
+
+        // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria
+        private void dataGrid1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
+            {
+
+            }
+
         }
     }
 }

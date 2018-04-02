@@ -40,7 +40,8 @@
             this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
             this.cb_Asistencia = new System.Windows.Forms.CheckBox();
             this.cb_Desempeno = new System.Windows.Forms.CheckBox();
-            this.lb_Atributos = new System.Windows.Forms.Label();
+            this.tb_NombreEmpleado = new System.Windows.Forms.TextBox();
+            this.lb_Nombre = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -82,6 +83,7 @@
             this.dataGrid1.RowHeadersVisible = false;
             this.dataGrid1.Size = new System.Drawing.Size(676, 127);
             this.dataGrid1.TabIndex = 2;
+            this.dataGrid1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid1_CellClick);
             // 
             // toolStrip1
             // 
@@ -125,7 +127,7 @@
             // 
             this.cb_Puntualidad.AutoSize = true;
             this.cb_Puntualidad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Puntualidad.Location = new System.Drawing.Point(296, 238);
+            this.cb_Puntualidad.Location = new System.Drawing.Point(558, 334);
             this.cb_Puntualidad.Name = "cb_Puntualidad";
             this.cb_Puntualidad.Size = new System.Drawing.Size(92, 19);
             this.cb_Puntualidad.TabIndex = 6;
@@ -136,7 +138,7 @@
             // 
             this.cb_Asistencia.AutoSize = true;
             this.cb_Asistencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Asistencia.Location = new System.Drawing.Point(296, 263);
+            this.cb_Asistencia.Location = new System.Drawing.Point(656, 333);
             this.cb_Asistencia.Name = "cb_Asistencia";
             this.cb_Asistencia.Size = new System.Drawing.Size(81, 19);
             this.cb_Asistencia.TabIndex = 6;
@@ -147,28 +149,36 @@
             // 
             this.cb_Desempeno.AutoSize = true;
             this.cb_Desempeno.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Desempeno.Location = new System.Drawing.Point(296, 288);
+            this.cb_Desempeno.Location = new System.Drawing.Point(743, 334);
             this.cb_Desempeno.Name = "cb_Desempeno";
             this.cb_Desempeno.Size = new System.Drawing.Size(94, 19);
             this.cb_Desempeno.TabIndex = 6;
             this.cb_Desempeno.Text = "Desempeño";
             this.cb_Desempeno.UseVisualStyleBackColor = true;
             // 
-            // lb_Atributos
+            // tb_NombreEmpleado
             // 
-            this.lb_Atributos.AutoSize = true;
-            this.lb_Atributos.Location = new System.Drawing.Point(293, 212);
-            this.lb_Atributos.Name = "lb_Atributos";
-            this.lb_Atributos.Size = new System.Drawing.Size(48, 13);
-            this.lb_Atributos.TabIndex = 7;
-            this.lb_Atributos.Text = "Atributos";
+            this.tb_NombreEmpleado.Location = new System.Drawing.Point(297, 333);
+            this.tb_NombreEmpleado.Name = "tb_NombreEmpleado";
+            this.tb_NombreEmpleado.Size = new System.Drawing.Size(242, 20);
+            this.tb_NombreEmpleado.TabIndex = 8;
+            // 
+            // lb_Nombre
+            // 
+            this.lb_Nombre.AutoSize = true;
+            this.lb_Nombre.Location = new System.Drawing.Point(294, 317);
+            this.lb_Nombre.Name = "lb_Nombre";
+            this.lb_Nombre.Size = new System.Drawing.Size(47, 13);
+            this.lb_Nombre.TabIndex = 9;
+            this.lb_Nombre.Text = "Nombre:";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 365);
-            this.Controls.Add(this.lb_Atributos);
+            this.Controls.Add(this.lb_Nombre);
+            this.Controls.Add(this.tb_NombreEmpleado);
             this.Controls.Add(this.cb_Desempeno);
             this.Controls.Add(this.cb_Asistencia);
             this.Controls.Add(this.cb_Puntualidad);
@@ -202,7 +212,8 @@
         private System.Windows.Forms.CheckBox cb_Puntualidad;
         private System.Windows.Forms.CheckBox cb_Asistencia;
         private System.Windows.Forms.CheckBox cb_Desempeno;
-        private System.Windows.Forms.Label lb_Atributos;
+        private System.Windows.Forms.TextBox tb_NombreEmpleado;
+        private System.Windows.Forms.Label lb_Nombre;
     }
 }
 
