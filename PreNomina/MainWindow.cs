@@ -18,6 +18,7 @@ namespace TimeChecker
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
         HorasLaborales horasL = new HorasLaborales();
+        int currentEmpleadoID = 1;
 
         public Form1()
         {
@@ -80,23 +81,9 @@ namespace TimeChecker
 
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
-            //dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
-
-            /*
-            foreach (TiemposDia t in empleados[0].Dias)
-            {
-                dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(double)));
-            }
-            */
-
-            //dt.Columns.Add(new DataColumn("TOT", typeof(double)));
-            //dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
-            //dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
-            //dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
 
             // Propiedades de lectura escritura para cada columna
             dt.Columns["ID"].ReadOnly = true;
-            //dt.Columns["TOT"].ReadOnly = true;
 
             // llena la ingormacion -------------------------------------------------------
             int i = 0, k = 0;
@@ -106,42 +93,15 @@ namespace TimeChecker
                 // ID
                 DataRow dr = dt.NewRow();
                 dr[k++] = e.ID;
-                // Nombre del empleado
                 dr[k++] = e.Nombre;
-                // Departamento
-                //dr[k++] = "Ingenieria";
-
-                /*
-                foreach (TiemposDia t in e.Dias)
-                {
-                    // Tiempo de retardo en cada día
-                    dr[k++] = Math.Round(e.getRetardoDia(horasL, i).TotalMinutes, 0);
-                    i++;
-                }
-                */
-
-                // Columna TOT
-                // dr[k++] = Math.Round(e.getRetardoTotal(horasL).TotalMinutes, 0);
-                // Columna Puntualidad
-                //dr[k++] = e.Puntualidad;
-                // Asistencia
-                //dr[k++] = e.Asistencia;
-                // Bono (Se asigna manualmente)
-                //dr[k++] = false;
-                // Añade fila
                 dt.Rows.Add(dr);
-                // Resetea contadores
                 i = 0;
                 k = 0;
             }
 
             // Envía datos a control
             this.dataGrid.DataSource = dt;
-            // Inmoviliza columna de nombre
-            // this.dataGrid.Columns["Nombre del empleado"].Frozen = true;
-            // Resalta las filas sin asistencia, puntualidad
-            // highlightTable();
-
+         
         }
         private void highlightTable()
         {
@@ -201,11 +161,11 @@ namespace TimeChecker
             // Elimina la información
             dataGrid1.DataSource = null;
             // Obtiene ID del empleado
-            int ID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
+            this.currentEmpleadoID = (int)this.dataGrid.Rows[e.RowIndex].Cells[0].Value;
             // Tamaño de celda automático
             this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
-            foreach (Empleado em in gEmpleados.Where(x => x.ID == ID))
+            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
             {
                 fillTablaRegistros(em);
                 setPAD(em);
