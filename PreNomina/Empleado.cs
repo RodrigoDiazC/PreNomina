@@ -33,6 +33,7 @@ namespace TimeChecker
             tokens = groupDias(tokens);
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
+            Dias = borrarDiasDuplicados(Dias);
             // Obtiene si fue puntual
             Puntualidad = this.checkPuntualidad(horarioLaboral);
             // Obtiene asistencia
@@ -106,7 +107,6 @@ namespace TimeChecker
 
             return span;
         }
-
         public bool checkAsistencia()
         {
             int acc1 = 0, acc2 = 0;
@@ -285,6 +285,18 @@ namespace TimeChecker
 
             return match;
         }
+        private List<TiemposDia> borrarDiasDuplicados(List<TiemposDia> d)
+        {
+            //Borra dias duplicados producidos cuando un empleado no registra salida2
 
+            DateTime prevDia = DateTime.Parse("01/01/1970");
+           
+            for(int i = 0; i < d.Count; i++){
+                if (d[i].dia == prevDia) d.RemoveAt(i - 1);
+                prevDia = d[i].dia;
+            }
+
+            return d;
+        }
     }
 }
