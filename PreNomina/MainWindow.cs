@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
+using Microsoft.Office.Interop.Excel;
+
 
 namespace TimeChecker
 {
@@ -81,7 +85,7 @@ namespace TimeChecker
                 //-------------------------------------------------- TABLA
                 // ------------------------- Obtiene la información del empleado seleccionado y la despliega en datagrif
                 // Genera los headers de los días dinamicamente -------------------------------------------------------
-                DataTable dt = new DataTable();
+                System.Data.DataTable dt = new System.Data.DataTable();
 
                 dt.Columns.Add(new DataColumn("Acceso", typeof(string)));
 
@@ -261,7 +265,7 @@ namespace TimeChecker
             this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
             // Genera los headers dinamicamente -------------------------------------------------------
-            DataTable dt = new DataTable();
+            System.Data.DataTable dt = new System.Data.DataTable();
 
             dt.Columns.Add(new DataColumn("ID", typeof(int)));
             dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
@@ -363,27 +367,27 @@ namespace TimeChecker
                 switch (checkedButton.Name)
                 {
                     case "rb_Asistencia":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "A";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "A";
                         break;
 
                     case "rb_Falta":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "F";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "F";
                         break;
 
                     case "rb_Vacaciones":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "V";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "V";
                         break;
 
                     case "rb_Permiso":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "P";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "P";
                         break;
 
                     case "rb_TrabajoF":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "TF";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "TF";
                         break;
 
                     case "rb_Incapacidad":
-                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "I";
+                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "I";
                         break;
                 }
             
@@ -391,15 +395,110 @@ namespace TimeChecker
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
         {
-            this.gEmpleados[currentEmpleadoID - 1].Puntualidad = this.cb_Puntualidad.Checked;
+            this.gEmpleados[currentEmpleadoID].Puntualidad = this.cb_Puntualidad.Checked;
         }
         private void cb_Asistencia_CheckedChanged(object sender, EventArgs e)
         {
-            this.gEmpleados[currentEmpleadoID - 1].Asistencia = this.cb_Asistencia.Checked;
+            this.gEmpleados[currentEmpleadoID].Asistencia = this.cb_Asistencia.Checked;
         }
         private void cb_Desempeno_CheckedChanged(object sender, EventArgs e)
         {
-            this.gEmpleados[currentEmpleadoID - 1].Desempeno = this.cb_Desempeno.Checked;
+            this.gEmpleados[currentEmpleadoID].Desempeno = this.cb_Desempeno.Checked;
         }
+
+        private void tsb_Exportar_Click(object sender, EventArgs e)
+        {
+            // Generar el archivo
+
+            //---- Ruta del archivo plantilla
+            string rutaTemplate = Directory.GetCurrentDirectory() + "\\Template.xlsx";
+            string rutaFolder = Directory.GetCurrentDirectory() + "\\Test";
+            //--- Crea carpeta
+            Directory.CreateDirectory(rutaFolder);
+
+            //--- Nueva ruta del archivo
+            string rutaNueva = rutaFolder + "\\test.xls";
+
+            //--- Toolkit para Excel ----//
+            Workbook mWorkBook;
+            Sheets mWorkSheets;
+            Worksheet mWSheet1;
+            Microsoft.Office.Interop.Excel.Application oXL;
+
+            //--- Creando objeto y configurando parametros
+            oXL = new Microsoft.Office.Interop.Excel.Application();
+            oXL.Visible = true;    //Para que no abra la ventana de excel
+            oXL.DisplayAlerts = false;
+
+            //--- Abre el archivo
+            mWorkBook = oXL.Workbooks.Open(rutaTemplate, 0, false, 5, "", "", false, XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+
+            //--- Get all the sheets in the workbook
+            mWorkSheets = mWorkBook.Worksheets;
+
+            //--- Get the allready exists sheet
+            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Hoja1");
+
+            //------------------------------------------------------------------ Pone los datos estáticos
+            // Poner Mes
+            // Poner Rango
+            // Poner días
+
+            // Pone la cantidad de filas de acuerdo a la cantidad de empleados
+            for(int i = 0; i < this.gEmpleados.Count - 2; i++)
+            {
+                Range line = (Range)mWSheet1.Rows[6];
+                line.Insert();
+            }
+
+            // Nombres de los empleados
+            int k = 0;
+            foreach(Empleado em in this.gEmpleados)
+            {
+                mWSheet1.Cells[2][5 + (k++)]= em.Nombre;
+            }
+
+            int prevMax = 0;
+            int emID = 0;
+            //Los días
+            foreach(Empleado em in this.gEmpleados)
+            {
+                if (em.Dias.Count > prevMax)
+                {
+                    prevMax = em.Dias.Count;
+                    emID    = em.ID; 
+                }
+            }
+
+
+
+            //--- Guarda el nuevo reporte
+            try
+            {
+                mWorkBook.SaveAs(rutaNueva, XlFileFormat.xlWorkbookNormal,
+                    Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
+                    Missing.Value, Missing.Value, Missing.Value,
+                    Missing.Value, Missing.Value);
+                MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                MessageBox.Show("Por favor cierre el documento y vuelva a generar el reporte.\nError " + ex.Message.ToString());
+            }
+
+            mWorkBook.Close(Missing.Value, Missing.Value, Missing.Value);
+            mWSheet1 = null;
+            mWorkBook = null;
+            oXL.Quit();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+        }
+
     }
+
 }
+
+        

@@ -63,6 +63,7 @@
             this.rb_Permiso = new System.Windows.Forms.RadioButton();
             this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
             this.rb_Asistencia = new System.Windows.Forms.RadioButton();
+            this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -112,7 +113,8 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_Abrir});
+            this.tsb_Abrir,
+            this.tsb_Exportar});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(984, 25);
@@ -427,6 +429,17 @@
             this.rb_Asistencia.Text = "Asistencia";
             this.rb_Asistencia.UseVisualStyleBackColor = true;
             // 
+            // tsb_Exportar
+            // 
+            this.tsb_Exportar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_Exportar.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Exportar.Image")));
+            this.tsb_Exportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Exportar.Name = "tsb_Exportar";
+            this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
+            this.tsb_Exportar.Text = "Exportar a Excel";
+            this.tsb_Exportar.ToolTipText = "Exportar a Excel";
+            this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -497,6 +510,7 @@
         private System.Windows.Forms.RadioButton rb_Vacaciones;
         private System.Windows.Forms.RadioButton rb_Permiso;
         private System.Windows.Forms.RadioButton rb_TrabajoF;
+        private System.Windows.Forms.ToolStripButton tsb_Exportar;
     }
 }
 

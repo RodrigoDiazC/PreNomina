@@ -35,7 +35,7 @@ namespace TimeChecker
 
             for (int i = 1; i < tokens.Length; i++)
             {
-                empleados[i-1] = new Empleado(tokens[i], i ,horarioLaboral);
+                empleados[i-1] = new Empleado(tokens[i], i - 1 ,horarioLaboral);
             }
 
             return empleados.ToList();
