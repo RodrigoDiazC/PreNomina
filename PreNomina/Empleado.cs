@@ -166,6 +166,11 @@ namespace TimeChecker
             {
                 string[] grupoDia = tokens[i].Split('\n');
 
+                entrada1 = new Acceso();
+                salida1 = new Acceso();
+                entrada2 = new Acceso();
+                salida2 = new Acceso();
+
                 for (int j = 0; j < grupoDia.Length; j++)
                 {
                     // Separa elementos
@@ -225,9 +230,9 @@ namespace TimeChecker
                         }
 
                     }
-                    
-                    if (diaElementos.Contains("ENTRADA1") || diaElementos.Contains("ENTRADA"))    entrada1 = temp;
-                    else if (diaElementos.Contains("SALIDA1") || diaElementos.Contains("SALIDA"))  salida1 = temp;
+
+                    if (diaElementos.Contains("ENTRADA1") || diaElementos.Contains("ENTRADA")) entrada1 = temp;
+                    else if (diaElementos.Contains("SALIDA1") || diaElementos.Contains("SALIDA")) salida1 = temp;
                     else if (diaElementos.Contains("ENTRADA2")) entrada2 = temp;
                     else if (diaElementos.Contains("SALIDA2")) salida2 = temp;
                 }
@@ -290,8 +295,9 @@ namespace TimeChecker
             //Borra dias duplicados producidos cuando un empleado no registra salida2
 
             DateTime prevDia = DateTime.Parse("01/01/1970");
-           
-            for(int i = 0; i < d.Count; i++){
+
+            for (int i = 0; i < d.Count; i++)
+            {
                 if (d[i].dia == prevDia) d.RemoveAt(i - 1);
                 prevDia = d[i].dia;
             }
