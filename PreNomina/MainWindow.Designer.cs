@@ -46,23 +46,23 @@
             this.cb_Anticipo = new System.Windows.Forms.CheckBox();
             this.cb_Excedente = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lb_TotRet = new System.Windows.Forms.Label();
             this.lb_TotExc = new System.Windows.Forms.Label();
-            this.tb_Acceso = new System.Windows.Forms.TextBox();
-            this.lb_Sta = new System.Windows.Forms.Label();
+            this.lb_TotRet = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tb_Observaciones = new System.Windows.Forms.TextBox();
             this.lb_Status = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.tb_Observaciones = new System.Windows.Forms.TextBox();
+            this.lb_Sta = new System.Windows.Forms.Label();
+            this.tb_Acceso = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.rb_Asistencia = new System.Windows.Forms.RadioButton();
-            this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
-            this.rb_Permiso = new System.Windows.Forms.RadioButton();
+            this.rb_Incapacidad = new System.Windows.Forms.RadioButton();
             this.rb_Falta = new System.Windows.Forms.RadioButton();
             this.rb_Vacaciones = new System.Windows.Forms.RadioButton();
-            this.rb_Incapacidad = new System.Windows.Forms.RadioButton();
+            this.rb_Permiso = new System.Windows.Forms.RadioButton();
+            this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
+            this.rb_Asistencia = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -157,6 +157,7 @@
             this.cb_Puntualidad.TabIndex = 6;
             this.cb_Puntualidad.Text = "Puntualidad";
             this.cb_Puntualidad.UseVisualStyleBackColor = true;
+            this.cb_Puntualidad.CheckedChanged += new System.EventHandler(this.cb_Puntualidad_CheckedChanged);
             // 
             // cb_Asistencia
             // 
@@ -168,6 +169,7 @@
             this.cb_Asistencia.TabIndex = 6;
             this.cb_Asistencia.Text = "Asistencia";
             this.cb_Asistencia.UseVisualStyleBackColor = true;
+            this.cb_Asistencia.CheckedChanged += new System.EventHandler(this.cb_Asistencia_CheckedChanged);
             // 
             // cb_Desempeno
             // 
@@ -179,10 +181,11 @@
             this.cb_Desempeno.TabIndex = 6;
             this.cb_Desempeno.Text = "Desempeño";
             this.cb_Desempeno.UseVisualStyleBackColor = true;
+            this.cb_Desempeno.CheckedChanged += new System.EventHandler(this.cb_Desempeno_CheckedChanged);
             // 
             // tb_NombreEmpleado
             // 
-            this.tb_NombreEmpleado.Location = new System.Drawing.Point(6, 46);
+            this.tb_NombreEmpleado.Location = new System.Drawing.Point(6, 41);
             this.tb_NombreEmpleado.Name = "tb_NombreEmpleado";
             this.tb_NombreEmpleado.Size = new System.Drawing.Size(273, 20);
             this.tb_NombreEmpleado.TabIndex = 8;
@@ -190,7 +193,7 @@
             // lb_Nombre
             // 
             this.lb_Nombre.AutoSize = true;
-            this.lb_Nombre.Location = new System.Drawing.Point(6, 26);
+            this.lb_Nombre.Location = new System.Drawing.Point(6, 21);
             this.lb_Nombre.Name = "lb_Nombre";
             this.lb_Nombre.Size = new System.Drawing.Size(47, 13);
             this.lb_Nombre.TabIndex = 9;
@@ -250,6 +253,44 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info General";
             // 
+            // lb_TotExc
+            // 
+            this.lb_TotExc.AutoSize = true;
+            this.lb_TotExc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TotExc.Location = new System.Drawing.Point(238, 110);
+            this.lb_TotExc.Name = "lb_TotExc";
+            this.lb_TotExc.Size = new System.Drawing.Size(0, 15);
+            this.lb_TotExc.TabIndex = 11;
+            // 
+            // lb_TotRet
+            // 
+            this.lb_TotRet.AutoSize = true;
+            this.lb_TotRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_TotRet.Location = new System.Drawing.Point(238, 85);
+            this.lb_TotRet.Name = "lb_TotRet";
+            this.lb_TotRet.Size = new System.Drawing.Size(0, 15);
+            this.lb_TotRet.TabIndex = 11;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(144, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 15);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Tot. Exc. (min):";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(123, 85);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(109, 15);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Tot. Retardo (min):";
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.tb_Observaciones);
@@ -264,59 +305,12 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Info de Registro";
             // 
-            // label1
+            // tb_Observaciones
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(123, 85);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(109, 15);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Tot. Retardo (min):";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(144, 111);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 15);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Tot. Exc. (min):";
-            // 
-            // lb_TotRet
-            // 
-            this.lb_TotRet.AutoSize = true;
-            this.lb_TotRet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_TotRet.Location = new System.Drawing.Point(238, 85);
-            this.lb_TotRet.Name = "lb_TotRet";
-            this.lb_TotRet.Size = new System.Drawing.Size(0, 15);
-            this.lb_TotRet.TabIndex = 11;
-            // 
-            // lb_TotExc
-            // 
-            this.lb_TotExc.AutoSize = true;
-            this.lb_TotExc.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_TotExc.Location = new System.Drawing.Point(238, 110);
-            this.lb_TotExc.Name = "lb_TotExc";
-            this.lb_TotExc.Size = new System.Drawing.Size(0, 15);
-            this.lb_TotExc.TabIndex = 11;
-            // 
-            // tb_Acceso
-            // 
-            this.tb_Acceso.Location = new System.Drawing.Point(6, 41);
-            this.tb_Acceso.Name = "tb_Acceso";
-            this.tb_Acceso.Size = new System.Drawing.Size(108, 20);
-            this.tb_Acceso.TabIndex = 8;
-            // 
-            // lb_Sta
-            // 
-            this.lb_Sta.AutoSize = true;
-            this.lb_Sta.Location = new System.Drawing.Point(3, 21);
-            this.lb_Sta.Name = "lb_Sta";
-            this.lb_Sta.Size = new System.Drawing.Size(40, 13);
-            this.lb_Sta.TabIndex = 12;
-            this.lb_Sta.Text = "Status:";
+            this.tb_Observaciones.Location = new System.Drawing.Point(142, 41);
+            this.tb_Observaciones.Name = "tb_Observaciones";
+            this.tb_Observaciones.Size = new System.Drawing.Size(226, 20);
+            this.tb_Observaciones.TabIndex = 13;
             // 
             // lb_Status
             // 
@@ -335,12 +329,21 @@
             this.label3.TabIndex = 12;
             this.label3.Text = "Observaciones:";
             // 
-            // tb_Observaciones
+            // lb_Sta
             // 
-            this.tb_Observaciones.Location = new System.Drawing.Point(142, 41);
-            this.tb_Observaciones.Name = "tb_Observaciones";
-            this.tb_Observaciones.Size = new System.Drawing.Size(226, 20);
-            this.tb_Observaciones.TabIndex = 13;
+            this.lb_Sta.AutoSize = true;
+            this.lb_Sta.Location = new System.Drawing.Point(3, 21);
+            this.lb_Sta.Name = "lb_Sta";
+            this.lb_Sta.Size = new System.Drawing.Size(40, 13);
+            this.lb_Sta.TabIndex = 12;
+            this.lb_Sta.Text = "Status:";
+            // 
+            // tb_Acceso
+            // 
+            this.tb_Acceso.Location = new System.Drawing.Point(6, 41);
+            this.tb_Acceso.Name = "tb_Acceso";
+            this.tb_Acceso.Size = new System.Drawing.Size(108, 20);
+            this.tb_Acceso.TabIndex = 8;
             // 
             // groupBox4
             // 
@@ -358,38 +361,16 @@
             this.groupBox4.Text = "Info de Día";
             this.groupBox4.Validated += new System.EventHandler(this.groupBox4_Validated);
             // 
-            // rb_Asistencia
+            // rb_Incapacidad
             // 
-            this.rb_Asistencia.AutoSize = true;
-            this.rb_Asistencia.Location = new System.Drawing.Point(12, 30);
-            this.rb_Asistencia.Name = "rb_Asistencia";
-            this.rb_Asistencia.Size = new System.Drawing.Size(73, 17);
-            this.rb_Asistencia.TabIndex = 13;
-            this.rb_Asistencia.TabStop = true;
-            this.rb_Asistencia.Text = "Asistencia";
-            this.rb_Asistencia.UseVisualStyleBackColor = true;
-            // 
-            // rb_TrabajoF
-            // 
-            this.rb_TrabajoF.AutoSize = true;
-            this.rb_TrabajoF.Location = new System.Drawing.Point(12, 53);
-            this.rb_TrabajoF.Name = "rb_TrabajoF";
-            this.rb_TrabajoF.Size = new System.Drawing.Size(103, 17);
-            this.rb_TrabajoF.TabIndex = 13;
-            this.rb_TrabajoF.TabStop = true;
-            this.rb_TrabajoF.Text = "Trabajo Foraneo";
-            this.rb_TrabajoF.UseVisualStyleBackColor = true;
-            // 
-            // rb_Permiso
-            // 
-            this.rb_Permiso.AutoSize = true;
-            this.rb_Permiso.Location = new System.Drawing.Point(208, 30);
-            this.rb_Permiso.Name = "rb_Permiso";
-            this.rb_Permiso.Size = new System.Drawing.Size(62, 17);
-            this.rb_Permiso.TabIndex = 13;
-            this.rb_Permiso.TabStop = true;
-            this.rb_Permiso.Text = "Permiso";
-            this.rb_Permiso.UseVisualStyleBackColor = true;
+            this.rb_Incapacidad.AutoSize = true;
+            this.rb_Incapacidad.Location = new System.Drawing.Point(121, 53);
+            this.rb_Incapacidad.Name = "rb_Incapacidad";
+            this.rb_Incapacidad.Size = new System.Drawing.Size(84, 17);
+            this.rb_Incapacidad.TabIndex = 13;
+            this.rb_Incapacidad.TabStop = true;
+            this.rb_Incapacidad.Text = "Incapacidad";
+            this.rb_Incapacidad.UseVisualStyleBackColor = true;
             // 
             // rb_Falta
             // 
@@ -413,16 +394,38 @@
             this.rb_Vacaciones.Text = "Vacaciones";
             this.rb_Vacaciones.UseVisualStyleBackColor = true;
             // 
-            // rb_Incapacidad
+            // rb_Permiso
             // 
-            this.rb_Incapacidad.AutoSize = true;
-            this.rb_Incapacidad.Location = new System.Drawing.Point(121, 53);
-            this.rb_Incapacidad.Name = "rb_Incapacidad";
-            this.rb_Incapacidad.Size = new System.Drawing.Size(84, 17);
-            this.rb_Incapacidad.TabIndex = 13;
-            this.rb_Incapacidad.TabStop = true;
-            this.rb_Incapacidad.Text = "Incapacidad";
-            this.rb_Incapacidad.UseVisualStyleBackColor = true;
+            this.rb_Permiso.AutoSize = true;
+            this.rb_Permiso.Location = new System.Drawing.Point(208, 30);
+            this.rb_Permiso.Name = "rb_Permiso";
+            this.rb_Permiso.Size = new System.Drawing.Size(62, 17);
+            this.rb_Permiso.TabIndex = 13;
+            this.rb_Permiso.TabStop = true;
+            this.rb_Permiso.Text = "Permiso";
+            this.rb_Permiso.UseVisualStyleBackColor = true;
+            // 
+            // rb_TrabajoF
+            // 
+            this.rb_TrabajoF.AutoSize = true;
+            this.rb_TrabajoF.Location = new System.Drawing.Point(12, 53);
+            this.rb_TrabajoF.Name = "rb_TrabajoF";
+            this.rb_TrabajoF.Size = new System.Drawing.Size(103, 17);
+            this.rb_TrabajoF.TabIndex = 13;
+            this.rb_TrabajoF.TabStop = true;
+            this.rb_TrabajoF.Text = "Trabajo Foraneo";
+            this.rb_TrabajoF.UseVisualStyleBackColor = true;
+            // 
+            // rb_Asistencia
+            // 
+            this.rb_Asistencia.AutoSize = true;
+            this.rb_Asistencia.Location = new System.Drawing.Point(12, 30);
+            this.rb_Asistencia.Name = "rb_Asistencia";
+            this.rb_Asistencia.Size = new System.Drawing.Size(73, 17);
+            this.rb_Asistencia.TabIndex = 13;
+            this.rb_Asistencia.TabStop = true;
+            this.rb_Asistencia.Text = "Asistencia";
+            this.rb_Asistencia.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 

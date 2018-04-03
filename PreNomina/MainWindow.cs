@@ -24,7 +24,6 @@ namespace TimeChecker
         public Form1()
         {
             InitializeComponent();
-
         }
 
         // Abre PDF
@@ -171,73 +170,75 @@ namespace TimeChecker
         //Setea atributos de la casilla seleccionada
         private void setEmpleadoTimeUI(Empleado em, int diaIndx, int acceso) //acceso 0 Entrada1 1 Salida1 2 Entrada2 3 Salida2
         {
-            // Informacion del registro
-            switch (acceso)
+
+            try
             {
-                case 0:
-                    this.lb_Status.Text = em.Dias[diaIndx].entrada1.status;
-                    this.tb_Observaciones.Text = em.Dias[diaIndx].entrada1.observaciones;
-                    this.tb_Acceso.Text = em.Dias[diaIndx].entrada1.Hora.ToShortTimeString();
-                    break;
-                case 1:
-                    this.lb_Status.Text = em.Dias[diaIndx].salida1.status;
-                    this.tb_Observaciones.Text = em.Dias[diaIndx].salida1.observaciones;
-                    this.tb_Acceso.Text = em.Dias[diaIndx].salida1.Hora.ToShortTimeString();
-                    break;
-                case 2:
-                    this.lb_Status.Text = em.Dias[diaIndx].entrada2.status;
-                    this.tb_Observaciones.Text = em.Dias[diaIndx].entrada2.observaciones;
-                    this.tb_Acceso.Text = em.Dias[diaIndx].entrada2.Hora.ToShortTimeString();
-                    break;
-                case 3:
-                    this.lb_Status.Text = em.Dias[diaIndx].salida2.status;
-                    this.tb_Observaciones.Text = em.Dias[diaIndx].salida2.observaciones;
-                    this.tb_Acceso.Text = em.Dias[diaIndx].salida2.Hora.ToShortTimeString();
-                    break;
+                // Informacion del registro
+                switch (acceso)
+                {
+                    case 0:
+                        this.lb_Status.Text = em.Dias[diaIndx].entrada1.status;
+                        this.tb_Observaciones.Text = em.Dias[diaIndx].entrada1.observaciones;
+                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada1.Hora.ToShortTimeString();
+                        break;
+                    case 1:
+                        this.lb_Status.Text = em.Dias[diaIndx].salida1.status;
+                        this.tb_Observaciones.Text = em.Dias[diaIndx].salida1.observaciones;
+                        this.tb_Acceso.Text = em.Dias[diaIndx].salida1.Hora.ToShortTimeString();
+                        break;
+                    case 2:
+                        this.lb_Status.Text = em.Dias[diaIndx].entrada2.status;
+                        this.tb_Observaciones.Text = em.Dias[diaIndx].entrada2.observaciones;
+                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada2.Hora.ToShortTimeString();
+                        break;
+                    case 3:
+                        this.lb_Status.Text = em.Dias[diaIndx].salida2.status;
+                        this.tb_Observaciones.Text = em.Dias[diaIndx].salida2.observaciones;
+                        this.tb_Acceso.Text = em.Dias[diaIndx].salida2.Hora.ToShortTimeString();
+                        break;
+                }
+
+                // Información del día
+                this.groupBox4.Text = "Información del día " + em.Dias[diaIndx].dia.ToLongDateString();
+
+                switch (em.Dias[diaIndx].status)
+                {
+                    case "A":
+                        this.rb_Asistencia.Checked = true;
+                        break;
+                    case "TF":
+                        this.rb_TrabajoF.Checked = true;
+                        break;
+                    case "P":
+                        this.rb_Permiso.Checked = true;
+                        break;
+                    case "F":
+                        this.rb_Falta.Checked = true;
+                        break;
+                    case "V":
+                        this.rb_Vacaciones.Checked = true;
+                        break;
+                    case "I":
+                        this.rb_Incapacidad.Checked = true;
+                        break;
+                }
             }
+            catch{
 
-            // Información del día
-            this.groupBox4.Text = "Información del día " + em.Dias[diaIndx].dia.ToLongDateString();
-
-            switch (em.Dias[diaIndx].status)
-            {
-                case "A":
-                    this.rb_Asistencia.Checked = true;
-                    break;
-                case "TF":
-                    this.rb_TrabajoF.Checked = true;
-                    break;
-                case "P":
-                    this.rb_Permiso.Checked = true;
-                    break;
-                case "F":
-                    this.rb_Falta.Checked = true;
-                    break;
-                case "V":
-                    this.rb_Vacaciones.Checked = true;
-                    break;
-                case "I":
-                    this.rb_Incapacidad.Checked = true;
-                    break;
             }
-
 
         }
-
-
-
 
         // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria
         private void dataGrid1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
             {
-                this.currentDay = e.ColumnIndex;
+                this.currentDay = e.ColumnIndex - 1;
                 setEmpleadoTimeUI(em, e.ColumnIndex - 1, e.RowIndex);
             }
 
         }
-
 
         // Herramientas
         private static string ExtractTextFromPdf(string path)
@@ -354,11 +355,51 @@ namespace TimeChecker
         {
             highlightTable(3, !this.cb_Excedente.Checked);
         }
-
         private void groupBox4_Validated(object sender, EventArgs e)
         {
-            GroupBox g = sender as GroupBox;
-            var a = from RadioButton r in g.Controls where r.Checked == true select r.Name;
+            var checkedButton = groupBox4.Controls.OfType<RadioButton>()
+                                      .FirstOrDefault(r => r.Checked);
+
+                switch (checkedButton.Name)
+                {
+                    case "rb_Asistencia":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "A";
+                        break;
+
+                    case "rb_Falta":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "F";
+                        break;
+
+                    case "rb_Vacaciones":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "V";
+                        break;
+
+                    case "rb_Permiso":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "P";
+                        break;
+
+                    case "rb_TrabajoF":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "TF";
+                        break;
+
+                    case "rb_Incapacidad":
+                        this.gEmpleados[currentEmpleadoID-1].Dias[currentDay].status = "I";
+                        break;
+                }
+            
+            
+        }
+        private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
+        {
+            this.gEmpleados[currentEmpleadoID - 1].Puntualidad = this.cb_Puntualidad.Checked;
+        }
+        private void cb_Asistencia_CheckedChanged(object sender, EventArgs e)
+        {
+            this.gEmpleados[currentEmpleadoID - 1].Asistencia = this.cb_Asistencia.Checked;
+        }
+        private void cb_Desempeno_CheckedChanged(object sender, EventArgs e)
+        {
+            this.gEmpleados[currentEmpleadoID - 1].Desempeno = this.cb_Desempeno.Checked;
         }
     }
 }
