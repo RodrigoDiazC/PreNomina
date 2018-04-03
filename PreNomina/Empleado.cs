@@ -225,9 +225,9 @@ namespace TimeChecker
                         }
 
                     }
-
-                    if (diaElementos.Contains("ENTRADA1")) entrada1 = temp;
-                    else if (diaElementos.Contains("SALIDA1")) salida1 = temp;
+                    
+                    if (diaElementos.Contains("ENTRADA1") || diaElementos.Contains("ENTRADA"))    entrada1 = temp;
+                    else if (diaElementos.Contains("SALIDA1") || diaElementos.Contains("SALIDA"))  salida1 = temp;
                     else if (diaElementos.Contains("ENTRADA2")) entrada2 = temp;
                     else if (diaElementos.Contains("SALIDA2")) salida2 = temp;
                 }
