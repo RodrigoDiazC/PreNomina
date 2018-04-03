@@ -227,7 +227,8 @@ namespace TimeChecker
                         break;
                 }
             }
-            catch{
+            catch
+            {
 
             }
 
@@ -364,33 +365,33 @@ namespace TimeChecker
             var checkedButton = groupBox4.Controls.OfType<RadioButton>()
                                       .FirstOrDefault(r => r.Checked);
 
-                switch (checkedButton.Name)
-                {
-                    case "rb_Asistencia":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "A";
-                        break;
+            switch (checkedButton.Name)
+            {
+                case "rb_Asistencia":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "A";
+                    break;
 
-                    case "rb_Falta":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "F";
-                        break;
+                case "rb_Falta":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "F";
+                    break;
 
-                    case "rb_Vacaciones":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "V";
-                        break;
+                case "rb_Vacaciones":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "V";
+                    break;
 
-                    case "rb_Permiso":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "P";
-                        break;
+                case "rb_Permiso":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "P";
+                    break;
 
-                    case "rb_TrabajoF":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "TF";
-                        break;
+                case "rb_TrabajoF":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "TF";
+                    break;
 
-                    case "rb_Incapacidad":
-                        this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "I";
-                        break;
-                }
-            
+                case "rb_Incapacidad":
+                    this.gEmpleados[currentEmpleadoID].Dias[currentDay].status = "I";
+                    break;
+            }
+
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
         {
@@ -444,7 +445,7 @@ namespace TimeChecker
             // Poner días
 
             //------------------------------------------- Pone la cantidad de filas de acuerdo a la cantidad de empleados
-            for(int i = 0; i < this.gEmpleados.Count - 2; i++)
+            for (int i = 0; i < this.gEmpleados.Count - 2; i++)
             {
                 Range line = (Range)mWSheet1.Rows[6];
                 line.Insert();
@@ -452,27 +453,27 @@ namespace TimeChecker
 
             //--------------------------------------------- Nombres de los empleados
             int k = 0;
-            foreach(Empleado em in this.gEmpleados)
+            foreach (Empleado em in this.gEmpleados)
             {
-                mWSheet1.Cells[2][5 + (k++)]= em.Nombre;
+                mWSheet1.Cells[2][5 + (k++)] = em.Nombre;
             }
 
             //--------------------------------------------- Los días
             int prevMax = 0;
             int emID = 0;
-            foreach(Empleado em in this.gEmpleados)
+            foreach (Empleado em in this.gEmpleados)
             {
                 if (em.Dias.Count > prevMax)
                 {
                     prevMax = em.Dias.Count;
-                    emID    = em.ID; 
+                    emID = em.ID;
                 }
             }
 
             // Dias extra a los 4 por default
-            if(prevMax > 4)
+            if (prevMax > 4)
             {
-                for(int i = 0; i < prevMax - 4; i++)
+                for (int i = 0; i < prevMax - 4; i++)
                 {
                     Range rng = mWSheet1.get_Range("E4", Missing.Value);
                     rng.EntireColumn.Insert(XlInsertShiftDirection.xlShiftToRight,
@@ -484,9 +485,9 @@ namespace TimeChecker
             int offDayIdx = 0;
             int[] offDays = new int[12];
 
-            foreach(TiemposDia t in this.gEmpleados[emID].Dias)
+            foreach (TiemposDia t in this.gEmpleados[emID].Dias)
             {
-                if(t.entrada1.status == "DESCANSOTRAB" || t.salida1.status == "DESCANSOTRAB") // Dias inhabiles
+                if (t.entrada1.status == "DESCANSOTRAB" || t.salida1.status == "DESCANSOTRAB") // Dias inhabiles
                 {
                     offDays[offDayIdx++] = 4 + (k);
                     mWSheet1.Cells[4 + (k++)][4] = t.dia.Day + "*";
@@ -503,19 +504,17 @@ namespace TimeChecker
                 {
                     for (j = 0; j < this.gEmpleados[i].Dias.Count; j++)
                     {
-                        if(offDays.Contains(4 + j) && ((this.gEmpleados[i].Dias[j].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j].salida1.status != "DESCANSOTRAB")) && (offset == 0))
+                        if (offDays.Contains(4 + j + offset) && ((this.gEmpleados[i].Dias[j].entrada1.status != "DESCANSOTRAB") && (this.gEmpleados[i].Dias[j].salida1.status != "DESCANSOTRAB"))) //&& (offset == 0))
                         {
-                            if (offDays.Contains(4 + j + 1) && ((this.gEmpleados[i].Dias[j + 1].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j + 1].salida1.status != "DESCANSOTRAB")))
+                            if (offDays.Contains(4 + j + 1 + offset) && ((this.gEmpleados[i].Dias[j + 1].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j + 1].salida1.status != "DESCANSOTRAB")))
                             {
                                 offset++;
                             }
-                                offset++;
-                            mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
+                            offset++;
                         }
-                        else
-                        {
-                            mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
-                        }
+
+                        mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
+
                     }
                     mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
                     offset = 0;
@@ -551,4 +550,4 @@ namespace TimeChecker
 
 }
 
-        
+
