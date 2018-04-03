@@ -391,7 +391,6 @@ namespace TimeChecker
                         break;
                 }
             
-            
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
         {
@@ -444,23 +443,23 @@ namespace TimeChecker
             // Poner Rango
             // Poner días
 
-            // Pone la cantidad de filas de acuerdo a la cantidad de empleados
+            //------------------------------------------- Pone la cantidad de filas de acuerdo a la cantidad de empleados
             for(int i = 0; i < this.gEmpleados.Count - 2; i++)
             {
                 Range line = (Range)mWSheet1.Rows[6];
                 line.Insert();
             }
 
-            // Nombres de los empleados
+            //--------------------------------------------- Nombres de los empleados
             int k = 0;
             foreach(Empleado em in this.gEmpleados)
             {
                 mWSheet1.Cells[2][5 + (k++)]= em.Nombre;
             }
 
+            //--------------------------------------------- Los días
             int prevMax = 0;
             int emID = 0;
-            //Los días
             foreach(Empleado em in this.gEmpleados)
             {
                 if (em.Dias.Count > prevMax)
@@ -470,7 +469,58 @@ namespace TimeChecker
                 }
             }
 
+            // Dias extra a los 4 por default
+            if(prevMax > 4)
+            {
+                for(int i = 0; i < prevMax - 4; i++)
+                {
+                    Range rng = mWSheet1.get_Range("E4", Missing.Value);
+                    rng.EntireColumn.Insert(XlInsertShiftDirection.xlShiftToRight,
+                                            XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                }
+            }
 
+            k = 0;
+            int offDayIdx = 0;
+            int[] offDays = new int[12];
+
+            foreach(TiemposDia t in this.gEmpleados[emID].Dias)
+            {
+                if(t.entrada1.status == "DESCANSOTRAB" || t.salida1.status == "DESCANSOTRAB") // Dias inhabiles
+                {
+                    offDays[offDayIdx++] = 4 + (k);
+                    mWSheet1.Cells[4 + (k++)][4] = t.dia.Day + "*";
+                }
+                else mWSheet1.Cells[4 + (k++)][4] = t.dia.Day;
+            }
+
+            // ----------------------------------------------------- Llena los días con el estatus
+            {
+                int i = 0, j = 0;
+                int offset = 0;
+
+                for (i = 0; i < this.gEmpleados.Count; i++)
+                {
+                    for (j = 0; j < this.gEmpleados[i].Dias.Count; j++)
+                    {
+                        if(offDays.Contains(4 + j) && ((this.gEmpleados[i].Dias[j].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j].salida1.status != "DESCANSOTRAB")) && (offset == 0))
+                        {
+                            if (offDays.Contains(4 + j + 1) && ((this.gEmpleados[i].Dias[j + 1].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j + 1].salida1.status != "DESCANSOTRAB")))
+                            {
+                                offset++;
+                            }
+                                offset++;
+                            mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
+                        }
+                        else
+                        {
+                            mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
+                        }
+                    }
+                    mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
+                    offset = 0;
+                }
+            }
 
             //--- Guarda el nuevo reporte
             try
