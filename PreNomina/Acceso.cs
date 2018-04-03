@@ -8,7 +8,8 @@ namespace TimeChecker
 {
     class Acceso
     {
-        public DateTime Hora;
-        public string status;
+        public DateTime Hora { get; set; }
+        public string status { get; set; }
+        public string observaciones { get; set; }
     }
 }

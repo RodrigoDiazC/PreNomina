@@ -8,28 +8,35 @@ namespace TimeChecker
 {
     class Empleado
     {
-        // Data publica ----------------------------------
-        public string listaAtributos;
-
         // Data privada ----------------------------------
-        private string Nombre = null;
-        private TiemposDia[] Dias = null;
-    
+        private string listaAtributos;
+
+        // Data Publica
+        public string Nombre { get; set; }
+        public List<TiemposDia> Dias { get; set; }
+        public bool Puntualidad { get; set; }
+        public bool Asistencia { get; set; }
+        public bool Desempeno { get; set; }
+        public int ID { get; set; }
+
         // Constructor -----------------------------------
-        public Empleado(string atributos)
+        public Empleado(string atributos, int identifier, HorasLaborales horarioLaboral)
         {
             this.listaAtributos = atributos;
             string[] tokens = atributos.Split(new[] { "\n" }, StringSplitOptions.None);
 
+            // ID para facilitar modificación de los objetos
+            this.ID = identifier;
             // Extrae el nombre del empleado
             this.Nombre = tokens[0];
-
-            // Elimina informacion no util
-            tokens = borrarBasura(tokens);
-            
+            // Elimina informacion no util y agrupa los días por fila
+            tokens = groupDias(tokens);
             // Extrae los dias
             Dias = extraerDiasDeTokens(tokens);
-            
+            // Obtiene si fue puntual
+            Puntualidad = this.checkPuntualidad(horarioLaboral);
+            // Obtiene asistencia
+            Asistencia = this.checkAsistencia();
         }
 
         // Metodos publicos ------------------------------
@@ -43,79 +50,232 @@ namespace TimeChecker
         }
         public int getCantDias()
         {
-            return this.Dias.Length;
+            return this.Dias.Count;
+        }
+        public TimeSpan getRetardoTotal(HorasLaborales horas)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "RETARDO")
+                {
+                    span += t.entrada1.Hora.Subtract(horas.entrada1);
+                }
+
+                if (t.entrada2.status == "RETARDO")
+                {
+                    span += t.entrada2.Hora.Subtract(horas.entrada2);
+                }
+            }
+
+            return span;
+        }
+        public TimeSpan getRetardoDia(HorasLaborales horas, int index)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            if (this.Dias[index].entrada1.status == "RETARDO")
+            {
+                span += this.Dias[index].entrada1.Hora.Subtract(horas.entrada1);
+            }
+
+            if (this.Dias[index].entrada2.status == "RETARDO")
+            {
+                span += this.Dias[index].entrada2.Hora.Subtract(horas.entrada2);
+            }
+
+            return span;
+        }
+        public TimeSpan getExtraTotal(HorasLaborales horas)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.salida1.Hora > horas.salida1)
+                {
+                    span += t.salida1.Hora.Subtract(horas.salida1);
+                }
+
+                if (t.salida2.Hora > horas.salida2)
+                {
+                    span += t.salida2.Hora.Subtract(horas.salida2);
+                }
+            }
+
+            return span;
+        }
+
+        public bool checkAsistencia()
+        {
+            int acc1 = 0, acc2 = 0;
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "NOREGISTRO") acc1++;
+                if (t.entrada2.status == "NOREGISTRO") acc1++;
+                if (t.salida1.status == "NOREGISTRO") acc1++;
+                if (t.salida2.status == "NOREGISTRO") acc1++;
+
+                if (acc1 >= 4) acc2++;
+                acc1 = 0;
+            }
+
+            if (acc2 >= 1) return false;
+            else return true;
+        }
+        public bool checkPuntualidad(HorasLaborales horas)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                if (t.entrada1.status == "RETARDO")
+                {
+                    span += t.entrada1.Hora.Subtract(horas.entrada1);
+                }
+
+                if (t.entrada2.status == "RETARDO")
+                {
+                    span += t.entrada2.Hora.Subtract(horas.entrada2);
+                }
+            }
+
+            if (span >= horas.limiteRetardo) return false;
+            else return true;
+        }
+        public void setDia(TiemposDia nuevoHorario, int index)
+        {
+            this.Dias[index] = nuevoHorario;
         }
 
         // Metodos privados
-        private TiemposDia[] extraerDiasDeTokens(string[] registro)
+        private List<TiemposDia> extraerDiasDeTokens(string[] tokens)
         {
             Acceso entrada1 = new Acceso();
-            Acceso salida1  = new Acceso();
+            Acceso salida1 = new Acceso();
             Acceso entrada2 = new Acceso();
-            Acceso salida2  = new Acceso();
+            Acceso salida2 = new Acceso();
             DateTime dia = DateTime.Now;
-            int elemento = 0;
 
-            TiemposDia[] diasInfo = new TiemposDia[(registro.Length) / 4];
+            List<TiemposDia> diasList = new List<TiemposDia>();
+            TiemposDia[] diasInfo = new TiemposDia[tokens.Length];
 
-            for(int i=0; i < (registro.Length)/4; i++)
+            for (int i = 0; i < tokens.Length; i++)
             {
-                for(int j=0; j < 4; j++)
+                string[] grupoDia = tokens[i].Split('\n');
+
+                for (int j = 0; j < grupoDia.Length; j++)
                 {
-                    string[] split = registro[elemento].Split(' ');
+                    // Separa elementos
+                    string[] diaElementos = grupoDia[j].Split(' ');
 
-                    // Obtiene la fecha del día
-                    if (j == 0) dia = DateTime.Parse(split[0]);
-
-                    // Acceso temporal
-                    DateTime aux;
                     Acceso temp = new Acceso();
 
-                    if (!split.Contains("A"))
+                    // Obtiene la fecha del día
+                    if (j == 0) dia = DateTime.Parse(diaElementos[0]);
+
+                    if (!diaElementos.Contains("A"))
                     {
                         // En caso de nuevo dia
-                        if(j == 0)
+                        if (j == 0)
                         {
-                            // Asigna hora
-                            DateTime.TryParse(split[1], out aux);
-                            temp.Hora = aux;
+                            temp.Hora = DateTime.Parse(diaElementos[1]);
                             // Asigna status
-                            temp.status = split[4];
+                            temp.status = diaElementos[4];
+                            // Observaciones
+                            if (diaElementos.Length > 5) temp.observaciones = diaElementos[5];
                         }
                         else
                         {
-                            // Asigna hora
-                            DateTime.TryParse(split[0], out aux);
-                            temp.Hora = aux;
+                            temp.Hora = DateTime.Parse(diaElementos[0]);
                             // Asigna status
-                            temp.status = split[3];
+                            temp.status = diaElementos[3];
+                            // Observaciones
+                            if (diaElementos.Length > 4) temp.observaciones = diaElementos[4];
+
                         }
                     }
                     else
                     {
-                        temp.status = "NOREGISTRO";
+                        if (j == 0)
+                        {
+                            // status
+                            temp.status = diaElementos[3];
+                            // observaciones
+                            if (diaElementos.Length > 4)
+                            {
+                                string[] observaciones = new string[diaElementos.Length - 4];
+                                Array.Copy(diaElementos, 4, observaciones, 0, observaciones.Length);
+                                temp.observaciones = string.Join(" ", observaciones);
+                            }
+                        }
+                        else
+                        {
+                            // Asigna status
+                            temp.status = diaElementos[2];
+                            // Observaciones
+                            if (diaElementos.Length > 3)
+                            {
+                                string[] observaciones = new string[diaElementos.Length - 3];
+                                Array.Copy(diaElementos, 3, observaciones, 0, observaciones.Length);
+                                temp.observaciones = string.Join(" ", observaciones);
+                            }
+                        }
+
                     }
 
-                    if (split.Contains("ENTRADA1")) entrada1 = temp;
-                    else if (split.Contains("SALIDA1")) salida1 = temp;
-                    else if (split.Contains("ENTRADA2")) entrada2 = temp;
-                    else if (split.Contains("SALIDA2")) salida2 = temp;
-
-                    elemento ++;
+                    if (diaElementos.Contains("ENTRADA1")) entrada1 = temp;
+                    else if (diaElementos.Contains("SALIDA1")) salida1 = temp;
+                    else if (diaElementos.Contains("ENTRADA2")) entrada2 = temp;
+                    else if (diaElementos.Contains("SALIDA2")) salida2 = temp;
                 }
 
                 diasInfo[i] = new TiemposDia(dia, entrada1, salida1, entrada2, salida2);
-
             }
 
-            return diasInfo;
+            foreach (TiemposDia t in diasInfo) diasList.Add(t);
+
+            return diasList;
         }
-        private string[] borrarBasura(string[] lista)
+        private string[] groupDias(string[] lista)
         {
+
+            int i = 0, k = 0;
+            string[] result = { };
+
+            // Borra información innecesaria
             var list = new List<string>(lista);
             list.RemoveAll(basuraEnLista);
 
-            return list.ToArray();
+            string perro = string.Join("", list);
+
+            foreach (char c in perro)
+            {
+                if (c == '/') i++;
+            }
+
+            i = i / 2;
+
+            string[] dias = new string[i];
+
+            // Agrupa un dia por renglon
+            for (int j = 0; j < i; j++)
+            {
+                do
+                {
+                    dias[j] += list[k] + '\n';
+                    k++;
+                    if (k >= list.Count) break;
+
+                } while (list[k][2] != '/');
+
+                //Borra \n anterior
+                dias[j] = dias[j].Substring(0, dias[j].Length - 1);
+            }
+
+            return dias;
         }
         private static bool basuraEnLista(string v)
         {
@@ -125,5 +285,6 @@ namespace TimeChecker
 
             return match;
         }
+
     }
 }
