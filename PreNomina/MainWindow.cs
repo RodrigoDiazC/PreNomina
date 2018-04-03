@@ -516,7 +516,16 @@ namespace TimeChecker
                         mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
 
                     }
+
+                    // Retardo total
                     mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
+                    // Puntualidad
+                    mWSheet1.Cells[4 + j + offset + 1][5 + i] = this.gEmpleados[i].Puntualidad ? "SI":"NO";
+                    // Asistencia
+                    mWSheet1.Cells[4 + j + offset + 2][5 + i] = this.gEmpleados[i].Asistencia ? "SI" : "NO";
+                    // Desempeño
+                    mWSheet1.Cells[4 + j + offset + 3][5 + i] = this.gEmpleados[i].Desempeno ? "SI" : "NO";
+
                     offset = 0;
                 }
             }
