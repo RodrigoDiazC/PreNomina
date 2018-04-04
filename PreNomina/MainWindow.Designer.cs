@@ -201,6 +201,7 @@
             // 
             this.tb_NombreEmpleado.Location = new System.Drawing.Point(6, 41);
             this.tb_NombreEmpleado.Name = "tb_NombreEmpleado";
+            this.tb_NombreEmpleado.ReadOnly = true;
             this.tb_NombreEmpleado.Size = new System.Drawing.Size(273, 20);
             this.tb_NombreEmpleado.TabIndex = 8;
             // 
@@ -323,8 +324,10 @@
             // 
             this.tb_Observaciones.Location = new System.Drawing.Point(142, 41);
             this.tb_Observaciones.Name = "tb_Observaciones";
+            this.tb_Observaciones.ReadOnly = true;
             this.tb_Observaciones.Size = new System.Drawing.Size(226, 20);
             this.tb_Observaciones.TabIndex = 13;
+            this.tb_Observaciones.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // lb_Status
             // 
@@ -356,8 +359,10 @@
             // 
             this.tb_Acceso.Location = new System.Drawing.Point(6, 41);
             this.tb_Acceso.Name = "tb_Acceso";
+            this.tb_Acceso.ReadOnly = true;
             this.tb_Acceso.Size = new System.Drawing.Size(108, 20);
             this.tb_Acceso.TabIndex = 8;
+            this.tb_Acceso.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // groupBox4
             // 
