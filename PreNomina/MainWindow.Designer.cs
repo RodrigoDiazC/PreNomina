@@ -94,11 +94,11 @@
             this.dataGrid.AllowUserToAddRows = false;
             this.dataGrid.AllowUserToResizeRows = false;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Location = new System.Drawing.Point(12, 74);
+            this.dataGrid.Location = new System.Drawing.Point(12, 48);
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(270, 307);
+            this.dataGrid.Size = new System.Drawing.Size(270, 343);
             this.dataGrid.TabIndex = 1;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
@@ -118,6 +118,7 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsb_Abrir,
             this.tsb_Exportar});
@@ -151,7 +152,7 @@
             // lb_Empleados
             // 
             this.lb_Empleados.AutoSize = true;
-            this.lb_Empleados.Location = new System.Drawing.Point(12, 50);
+            this.lb_Empleados.Location = new System.Drawing.Point(12, 30);
             this.lb_Empleados.Name = "lb_Empleados";
             this.lb_Empleados.Size = new System.Drawing.Size(98, 13);
             this.lb_Empleados.TabIndex = 5;
@@ -467,7 +468,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(288, 12);
+            this.tabControl1.Location = new System.Drawing.Point(288, 26);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(698, 369);
@@ -497,7 +498,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(202, 74);
+            this.tabPage2.Size = new System.Drawing.Size(690, 343);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -506,7 +507,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 388);
+            this.ClientSize = new System.Drawing.Size(988, 400);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lb_Empleados);
             this.Controls.Add(this.toolStrip1);
