@@ -466,11 +466,12 @@ namespace TimeChecker
 
             //--------------------------------------------- Nombres de los empleados
             int k = 0;
+            int cantRows = 0;
             foreach (Empleado em in this.gEmpleados)
             {
                 mWSheet1.Cells[2][5 + (k++)] = em.Nombre;
             }
-
+            cantRows = k;
             //--------------------------------------------- Los días
             int prevMax = 0;
             int emID = 0;
@@ -547,6 +548,9 @@ namespace TimeChecker
                 mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " - " + this.analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
             }
             else mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+
+            // ----------------------------------------------------------------------- Comentarios
+            mWSheet1.Cells[3][cantRows + 1 + 5] = this.tb_Comentarios.Text;
 
 
             // ---------------------------------------------------------------------- Guarda el nuevo reporte

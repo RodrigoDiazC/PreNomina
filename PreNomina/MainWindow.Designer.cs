@@ -69,6 +69,8 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
+            this.tb_Comentarios = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -100,7 +102,7 @@
             this.dataGrid.Name = "dataGrid";
             this.dataGrid.ReadOnly = true;
             this.dataGrid.RowHeadersVisible = false;
-            this.dataGrid.Size = new System.Drawing.Size(270, 343);
+            this.dataGrid.Size = new System.Drawing.Size(270, 207);
             this.dataGrid.TabIndex = 1;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
             // 
@@ -225,6 +227,8 @@
             // cb_Retardos
             // 
             this.cb_Retardos.AutoSize = true;
+            this.cb_Retardos.Checked = true;
+            this.cb_Retardos.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_Retardos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_Retardos.Location = new System.Drawing.Point(334, 16);
             this.cb_Retardos.Name = "cb_Retardos";
@@ -457,6 +461,8 @@
             // cb_NoReg
             // 
             this.cb_NoReg.AutoSize = true;
+            this.cb_NoReg.Checked = true;
+            this.cb_NoReg.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_NoReg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_NoReg.Location = new System.Drawing.Point(415, 16);
             this.cb_NoReg.Name = "cb_NoReg";
@@ -515,11 +521,30 @@
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
             // 
+            // tb_Comentarios
+            // 
+            this.tb_Comentarios.Location = new System.Drawing.Point(15, 278);
+            this.tb_Comentarios.Multiline = true;
+            this.tb_Comentarios.Name = "tb_Comentarios";
+            this.tb_Comentarios.Size = new System.Drawing.Size(267, 115);
+            this.tb_Comentarios.TabIndex = 17;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(12, 261);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Comentarios";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 400);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tb_Comentarios);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lb_Empleados);
             this.Controls.Add(this.toolStrip1);
@@ -589,6 +614,8 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.WebBrowser wb_pdfViewer;
+        private System.Windows.Forms.TextBox tb_Comentarios;
+        private System.Windows.Forms.Label label4;
     }
 }
 
