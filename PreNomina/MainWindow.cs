@@ -182,22 +182,22 @@ namespace TimeChecker
                     case 0:
                         this.lb_Status.Text = em.Dias[diaIndx].entrada1.status;
                         this.tb_Observaciones.Text = em.Dias[diaIndx].entrada1.observaciones;
-                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada1.Hora.ToShortTimeString();
+                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada1.Hora.ToShortTimeString() == "12:00 a. m." ? " " : em.Dias[diaIndx].entrada1.Hora.ToShortTimeString();
                         break;
                     case 1:
                         this.lb_Status.Text = em.Dias[diaIndx].salida1.status;
                         this.tb_Observaciones.Text = em.Dias[diaIndx].salida1.observaciones;
-                        this.tb_Acceso.Text = em.Dias[diaIndx].salida1.Hora.ToShortTimeString();
+                        this.tb_Acceso.Text = em.Dias[diaIndx].salida1.Hora.ToShortTimeString() == "12:00 a. m." ? " " : em.Dias[diaIndx].salida1.Hora.ToShortTimeString();
                         break;
                     case 2:
                         this.lb_Status.Text = em.Dias[diaIndx].entrada2.status;
                         this.tb_Observaciones.Text = em.Dias[diaIndx].entrada2.observaciones;
-                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada2.Hora.ToShortTimeString();
+                        this.tb_Acceso.Text = em.Dias[diaIndx].entrada2.Hora.ToShortTimeString() == "12:00 a. m." ? " " : em.Dias[diaIndx].entrada2.Hora.ToShortTimeString();
                         break;
                     case 3:
                         this.lb_Status.Text = em.Dias[diaIndx].salida2.status;
                         this.tb_Observaciones.Text = em.Dias[diaIndx].salida2.observaciones;
-                        this.tb_Acceso.Text = em.Dias[diaIndx].salida2.Hora.ToShortTimeString();
+                        this.tb_Acceso.Text = em.Dias[diaIndx].salida2.Hora.ToShortTimeString() == "12:00 a. m." ? " " : em.Dias[diaIndx].salida2.Hora.ToShortTimeString();
                         break;
                 }
 
