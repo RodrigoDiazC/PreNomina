@@ -64,6 +64,7 @@
             this.rb_Permiso = new System.Windows.Forms.RadioButton();
             this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
             this.rb_Asistencia = new System.Windows.Forms.RadioButton();
+            this.cb_NoReg = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -216,7 +217,7 @@
             // 
             this.cb_Retardos.AutoSize = true;
             this.cb_Retardos.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Retardos.Location = new System.Drawing.Point(725, 22);
+            this.cb_Retardos.Location = new System.Drawing.Point(624, 22);
             this.cb_Retardos.Name = "cb_Retardos";
             this.cb_Retardos.Size = new System.Drawing.Size(76, 19);
             this.cb_Retardos.TabIndex = 10;
@@ -240,7 +241,7 @@
             // 
             this.cb_Excedente.AutoSize = true;
             this.cb_Excedente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cb_Excedente.Location = new System.Drawing.Point(888, 22);
+            this.cb_Excedente.Location = new System.Drawing.Point(887, 22);
             this.cb_Excedente.Name = "cb_Excedente";
             this.cb_Excedente.Size = new System.Drawing.Size(84, 19);
             this.cb_Excedente.TabIndex = 10;
@@ -377,7 +378,7 @@
             // rb_Incapacidad
             // 
             this.rb_Incapacidad.AutoSize = true;
-            this.rb_Incapacidad.Location = new System.Drawing.Point(121, 53);
+            this.rb_Incapacidad.Location = new System.Drawing.Point(119, 53);
             this.rb_Incapacidad.Name = "rb_Incapacidad";
             this.rb_Incapacidad.Size = new System.Drawing.Size(84, 17);
             this.rb_Incapacidad.TabIndex = 13;
@@ -388,7 +389,7 @@
             // rb_Falta
             // 
             this.rb_Falta.AutoSize = true;
-            this.rb_Falta.Location = new System.Drawing.Point(208, 52);
+            this.rb_Falta.Location = new System.Drawing.Point(207, 52);
             this.rb_Falta.Name = "rb_Falta";
             this.rb_Falta.Size = new System.Drawing.Size(48, 17);
             this.rb_Falta.TabIndex = 13;
@@ -399,7 +400,7 @@
             // rb_Vacaciones
             // 
             this.rb_Vacaciones.AutoSize = true;
-            this.rb_Vacaciones.Location = new System.Drawing.Point(121, 30);
+            this.rb_Vacaciones.Location = new System.Drawing.Point(119, 30);
             this.rb_Vacaciones.Name = "rb_Vacaciones";
             this.rb_Vacaciones.Size = new System.Drawing.Size(81, 17);
             this.rb_Vacaciones.TabIndex = 13;
@@ -410,7 +411,7 @@
             // rb_Permiso
             // 
             this.rb_Permiso.AutoSize = true;
-            this.rb_Permiso.Location = new System.Drawing.Point(208, 30);
+            this.rb_Permiso.Location = new System.Drawing.Point(206, 30);
             this.rb_Permiso.Name = "rb_Permiso";
             this.rb_Permiso.Size = new System.Drawing.Size(62, 17);
             this.rb_Permiso.TabIndex = 13;
@@ -440,11 +441,24 @@
             this.rb_Asistencia.Text = "Asistencia";
             this.rb_Asistencia.UseVisualStyleBackColor = true;
             // 
+            // cb_NoReg
+            // 
+            this.cb_NoReg.AutoSize = true;
+            this.cb_NoReg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cb_NoReg.Location = new System.Drawing.Point(705, 22);
+            this.cb_NoReg.Name = "cb_NoReg";
+            this.cb_NoReg.Size = new System.Drawing.Size(97, 19);
+            this.cb_NoReg.TabIndex = 15;
+            this.cb_NoReg.Text = "No Registros";
+            this.cb_NoReg.UseVisualStyleBackColor = true;
+            this.cb_NoReg.CheckedChanged += new System.EventHandler(this.cb_NoReg_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 365);
+            this.Controls.Add(this.cb_NoReg);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -512,6 +526,7 @@
         private System.Windows.Forms.RadioButton rb_Permiso;
         private System.Windows.Forms.RadioButton rb_TrabajoF;
         private System.Windows.Forms.ToolStripButton tsb_Exportar;
+        private System.Windows.Forms.CheckBox cb_NoReg;
     }
 }
 

@@ -291,7 +291,7 @@ namespace TimeChecker
             this.dataGrid.DataSource = dt;
 
         }
-        private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente
+        private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente 4 No Registro
         {
 
             for (int i = 0; i < this.dataGrid1.Rows.Count; i++)
@@ -329,7 +329,7 @@ namespace TimeChecker
 
                     if ((mode == 2) && (i == 1 || i == 3)) // Anticipo
                     {
-                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value < check)
+                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value < check && (TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value != TimeSpan.Parse("00:00:00"))
                         {
                             if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
                             else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.MediumPurple;
@@ -342,6 +342,15 @@ namespace TimeChecker
                         {
                             if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
                             else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.LightGreen;
+                        }
+                    }
+
+                    if ((mode == 4)) // No registro
+                    {
+                        if ((TimeSpan)this.dataGrid1.Rows[i].Cells[j].Value == TimeSpan.Parse("00:00:00"))
+                        {
+                            if (clear) this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.White;
+                            else this.dataGrid1.Rows[i].Cells[j].Style.BackColor = Color.Yellow;
                         }
                     }
                 }
@@ -358,6 +367,10 @@ namespace TimeChecker
         private void cb_Excedente_CheckedChanged(object sender, EventArgs e)
         {
             highlightTable(3, !this.cb_Excedente.Checked);
+        }
+        private void cb_NoReg_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightTable(4, !this.cb_NoReg.Checked);
         }
         private void groupBox4_Validated(object sender, EventArgs e)
         {
@@ -556,7 +569,6 @@ namespace TimeChecker
         }
 
     }
-
 }
 
 
