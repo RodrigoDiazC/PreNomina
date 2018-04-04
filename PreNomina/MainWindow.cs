@@ -58,6 +58,10 @@ namespace TimeChecker
 
             // Elimina la información de la tabla inferior
             dataGrid1.DataSource = null;
+
+            // Abre PDF en web browser
+            this.wb_pdfViewer.Navigate(openFileDialog.FileName);
+
         }
 
         // Despliega información del usuario
