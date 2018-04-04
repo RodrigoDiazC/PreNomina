@@ -70,11 +70,12 @@ namespace TimeChecker
             // Tamaño de celda automático
             this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
-            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
-            {
-                fillTablaRegistros(em);
-                setEmpleadoPropiedadesUI(em);
-            }
+            fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
+            setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
+
+            // Actualiza el highlight 
+            updateHighlight();
+
         }
 
         // Tabla de detalle de registros
@@ -526,7 +527,7 @@ namespace TimeChecker
                     // Retardo total
                     mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
                     // Puntualidad
-                    mWSheet1.Cells[4 + j + offset + 1][5 + i] = this.gEmpleados[i].Puntualidad ? "SI":"NO";
+                    mWSheet1.Cells[4 + j + offset + 1][5 + i] = this.gEmpleados[i].Puntualidad ? "SI" : "NO";
                     // Asistencia
                     mWSheet1.Cells[4 + j + offset + 2][5 + i] = this.gEmpleados[i].Asistencia ? "SI" : "NO";
                     // Desempeño
@@ -566,6 +567,14 @@ namespace TimeChecker
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+        }
+        private void updateHighlight()
+        {
+            // Actualiza el highlight 
+            highlightTable(1, !this.cb_Retardos.Checked);
+            highlightTable(2, !this.cb_Anticipo.Checked);
+            highlightTable(3, !this.cb_Excedente.Checked);
+            highlightTable(4, !this.cb_NoReg.Checked);
         }
 
     }
