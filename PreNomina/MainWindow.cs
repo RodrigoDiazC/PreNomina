@@ -147,7 +147,6 @@ namespace TimeChecker
                 dt.Rows.Add(drEntrada2);
                 dt.Rows.Add(drSalida2);
 
-
                 // Envía datos a control
                 this.dataGrid1.DataSource = dt;
                 // Inmoviliza columna de nombre
@@ -405,7 +404,6 @@ namespace TimeChecker
         {
             this.gEmpleados[currentEmpleadoID].Desempeno = this.cb_Desempeno.Checked;
         }
-
         private void tsb_Exportar_Click(object sender, EventArgs e)
         {
             // Generar el archivo
@@ -440,9 +438,6 @@ namespace TimeChecker
             mWSheet1 = (Worksheet)mWorkSheets.get_Item("Hoja1");
 
             //------------------------------------------------------------------ Pone los datos estáticos
-            // Poner Mes
-            // Poner Rango
-            // Poner días
 
             //------------------------------------------- Pone la cantidad de filas de acuerdo a la cantidad de empleados
             for (int i = 0; i < this.gEmpleados.Count - 2; i++)
@@ -495,7 +490,7 @@ namespace TimeChecker
                 else mWSheet1.Cells[4 + (k++)][4] = t.dia.Day;
             }
 
-            // ----------------------------------------------------- Llena los días con el estatus
+            // --------------------------------------------------------------- Llena los días con el estatus
             {
                 int i = 0, j = 0;
                 int offset = 0;
@@ -512,9 +507,7 @@ namespace TimeChecker
                             }
                             offset++;
                         }
-
                         mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
-
                     }
 
                     // Retardo total
@@ -530,7 +523,15 @@ namespace TimeChecker
                 }
             }
 
-            //--- Guarda el nuevo reporte
+            // ----------------------------------------------------------------------- Rango de meses
+            if (this.analizador.fechaInicio.Month != this.analizador.fechaFin.Month)
+            {
+                mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " - " + this.analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+            }
+            else mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+
+
+            // ---------------------------------------------------------------------- Guarda el nuevo reporte
             try
             {
                 mWorkBook.SaveAs(rutaNueva, XlFileFormat.xlWorkbookNormal,
@@ -552,7 +553,6 @@ namespace TimeChecker
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-
         }
 
     }

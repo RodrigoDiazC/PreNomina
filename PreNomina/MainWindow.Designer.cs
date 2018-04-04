@@ -35,6 +35,7 @@
             this.dataGrid1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
             this.lb_Empleados = new System.Windows.Forms.Label();
             this.lb_Horarios = new System.Windows.Forms.Label();
             this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@
             this.rb_Permiso = new System.Windows.Forms.RadioButton();
             this.rb_TrabajoF = new System.Windows.Forms.RadioButton();
             this.rb_Asistencia = new System.Windows.Forms.RadioButton();
-            this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -130,6 +130,17 @@
             this.tsb_Abrir.Size = new System.Drawing.Size(79, 22);
             this.tsb_Abrir.Text = "Abrir archivo";
             this.tsb_Abrir.Click += new System.EventHandler(this.tsb_Abrir_Click);
+            // 
+            // tsb_Exportar
+            // 
+            this.tsb_Exportar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_Exportar.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Exportar.Image")));
+            this.tsb_Exportar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Exportar.Name = "tsb_Exportar";
+            this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
+            this.tsb_Exportar.Text = "Exportar a Excel";
+            this.tsb_Exportar.ToolTipText = "Exportar a Excel";
+            this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
             // 
             // lb_Empleados
             // 
@@ -429,17 +440,6 @@
             this.rb_Asistencia.Text = "Asistencia";
             this.rb_Asistencia.UseVisualStyleBackColor = true;
             // 
-            // tsb_Exportar
-            // 
-            this.tsb_Exportar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsb_Exportar.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Exportar.Image")));
-            this.tsb_Exportar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Exportar.Name = "tsb_Exportar";
-            this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
-            this.tsb_Exportar.Text = "Exportar a Excel";
-            this.tsb_Exportar.ToolTipText = "Exportar a Excel";
-            this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -457,6 +457,7 @@
             this.Controls.Add(this.dataGrid1);
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.bt_Abrir);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Form1";
             this.Text = "PreNomina";
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
