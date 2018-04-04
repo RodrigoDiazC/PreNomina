@@ -62,6 +62,12 @@ namespace TimeChecker
             // Abre PDF en web browser
             this.wb_pdfViewer.Navigate(openFileDialog.FileName);
 
+            // Inicializa las tablas con el primer empleado
+            this.currentEmpleadoID = 0;
+            fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
+            setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
+            updateHighlight();
+
         }
 
         // Despliega información del usuario
