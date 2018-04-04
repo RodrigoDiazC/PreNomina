@@ -203,7 +203,7 @@ namespace TimeChecker
                 }
 
                 // Información del día
-                this.groupBox4.Text = "Información del día " + em.Dias[diaIndx].dia.ToLongDateString();
+                this.groupBox4.Text = em.Dias[diaIndx].dia.ToLongDateString();
 
                 switch (em.Dias[diaIndx].status)
                 {

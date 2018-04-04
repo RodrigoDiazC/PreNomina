@@ -36,6 +36,12 @@ namespace TimeChecker
             for (int i = 1; i < tokens.Length; i++)
             {
                 empleados[i-1] = new Empleado(tokens[i], i - 1 ,horarioLaboral);
+                
+                // Analiza el status de cada dia
+                foreach(TiemposDia t in empleados[i - 1].Dias)
+                {
+                    t.checkStatus();
+                }    
             }
 
             return empleados.ToList();
