@@ -66,13 +66,13 @@
             this.cb_NoReg = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tp_Detallada = new System.Windows.Forms.TabPage();
+            this.dataGrid1 = new System.Windows.Forms.DataGridView();
             this.tp_General = new System.Windows.Forms.TabPage();
             this.dg_General = new System.Windows.Forms.DataGridView();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.dataGrid1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -80,10 +80,10 @@
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tp_Detallada.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.tp_General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).BeginInit();
             this.tp_PDF.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -493,10 +493,26 @@
             this.tp_Detallada.TabIndex = 0;
             this.tp_Detallada.Text = "Vista Detallada";
             // 
+            // dataGrid1
+            // 
+            this.dataGrid1.AllowUserToAddRows = false;
+            this.dataGrid1.AllowUserToDeleteRows = false;
+            this.dataGrid1.AllowUserToResizeRows = false;
+            this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid1.Location = new System.Drawing.Point(6, 40);
+            this.dataGrid1.Name = "dataGrid1";
+            this.dataGrid1.ReadOnly = true;
+            this.dataGrid1.RowHeadersVisible = false;
+            this.dataGrid1.Size = new System.Drawing.Size(676, 127);
+            this.dataGrid1.TabIndex = 2;
+            this.dataGrid1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid1_CellClick);
+            // 
             // tp_General
             // 
             this.tp_General.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_General.Controls.Add(this.label4);
             this.tp_General.Controls.Add(this.dg_General);
+            this.tp_General.Controls.Add(this.tb_Comentarios);
             this.tp_General.Location = new System.Drawing.Point(4, 22);
             this.tp_General.Name = "tp_General";
             this.tp_General.Padding = new System.Windows.Forms.Padding(3);
@@ -510,10 +526,10 @@
             this.dg_General.AllowUserToDeleteRows = false;
             this.dg_General.AllowUserToResizeRows = false;
             this.dg_General.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_General.Location = new System.Drawing.Point(0, 2);
+            this.dg_General.Location = new System.Drawing.Point(6, 2);
             this.dg_General.Name = "dg_General";
             this.dg_General.RowHeadersVisible = false;
-            this.dg_General.Size = new System.Drawing.Size(687, 207);
+            this.dg_General.Size = new System.Drawing.Size(678, 207);
             this.dg_General.TabIndex = 3;
             // 
             // tp_PDF
@@ -538,42 +554,27 @@
             // 
             // tb_Comentarios
             // 
-            this.tb_Comentarios.Location = new System.Drawing.Point(15, 278);
+            this.tb_Comentarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Comentarios.Location = new System.Drawing.Point(6, 241);
             this.tb_Comentarios.Multiline = true;
             this.tb_Comentarios.Name = "tb_Comentarios";
-            this.tb_Comentarios.Size = new System.Drawing.Size(267, 111);
+            this.tb_Comentarios.Size = new System.Drawing.Size(678, 96);
             this.tb_Comentarios.TabIndex = 17;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 261);
+            this.label4.Location = new System.Drawing.Point(6, 225);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 18;
             this.label4.Text = "Comentarios";
-            // 
-            // dataGrid1
-            // 
-            this.dataGrid1.AllowUserToAddRows = false;
-            this.dataGrid1.AllowUserToDeleteRows = false;
-            this.dataGrid1.AllowUserToResizeRows = false;
-            this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid1.Location = new System.Drawing.Point(6, 40);
-            this.dataGrid1.Name = "dataGrid1";
-            this.dataGrid1.ReadOnly = true;
-            this.dataGrid1.RowHeadersVisible = false;
-            this.dataGrid1.Size = new System.Drawing.Size(676, 127);
-            this.dataGrid1.TabIndex = 2;
-            this.dataGrid1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid1_CellClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 398);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.tb_Comentarios);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lb_Empleados);
             this.Controls.Add(this.toolStrip1);
@@ -594,10 +595,11 @@
             this.tabControl1.ResumeLayout(false);
             this.tp_Detallada.ResumeLayout(false);
             this.tp_Detallada.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.tp_General.ResumeLayout(false);
+            this.tp_General.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).EndInit();
             this.tp_PDF.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
