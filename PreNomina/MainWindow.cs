@@ -684,15 +684,11 @@ namespace TimeChecker
             highlightTable(4, !this.cb_NoReg.Checked);
         }
 
-        // Pendiente
-        private void dg_General_CellClick(object sender, DataGridViewCellEventArgs e)
+        // Vuelve a cargar la tabla de preview (General)
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // El ID del usuario sera reemplazado por el indice de row (ya no son sorteables las tablas)
+            if (this.tabControl1.SelectedTab.Name == "tp_General") fillTablaGeneral(this.gEmpleados);
         }
-
-
-
-
     }
 }
 

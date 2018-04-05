@@ -66,12 +66,12 @@
             this.cb_NoReg = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tp_Detallada = new System.Windows.Forms.TabPage();
+            this.tp_General = new System.Windows.Forms.TabPage();
+            this.dg_General = new System.Windows.Forms.DataGridView();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.tp_General = new System.Windows.Forms.TabPage();
-            this.dg_General = new System.Windows.Forms.DataGridView();
             this.dataGrid1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -80,9 +80,9 @@
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tp_Detallada.SuspendLayout();
-            this.tp_PDF.SuspendLayout();
             this.tp_General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).BeginInit();
+            this.tp_PDF.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -470,8 +470,9 @@
             this.tabControl1.Location = new System.Drawing.Point(288, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(698, 378);
+            this.tabControl1.Size = new System.Drawing.Size(698, 369);
             this.tabControl1.TabIndex = 16;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tp_Detallada
             // 
@@ -488,9 +489,32 @@
             this.tp_Detallada.Location = new System.Drawing.Point(4, 22);
             this.tp_Detallada.Name = "tp_Detallada";
             this.tp_Detallada.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Detallada.Size = new System.Drawing.Size(690, 352);
+            this.tp_Detallada.Size = new System.Drawing.Size(690, 343);
             this.tp_Detallada.TabIndex = 0;
             this.tp_Detallada.Text = "Vista Detallada";
+            // 
+            // tp_General
+            // 
+            this.tp_General.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_General.Controls.Add(this.dg_General);
+            this.tp_General.Location = new System.Drawing.Point(4, 22);
+            this.tp_General.Name = "tp_General";
+            this.tp_General.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_General.Size = new System.Drawing.Size(690, 343);
+            this.tp_General.TabIndex = 2;
+            this.tp_General.Text = "Vista Preliminar";
+            // 
+            // dg_General
+            // 
+            this.dg_General.AllowUserToAddRows = false;
+            this.dg_General.AllowUserToDeleteRows = false;
+            this.dg_General.AllowUserToResizeRows = false;
+            this.dg_General.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_General.Location = new System.Drawing.Point(0, 2);
+            this.dg_General.Name = "dg_General";
+            this.dg_General.RowHeadersVisible = false;
+            this.dg_General.Size = new System.Drawing.Size(687, 207);
+            this.dg_General.TabIndex = 3;
             // 
             // tp_PDF
             // 
@@ -517,7 +541,7 @@
             this.tb_Comentarios.Location = new System.Drawing.Point(15, 278);
             this.tb_Comentarios.Multiline = true;
             this.tb_Comentarios.Name = "tb_Comentarios";
-            this.tb_Comentarios.Size = new System.Drawing.Size(267, 115);
+            this.tb_Comentarios.Size = new System.Drawing.Size(267, 111);
             this.tb_Comentarios.TabIndex = 17;
             // 
             // label4
@@ -528,30 +552,6 @@
             this.label4.Size = new System.Drawing.Size(65, 13);
             this.label4.TabIndex = 18;
             this.label4.Text = "Comentarios";
-            // 
-            // tp_General
-            // 
-            this.tp_General.BackColor = System.Drawing.SystemColors.Control;
-            this.tp_General.Controls.Add(this.dg_General);
-            this.tp_General.Location = new System.Drawing.Point(4, 22);
-            this.tp_General.Name = "tp_General";
-            this.tp_General.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_General.Size = new System.Drawing.Size(690, 352);
-            this.tp_General.TabIndex = 2;
-            this.tp_General.Text = "Vista General";
-            // 
-            // dg_General
-            // 
-            this.dg_General.AllowUserToAddRows = false;
-            this.dg_General.AllowUserToDeleteRows = false;
-            this.dg_General.AllowUserToResizeRows = false;
-            this.dg_General.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dg_General.Location = new System.Drawing.Point(0, 2);
-            this.dg_General.Name = "dg_General";
-            this.dg_General.RowHeadersVisible = false;
-            this.dg_General.Size = new System.Drawing.Size(687, 207);
-            this.dg_General.TabIndex = 3;
-            this.dg_General.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_General_CellClick);
             // 
             // dataGrid1
             // 
@@ -571,7 +571,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 405);
+            this.ClientSize = new System.Drawing.Size(988, 398);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tb_Comentarios);
             this.Controls.Add(this.tabControl1);
@@ -594,9 +594,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tp_Detallada.ResumeLayout(false);
             this.tp_Detallada.PerformLayout();
-            this.tp_PDF.ResumeLayout(false);
             this.tp_General.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).EndInit();
+            this.tp_PDF.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
