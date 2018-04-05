@@ -66,11 +66,13 @@
             this.rb_Asistencia = new System.Windows.Forms.RadioButton();
             this.cb_NoReg = new System.Windows.Forms.CheckBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tp_Detallada = new System.Windows.Forms.TabPage();
+            this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.tp_General = new System.Windows.Forms.TabPage();
+            this.dg_General = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -78,8 +80,10 @@
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tp_Detallada.SuspendLayout();
+            this.tp_PDF.SuspendLayout();
+            this.tp_General.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dg_General)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -474,43 +478,44 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(288, 26);
+            this.tabControl1.Controls.Add(this.tp_Detallada);
+            this.tabControl1.Controls.Add(this.tp_General);
+            this.tabControl1.Controls.Add(this.tp_PDF);
+            this.tabControl1.Location = new System.Drawing.Point(288, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(698, 369);
             this.tabControl1.TabIndex = 16;
             // 
-            // tabPage1
+            // tp_Detallada
             // 
-            this.tabPage1.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage1.Controls.Add(this.dataGrid1);
-            this.tabPage1.Controls.Add(this.cb_NoReg);
-            this.tabPage1.Controls.Add(this.lb_Horarios);
-            this.tabPage1.Controls.Add(this.groupBox4);
-            this.tabPage1.Controls.Add(this.cb_Retardos);
-            this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.cb_Anticipo);
-            this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Controls.Add(this.cb_Excedente);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(690, 343);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Vista Detallada";
+            this.tp_Detallada.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_Detallada.Controls.Add(this.dataGrid1);
+            this.tp_Detallada.Controls.Add(this.cb_NoReg);
+            this.tp_Detallada.Controls.Add(this.lb_Horarios);
+            this.tp_Detallada.Controls.Add(this.groupBox4);
+            this.tp_Detallada.Controls.Add(this.cb_Retardos);
+            this.tp_Detallada.Controls.Add(this.groupBox2);
+            this.tp_Detallada.Controls.Add(this.cb_Anticipo);
+            this.tp_Detallada.Controls.Add(this.groupBox1);
+            this.tp_Detallada.Controls.Add(this.cb_Excedente);
+            this.tp_Detallada.Location = new System.Drawing.Point(4, 22);
+            this.tp_Detallada.Name = "tp_Detallada";
+            this.tp_Detallada.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_Detallada.Size = new System.Drawing.Size(690, 343);
+            this.tp_Detallada.TabIndex = 0;
+            this.tp_Detallada.Text = "Vista Detallada";
             // 
-            // tabPage2
+            // tp_PDF
             // 
-            this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
-            this.tabPage2.Controls.Add(this.wb_pdfViewer);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(690, 343);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Vista PDF";
+            this.tp_PDF.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_PDF.Controls.Add(this.wb_pdfViewer);
+            this.tp_PDF.Location = new System.Drawing.Point(4, 22);
+            this.tp_PDF.Name = "tp_PDF";
+            this.tp_PDF.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_PDF.Size = new System.Drawing.Size(690, 343);
+            this.tp_PDF.TabIndex = 1;
+            this.tp_PDF.Text = "Vista PDF";
             // 
             // wb_pdfViewer
             // 
@@ -538,6 +543,30 @@
             this.label4.TabIndex = 18;
             this.label4.Text = "Comentarios";
             // 
+            // tp_General
+            // 
+            this.tp_General.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_General.Controls.Add(this.dg_General);
+            this.tp_General.Location = new System.Drawing.Point(4, 22);
+            this.tp_General.Name = "tp_General";
+            this.tp_General.Padding = new System.Windows.Forms.Padding(3);
+            this.tp_General.Size = new System.Drawing.Size(690, 343);
+            this.tp_General.TabIndex = 2;
+            this.tp_General.Text = "Vista General";
+            // 
+            // dg_General
+            // 
+            this.dg_General.AllowUserToAddRows = false;
+            this.dg_General.AllowUserToDeleteRows = false;
+            this.dg_General.AllowUserToResizeRows = false;
+            this.dg_General.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dg_General.Location = new System.Drawing.Point(0, 2);
+            this.dg_General.Name = "dg_General";
+            this.dg_General.ReadOnly = true;
+            this.dg_General.RowHeadersVisible = false;
+            this.dg_General.Size = new System.Drawing.Size(687, 207);
+            this.dg_General.TabIndex = 3;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,9 +593,11 @@
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
+            this.tp_Detallada.ResumeLayout(false);
+            this.tp_Detallada.PerformLayout();
+            this.tp_PDF.ResumeLayout(false);
+            this.tp_General.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dg_General)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -611,11 +642,13 @@
         private System.Windows.Forms.ToolStripButton tsb_Exportar;
         private System.Windows.Forms.CheckBox cb_NoReg;
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tp_Detallada;
+        private System.Windows.Forms.TabPage tp_PDF;
         private System.Windows.Forms.WebBrowser wb_pdfViewer;
         private System.Windows.Forms.TextBox tb_Comentarios;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TabPage tp_General;
+        private System.Windows.Forms.DataGridView dg_General;
     }
 }
 

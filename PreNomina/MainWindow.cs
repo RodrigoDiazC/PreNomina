@@ -56,17 +56,18 @@ namespace TimeChecker
             // Muestra empleados en tabla
             generateTable(gEmpleados);
 
-            // Elimina la información de la tabla inferior
-            dataGrid1.DataSource = null;
-
             // Abre PDF en web browser
             this.wb_pdfViewer.Navigate(openFileDialog.FileName);
 
-            // Inicializa las tablas con el primer empleado
+            // Inicializa la tabla secundaria con el primer empleado
             this.currentEmpleadoID = 0;
             fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
             setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
             updateHighlight();
+
+            // Inicializa la tabla general
+            fillTablaGeneral(this.gEmpleados);
+
 
         }
 
@@ -170,6 +171,71 @@ namespace TimeChecker
 
         }
 
+        // Tabla de vista general
+        private void fillTablaGeneral(List<Empleado> empleados)
+        {
+            // Genera los headers (COLUMNAS)  -------------------------------------------------------
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            dt.Columns.Add(new DataColumn("Departamento", typeof(string)));
+
+            // Obtiene el empleado con más días
+            int prevMax = 0;
+            int emID = 0;
+            foreach (Empleado em in this.gEmpleados)
+            {
+                if (em.Dias.Count > prevMax)
+                {
+                    prevMax = em.Dias.Count;
+                    emID = em.ID;
+                }
+            }
+
+            foreach (TiemposDia t in empleados[emID].Dias)
+            {
+                dt.Columns.Add(new DataColumn(t.dia.Day.ToString(), typeof(string)));
+            }
+
+            dt.Columns.Add(new DataColumn("TOT", typeof(int)));
+            dt.Columns.Add(new DataColumn("Puntualidad", typeof(bool)));
+            dt.Columns.Add(new DataColumn("Asistencia", typeof(bool)));
+            dt.Columns.Add(new DataColumn("Desempeño", typeof(bool)));
+
+            // Genera las rows (FILAS) -------------------------------------------------------------------------------
+            foreach (Empleado em in empleados)
+            {
+                DataRow fila = dt.NewRow();
+                int i = 0;
+
+                // Departamento
+                fila[i++] = "INGENIERIA";
+
+                for (int t = 0; t < em.Dias.Count; t++)
+                {
+                    skipCol:
+                    if (dt.Columns[i].ColumnName == em.Dias[t].dia.Day.ToString()) fila[i++] = em.Dias[t].status;
+                    else
+                    {
+                        i++;
+                        goto skipCol;
+                    }
+                }
+
+                dt.Rows.Add(fila);
+            }
+
+            // Propiedades de lectura escritura para cada columna
+            dt.Columns[0].ReadOnly = true;
+
+            // Pasa a tabla
+            this.dg_General.DataSource = dt;
+
+            // Propiedades dela tabla
+            this.dg_General.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            foreach (DataGridViewColumn col in this.dg_General.Columns) col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+        }
+
         //Setea atributos del empleado en la interfaz
         private void setEmpleadoPropiedadesUI(Empleado em)
         {
@@ -253,6 +319,160 @@ namespace TimeChecker
                 setEmpleadoTimeUI(em, e.ColumnIndex - 1, e.RowIndex);
             }
 
+        }
+
+        // Exporta tabla a excel
+        private void tsb_Exportar_Click(object sender, EventArgs e)
+        {
+            //---- Ruta del archivo plantilla
+            string rutaTemplate = Directory.GetCurrentDirectory() + "\\Template.xlsx";
+            string rutaFolder = Directory.GetCurrentDirectory() + "\\Test";
+            //--- Crea carpeta
+            Directory.CreateDirectory(rutaFolder);
+
+            //--- Nueva ruta del archivo
+            string rutaNueva = rutaFolder + "\\test.xls";
+
+            //--- Toolkit para Excel ----//
+            Workbook mWorkBook;
+            Sheets mWorkSheets;
+            Worksheet mWSheet1;
+            Microsoft.Office.Interop.Excel.Application oXL;
+
+            //--- Creando objeto y configurando parametros
+            oXL = new Microsoft.Office.Interop.Excel.Application();
+            oXL.Visible = true;    //Para que no abra la ventana de excel
+            oXL.DisplayAlerts = false;
+
+            //--- Abre el archivo
+            mWorkBook = oXL.Workbooks.Open(rutaTemplate, 0, false, 5, "", "", false, XlPlatform.xlWindows, "", true, false, 0, true, false, false);
+
+            //--- Get all the sheets in the workbook
+            mWorkSheets = mWorkBook.Worksheets;
+
+            //--- Get the allready exists sheet
+            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Hoja1");
+
+            //------------------------------------------------------------------ Pone los datos estáticos
+
+            //------------------------------------------- Pone la cantidad de filas de acuerdo a la cantidad de empleados
+            for (int i = 0; i < this.gEmpleados.Count - 2; i++)
+            {
+                Range line = (Range)mWSheet1.Rows[6];
+                line.Insert();
+            }
+
+            //--------------------------------------------- Nombres de los empleados
+            int k = 0;
+            int cantRows = 0;
+            foreach (Empleado em in this.gEmpleados)
+            {
+                mWSheet1.Cells[2][5 + (k++)] = em.Nombre;
+            }
+            cantRows = k;
+            //--------------------------------------------- Los días
+            int prevMax = 0;
+            int emID = 0;
+            foreach (Empleado em in this.gEmpleados)
+            {
+                if (em.Dias.Count > prevMax)
+                {
+                    prevMax = em.Dias.Count;
+                    emID = em.ID;
+                }
+            }
+
+            // Dias extra a los 4 por default
+            if (prevMax > 4)
+            {
+                for (int i = 0; i < prevMax - 4; i++)
+                {
+                    Range rng = mWSheet1.get_Range("E4", Missing.Value);
+                    rng.EntireColumn.Insert(XlInsertShiftDirection.xlShiftToRight,
+                                            XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                }
+            }
+
+            k = 0;
+            int offDayIdx = 0;
+            int[] offDays = new int[12];
+
+            foreach (TiemposDia t in this.gEmpleados[emID].Dias)
+            {
+                if (t.entrada1.status == "DESCANSOTRAB" || t.salida1.status == "DESCANSOTRAB") // Dias inhabiles
+                {
+                    offDays[offDayIdx++] = 4 + (k);
+                    mWSheet1.Cells[4 + (k++)][4] = t.dia.Day + "*";
+                }
+                else mWSheet1.Cells[4 + (k++)][4] = t.dia.Day;
+            }
+
+            // --------------------------------------------------------------- Llena los días con el estatus
+            {
+                int i = 0, j = 0;
+                int offset = 0;
+
+                for (i = 0; i < this.gEmpleados.Count; i++)
+                {
+                    for (j = 0; j < this.gEmpleados[i].Dias.Count; j++)
+                    {
+                        if (offDays.Contains(4 + j + offset) && ((this.gEmpleados[i].Dias[j].entrada1.status != "DESCANSOTRAB") && (this.gEmpleados[i].Dias[j].salida1.status != "DESCANSOTRAB"))) //&& (offset == 0))
+                        {
+                            if (offDays.Contains(4 + j + 1 + offset) && ((this.gEmpleados[i].Dias[j + 1].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j + 1].salida1.status != "DESCANSOTRAB")))
+                            {
+                                offset++;
+                            }
+                            offset++;
+                        }
+                        mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
+                    }
+
+                    // Retardo total
+                    mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
+                    // Puntualidad
+                    mWSheet1.Cells[4 + j + offset + 1][5 + i] = this.gEmpleados[i].Puntualidad ? "SI" : "NO";
+                    // Asistencia
+                    mWSheet1.Cells[4 + j + offset + 2][5 + i] = this.gEmpleados[i].Asistencia ? "SI" : "NO";
+                    // Desempeño
+                    mWSheet1.Cells[4 + j + offset + 3][5 + i] = this.gEmpleados[i].Desempeno ? "SI" : "NO";
+
+                    offset = 0;
+                }
+            }
+
+            // ----------------------------------------------------------------------- Rango de meses
+            if (this.analizador.fechaInicio.Month != this.analizador.fechaFin.Month)
+            {
+                mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " - " + this.analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+            }
+            else mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+
+            // ----------------------------------------------------------------------- Comentarios
+            mWSheet1.Cells[3][cantRows + 1 + 5] = this.tb_Comentarios.Text;
+
+
+            // ---------------------------------------------------------------------- Guarda el nuevo reporte
+            try
+            {
+                mWorkBook.SaveAs(rutaNueva, XlFileFormat.xlWorkbookNormal,
+                    Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
+                    Missing.Value, Missing.Value, Missing.Value,
+                    Missing.Value, Missing.Value);
+                MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                MessageBox.Show("Por favor cierre el documento y vuelva a generar el reporte.\nError " + ex.Message.ToString());
+            }
+
+            mWorkBook.Close(Missing.Value, Missing.Value, Missing.Value);
+            mWSheet1 = null;
+            mWorkBook = null;
+            oXL.Quit();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
         }
 
         // Herramientas
@@ -427,160 +647,6 @@ namespace TimeChecker
         private void cb_Desempeno_CheckedChanged(object sender, EventArgs e)
         {
             this.gEmpleados[currentEmpleadoID].Desempeno = this.cb_Desempeno.Checked;
-        }
-        private void tsb_Exportar_Click(object sender, EventArgs e)
-        {
-            // Generar el archivo
-
-            //---- Ruta del archivo plantilla
-            string rutaTemplate = Directory.GetCurrentDirectory() + "\\Template.xlsx";
-            string rutaFolder = Directory.GetCurrentDirectory() + "\\Test";
-            //--- Crea carpeta
-            Directory.CreateDirectory(rutaFolder);
-
-            //--- Nueva ruta del archivo
-            string rutaNueva = rutaFolder + "\\test.xls";
-
-            //--- Toolkit para Excel ----//
-            Workbook mWorkBook;
-            Sheets mWorkSheets;
-            Worksheet mWSheet1;
-            Microsoft.Office.Interop.Excel.Application oXL;
-
-            //--- Creando objeto y configurando parametros
-            oXL = new Microsoft.Office.Interop.Excel.Application();
-            oXL.Visible = true;    //Para que no abra la ventana de excel
-            oXL.DisplayAlerts = false;
-
-            //--- Abre el archivo
-            mWorkBook = oXL.Workbooks.Open(rutaTemplate, 0, false, 5, "", "", false, XlPlatform.xlWindows, "", true, false, 0, true, false, false);
-
-            //--- Get all the sheets in the workbook
-            mWorkSheets = mWorkBook.Worksheets;
-
-            //--- Get the allready exists sheet
-            mWSheet1 = (Worksheet)mWorkSheets.get_Item("Hoja1");
-
-            //------------------------------------------------------------------ Pone los datos estáticos
-
-            //------------------------------------------- Pone la cantidad de filas de acuerdo a la cantidad de empleados
-            for (int i = 0; i < this.gEmpleados.Count - 2; i++)
-            {
-                Range line = (Range)mWSheet1.Rows[6];
-                line.Insert();
-            }
-
-            //--------------------------------------------- Nombres de los empleados
-            int k = 0;
-            int cantRows = 0;
-            foreach (Empleado em in this.gEmpleados)
-            {
-                mWSheet1.Cells[2][5 + (k++)] = em.Nombre;
-            }
-            cantRows = k;
-            //--------------------------------------------- Los días
-            int prevMax = 0;
-            int emID = 0;
-            foreach (Empleado em in this.gEmpleados)
-            {
-                if (em.Dias.Count > prevMax)
-                {
-                    prevMax = em.Dias.Count;
-                    emID = em.ID;
-                }
-            }
-
-            // Dias extra a los 4 por default
-            if (prevMax > 4)
-            {
-                for (int i = 0; i < prevMax - 4; i++)
-                {
-                    Range rng = mWSheet1.get_Range("E4", Missing.Value);
-                    rng.EntireColumn.Insert(XlInsertShiftDirection.xlShiftToRight,
-                                            XlInsertFormatOrigin.xlFormatFromRightOrBelow);
-                }
-            }
-
-            k = 0;
-            int offDayIdx = 0;
-            int[] offDays = new int[12];
-
-            foreach (TiemposDia t in this.gEmpleados[emID].Dias)
-            {
-                if (t.entrada1.status == "DESCANSOTRAB" || t.salida1.status == "DESCANSOTRAB") // Dias inhabiles
-                {
-                    offDays[offDayIdx++] = 4 + (k);
-                    mWSheet1.Cells[4 + (k++)][4] = t.dia.Day + "*";
-                }
-                else mWSheet1.Cells[4 + (k++)][4] = t.dia.Day;
-            }
-
-            // --------------------------------------------------------------- Llena los días con el estatus
-            {
-                int i = 0, j = 0;
-                int offset = 0;
-
-                for (i = 0; i < this.gEmpleados.Count; i++)
-                {
-                    for (j = 0; j < this.gEmpleados[i].Dias.Count; j++)
-                    {
-                        if (offDays.Contains(4 + j + offset) && ((this.gEmpleados[i].Dias[j].entrada1.status != "DESCANSOTRAB") && (this.gEmpleados[i].Dias[j].salida1.status != "DESCANSOTRAB"))) //&& (offset == 0))
-                        {
-                            if (offDays.Contains(4 + j + 1 + offset) && ((this.gEmpleados[i].Dias[j + 1].entrada1.status != "DESCANSOTRAB") || (this.gEmpleados[i].Dias[j + 1].salida1.status != "DESCANSOTRAB")))
-                            {
-                                offset++;
-                            }
-                            offset++;
-                        }
-                        mWSheet1.Cells[4 + j + offset][5 + i] = this.gEmpleados[i].Dias[j].status;
-                    }
-
-                    // Retardo total
-                    mWSheet1.Cells[4 + j + offset][5 + i] = ((int)this.gEmpleados[i].getRetardoTotal(horasL).TotalMinutes).ToString();
-                    // Puntualidad
-                    mWSheet1.Cells[4 + j + offset + 1][5 + i] = this.gEmpleados[i].Puntualidad ? "SI" : "NO";
-                    // Asistencia
-                    mWSheet1.Cells[4 + j + offset + 2][5 + i] = this.gEmpleados[i].Asistencia ? "SI" : "NO";
-                    // Desempeño
-                    mWSheet1.Cells[4 + j + offset + 3][5 + i] = this.gEmpleados[i].Desempeno ? "SI" : "NO";
-
-                    offset = 0;
-                }
-            }
-
-            // ----------------------------------------------------------------------- Rango de meses
-            if (this.analizador.fechaInicio.Month != this.analizador.fechaFin.Month)
-            {
-                mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " - " + this.analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
-            }
-            else mWSheet1.Cells[4][3] = this.analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
-
-            // ----------------------------------------------------------------------- Comentarios
-            mWSheet1.Cells[3][cantRows + 1 + 5] = this.tb_Comentarios.Text;
-
-
-            // ---------------------------------------------------------------------- Guarda el nuevo reporte
-            try
-            {
-                mWorkBook.SaveAs(rutaNueva, XlFileFormat.xlWorkbookNormal,
-                    Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
-                    Missing.Value, Missing.Value, Missing.Value,
-                    Missing.Value, Missing.Value);
-                MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
-            }
-            catch (System.Runtime.InteropServices.COMException ex)
-            {
-                MessageBox.Show("Por favor cierre el documento y vuelva a generar el reporte.\nError " + ex.Message.ToString());
-            }
-
-            mWorkBook.Close(Missing.Value, Missing.Value, Missing.Value);
-            mWSheet1 = null;
-            mWorkBook = null;
-            oXL.Quit();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
         }
         private void updateHighlight()
         {
