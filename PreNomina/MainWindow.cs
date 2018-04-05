@@ -163,6 +163,7 @@ namespace TimeChecker
                 this.dataGrid1.DataSource = dt;
                 // Inmoviliza columna de nombre
                 this.dataGrid1.Columns[0].Frozen = true;
+
             }
             catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
             {
@@ -221,6 +222,15 @@ namespace TimeChecker
                     }
                 }
 
+                // TOT
+                fila[i++] = em.getRetardoTotal(horasL).TotalMinutes;
+                // Puntualidad
+                fila[i++] = em.Puntualidad;
+                // Asistencia
+                fila[i++] = em.Asistencia;
+                // Asistencia
+                fila[i++] = em.Desempeno;
+
                 dt.Rows.Add(fila);
             }
 
@@ -232,8 +242,14 @@ namespace TimeChecker
 
             // Propiedades dela tabla
             this.dg_General.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            foreach (DataGridViewColumn col in this.dg_General.Columns) col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
-
+            //this.dg_General.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dg_General.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            
+            foreach (DataGridViewColumn col in this.dg_General.Columns)
+            {
+                //col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
         }
 
         //Setea atributos del empleado en la interfaz
@@ -520,6 +536,15 @@ namespace TimeChecker
 
             // Envía datos a control
             this.dataGrid.DataSource = dt;
+
+            // Propiedades dela tabla
+            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            foreach (DataGridViewColumn col in this.dataGrid.Columns)
+            {
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
         }
         private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente 4 No Registro
