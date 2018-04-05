@@ -68,7 +68,6 @@ namespace TimeChecker
             // Inicializa la tabla general
             fillTablaGeneral(this.gEmpleados);
 
-
         }
 
         // Despliega información del usuario
@@ -86,6 +85,49 @@ namespace TimeChecker
 
             // Actualiza el highlight 
             updateHighlight();
+
+        }
+
+        // LLena tabla de empleados
+        private void generateTable(List<Empleado> empleados)
+        {
+            // Tamaño de celda automático
+            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+
+            // Genera los headers dinamicamente -------------------------------------------------------
+            System.Data.DataTable dt = new System.Data.DataTable();
+
+            dt.Columns.Add(new DataColumn("ID", typeof(int)));
+            dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
+
+            // Propiedades de lectura escritura para cada columna
+            dt.Columns["ID"].ReadOnly = true;
+
+            // llena la ingormacion -------------------------------------------------------
+            int i = 0, k = 0;
+
+            foreach (Empleado e in empleados)
+            {
+                // ID
+                DataRow dr = dt.NewRow();
+                dr[k++] = e.ID;
+                dr[k++] = e.Nombre;
+                dt.Rows.Add(dr);
+                i = 0;
+                k = 0;
+            }
+
+            // Envía datos a control
+            this.dataGrid.DataSource = dt;
+
+            // Propiedades dela tabla
+            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            foreach (DataGridViewColumn col in this.dataGrid.Columns)
+            {
+                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
 
         }
 
@@ -506,47 +548,7 @@ namespace TimeChecker
                 return text.ToString();
             }
         }
-        private void generateTable(List<Empleado> empleados)
-        {
-            // Tamaño de celda automático
-            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
-
-            // Genera los headers dinamicamente -------------------------------------------------------
-            System.Data.DataTable dt = new System.Data.DataTable();
-
-            dt.Columns.Add(new DataColumn("ID", typeof(int)));
-            dt.Columns.Add(new DataColumn("Nombre del empleado", typeof(string)));
-
-            // Propiedades de lectura escritura para cada columna
-            dt.Columns["ID"].ReadOnly = true;
-
-            // llena la ingormacion -------------------------------------------------------
-            int i = 0, k = 0;
-
-            foreach (Empleado e in empleados)
-            {
-                // ID
-                DataRow dr = dt.NewRow();
-                dr[k++] = e.ID;
-                dr[k++] = e.Nombre;
-                dt.Rows.Add(dr);
-                i = 0;
-                k = 0;
-            }
-
-            // Envía datos a control
-            this.dataGrid.DataSource = dt;
-
-            // Propiedades dela tabla
-            this.dataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGrid.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            foreach (DataGridViewColumn col in this.dataGrid.Columns)
-            {
-                col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleLeft;
-                col.SortMode = DataGridViewColumnSortMode.NotSortable;
-            }
-
-        }
+      
         private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente 4 No Registro
         {
 
@@ -681,6 +683,15 @@ namespace TimeChecker
             highlightTable(3, !this.cb_Excedente.Checked);
             highlightTable(4, !this.cb_NoReg.Checked);
         }
+
+        // Pendiente
+        private void dg_General_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // El ID del usuario sera reemplazado por el indice de row (ya no son sorteables las tablas)
+        }
+
+
+
 
     }
 }

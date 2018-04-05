@@ -32,7 +32,6 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.bt_Abrir = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
-            this.dataGrid1 = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
             this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
@@ -73,8 +72,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tp_General = new System.Windows.Forms.TabPage();
             this.dg_General = new System.Windows.Forms.DataGridView();
+            this.dataGrid1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -84,6 +83,7 @@
             this.tp_PDF.SuspendLayout();
             this.tp_General.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).BeginInit();
             this.SuspendLayout();
             // 
             // openFileDialog
@@ -109,20 +109,6 @@
             this.dataGrid.Size = new System.Drawing.Size(270, 207);
             this.dataGrid.TabIndex = 1;
             this.dataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_CellClick);
-            // 
-            // dataGrid1
-            // 
-            this.dataGrid1.AllowUserToAddRows = false;
-            this.dataGrid1.AllowUserToDeleteRows = false;
-            this.dataGrid1.AllowUserToResizeRows = false;
-            this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid1.Location = new System.Drawing.Point(6, 40);
-            this.dataGrid1.Name = "dataGrid1";
-            this.dataGrid1.ReadOnly = true;
-            this.dataGrid1.RowHeadersVisible = false;
-            this.dataGrid1.Size = new System.Drawing.Size(676, 127);
-            this.dataGrid1.TabIndex = 2;
-            this.dataGrid1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid1_CellClick);
             // 
             // toolStrip1
             // 
@@ -484,7 +470,7 @@
             this.tabControl1.Location = new System.Drawing.Point(288, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(698, 369);
+            this.tabControl1.Size = new System.Drawing.Size(698, 378);
             this.tabControl1.TabIndex = 16;
             // 
             // tp_Detallada
@@ -502,7 +488,7 @@
             this.tp_Detallada.Location = new System.Drawing.Point(4, 22);
             this.tp_Detallada.Name = "tp_Detallada";
             this.tp_Detallada.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_Detallada.Size = new System.Drawing.Size(690, 343);
+            this.tp_Detallada.Size = new System.Drawing.Size(690, 352);
             this.tp_Detallada.TabIndex = 0;
             this.tp_Detallada.Text = "Vista Detallada";
             // 
@@ -550,7 +536,7 @@
             this.tp_General.Location = new System.Drawing.Point(4, 22);
             this.tp_General.Name = "tp_General";
             this.tp_General.Padding = new System.Windows.Forms.Padding(3);
-            this.tp_General.Size = new System.Drawing.Size(690, 343);
+            this.tp_General.Size = new System.Drawing.Size(690, 352);
             this.tp_General.TabIndex = 2;
             this.tp_General.Text = "Vista General";
             // 
@@ -565,12 +551,27 @@
             this.dg_General.RowHeadersVisible = false;
             this.dg_General.Size = new System.Drawing.Size(687, 207);
             this.dg_General.TabIndex = 3;
+            this.dg_General.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_General_CellClick);
+            // 
+            // dataGrid1
+            // 
+            this.dataGrid1.AllowUserToAddRows = false;
+            this.dataGrid1.AllowUserToDeleteRows = false;
+            this.dataGrid1.AllowUserToResizeRows = false;
+            this.dataGrid1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGrid1.Location = new System.Drawing.Point(6, 40);
+            this.dataGrid1.Name = "dataGrid1";
+            this.dataGrid1.ReadOnly = true;
+            this.dataGrid1.RowHeadersVisible = false;
+            this.dataGrid1.Size = new System.Drawing.Size(676, 127);
+            this.dataGrid1.TabIndex = 2;
+            this.dataGrid1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid1_CellClick);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(988, 400);
+            this.ClientSize = new System.Drawing.Size(988, 405);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.tb_Comentarios);
             this.Controls.Add(this.tabControl1);
@@ -582,7 +583,6 @@
             this.Name = "Form1";
             this.Text = "PreNomina";
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -597,6 +597,7 @@
             this.tp_PDF.ResumeLayout(false);
             this.tp_General.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dg_General)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGrid1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -607,7 +608,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.Button bt_Abrir;
         private System.Windows.Forms.DataGridView dataGrid;
-        private System.Windows.Forms.DataGridView dataGrid1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsb_Abrir;
         private System.Windows.Forms.Label lb_Empleados;
@@ -648,6 +648,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TabPage tp_General;
         private System.Windows.Forms.DataGridView dg_General;
+        private System.Windows.Forms.DataGridView dataGrid1;
     }
 }
 
