@@ -24,7 +24,7 @@ namespace PreNomina
             this.tb_Sal1.Text = ((Form1)main).horasL.salida1.ToShortTimeString();
             this.tb_Ent2.Text = ((Form1)main).horasL.entrada2.ToShortTimeString();
             this.tb_Sal2.Text = ((Form1)main).horasL.salida2.ToShortTimeString();
-
+            this.cb_TiempoAntRet.Checked = ((Form1)main).retardoAnticipo;
         }
 
         private void bt_Aplicar_Click(object sender, EventArgs e)
@@ -35,18 +35,20 @@ namespace PreNomina
                 ((Form1)main).horasL.salida1 = DateTime.Parse(this.tb_Sal1.Text);
                 ((Form1)main).horasL.entrada2 = DateTime.Parse(this.tb_Ent2.Text);
                 ((Form1)main).horasL.salida2 = DateTime.Parse(this.tb_Sal2.Text);
+
+                // Retardo mas anticipo
+                ((Form1)main).retardoAnticipo = this.cb_TiempoAntRet.Checked;
+
+                // Actualiza MainForm
+                ((Form1)main).updateConfig();
+
+                // Cierra esta ventana
+                this.Close();
             }
             catch
             {
                 MessageBox.Show("Compruebe el formato de los parametros");
             }
-
-            // Actualiza MainForm
-            ((Form1)main).updateConfig();
-
-            // Cierra esta ventana
-            this.Close();
-
         }
 
         private void bt_Cancelar_Click(object sender, EventArgs e)

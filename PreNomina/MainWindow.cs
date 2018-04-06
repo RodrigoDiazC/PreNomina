@@ -19,11 +19,15 @@ namespace PreNomina
     public partial class Form1 : Form
     {
         // Variables globales
+        public HorasLaborales horasL = new HorasLaborales();
+        public bool retardoAnticipo = false;
+
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
-        public HorasLaborales horasL = new HorasLaborales();
+        
         int currentEmpleadoID = 1;
         int currentDay = 1;
+        
 
         public Form1()
         {
@@ -297,7 +301,10 @@ namespace PreNomina
             this.cb_Puntualidad.Checked = em.Puntualidad;
             this.cb_Desempeno.Checked = em.Desempeno;
             this.tb_NombreEmpleado.Text = em.Nombre;
-            this.lb_TotRet.Text = ((int)em.getRetardoTotal(horasL).TotalMinutes).ToString();
+
+            if (retardoAnticipo) this.lb_TotRet.Text = (((int)em.getRetardoTotal(horasL).TotalMinutes) + ((int)em.getAnticipoTotal(horasL).TotalMinutes)).ToString();
+            else this.lb_TotRet.Text = ((int)em.getRetardoTotal(horasL).TotalMinutes).ToString();
+
             this.lb_TotExc.Text = ((int)em.getExtraTotal(horasL).TotalMinutes).ToString();
         }
 

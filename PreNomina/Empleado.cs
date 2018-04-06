@@ -64,7 +64,7 @@ namespace PreNomina
                     span += t.entrada1.Hora.Subtract(horas.entrada1);
                 }
 
-                if (t.entrada2.Hora.TimeOfDay == horas.entrada2.TimeOfDay)
+                if (t.entrada2.Hora.TimeOfDay > horas.entrada2.TimeOfDay)
                 {
                     span += t.entrada2.Hora.Subtract(horas.entrada2);
                 }
@@ -76,12 +76,12 @@ namespace PreNomina
         {
             TimeSpan span = TimeSpan.Parse("0");
 
-            if (this.Dias[index].entrada1.status == "RETARDO")
+            if (this.Dias[index].entrada1.Hora.TimeOfDay > horas.entrada1.TimeOfDay)
             {
                 span += this.Dias[index].entrada1.Hora.Subtract(horas.entrada1);
             }
 
-            if (this.Dias[index].entrada2.status == "RETARDO")
+            if (this.Dias[index].entrada2.Hora.TimeOfDay > horas.entrada2.TimeOfDay)
             {
                 span += this.Dias[index].entrada2.Hora.Subtract(horas.entrada2);
             }
@@ -107,6 +107,27 @@ namespace PreNomina
 
             return span;
         }
+        public TimeSpan getAnticipoTotal(HorasLaborales horas)
+        {
+            TimeSpan span = TimeSpan.Parse("0");
+
+            foreach (TiemposDia t in this.Dias)
+            {
+                
+                if ((t.salida1.Hora.TimeOfDay < horas.salida1.TimeOfDay) && (t.salida1.Hora.TimeOfDay != TimeSpan.Parse("00:00:00"))) // NOREGISTRO para no tomar en cuenta dias donde no se registró
+                {
+                    span += horas.salida1.Subtract(t.salida1.Hora);
+                }
+
+                if ((t.salida2.Hora.TimeOfDay < horas.salida2.TimeOfDay) && (t.salida2.Hora.TimeOfDay != TimeSpan.Parse("00:00:00")))
+                {
+                    span += horas.salida2.Subtract(t.salida2.Hora);
+                }
+            }
+
+            return span;
+        }
+
         public bool checkAsistencia()
         {
             int acc1 = 0, acc2 = 0;
