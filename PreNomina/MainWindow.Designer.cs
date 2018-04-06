@@ -35,6 +35,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
             this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
+            this.tsb_Opciones = new System.Windows.Forms.ToolStripButton();
             this.lb_Empleados = new System.Windows.Forms.Label();
             this.lb_Horarios = new System.Windows.Forms.Label();
             this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
@@ -73,7 +74,6 @@
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
-            this.tsb_Opciones = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -143,6 +143,16 @@
             this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
             this.tsb_Exportar.Text = "Exportar a excel";
             this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
+            // 
+            // tsb_Opciones
+            // 
+            this.tsb_Opciones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_Opciones.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Opciones.Image")));
+            this.tsb_Opciones.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_Opciones.Name = "tsb_Opciones";
+            this.tsb_Opciones.Size = new System.Drawing.Size(61, 22);
+            this.tsb_Opciones.Text = "Opciones";
+            this.tsb_Opciones.Click += new System.EventHandler(this.tsb_Opciones_Click);
             // 
             // lb_Empleados
             // 
@@ -571,16 +581,6 @@
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
             // 
-            // tsb_Opciones
-            // 
-            this.tsb_Opciones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsb_Opciones.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Opciones.Image")));
-            this.tsb_Opciones.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Opciones.Name = "tsb_Opciones";
-            this.tsb_Opciones.Size = new System.Drawing.Size(61, 22);
-            this.tsb_Opciones.Text = "Opciones";
-            this.tsb_Opciones.Click += new System.EventHandler(this.tsb_Opciones_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -592,6 +592,7 @@
             this.Controls.Add(this.dataGrid);
             this.Controls.Add(this.bt_Abrir);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "PreNomina";
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
