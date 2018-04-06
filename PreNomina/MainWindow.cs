@@ -707,7 +707,7 @@ namespace PreNomina
             {
                 foreach (Empleado em in this.gEmpleados)
                 {
-                    em.Puntualidad = em.checkPuntualidad(this.horasL);
+                    em.Puntualidad = em.checkPuntualidad(this.horasL, this.retardoAnticipo);
                 }
 
                 fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);

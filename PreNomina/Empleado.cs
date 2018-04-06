@@ -35,7 +35,7 @@ namespace PreNomina
             Dias = extraerDiasDeTokens(tokens);
             Dias = borrarDiasDuplicados(Dias);
             // Obtiene si fue puntual
-            Puntualidad = this.checkPuntualidad(horarioLaboral);
+            Puntualidad = this.checkPuntualidad(horarioLaboral, false);
             // Obtiene asistencia
             Asistencia = this.checkAsistencia();
         }
@@ -113,7 +113,7 @@ namespace PreNomina
 
             foreach (TiemposDia t in this.Dias)
             {
-                
+
                 if ((t.salida1.Hora.TimeOfDay < horas.salida1.TimeOfDay) && (t.salida1.Hora.TimeOfDay != TimeSpan.Parse("00:00:00"))) // NOREGISTRO para no tomar en cuenta dias donde no se registró
                 {
                     span += horas.salida1.Subtract(t.salida1.Hora);
@@ -146,10 +146,11 @@ namespace PreNomina
             if (acc2 >= 1) return false;
             else return true;
         }
-        public bool checkPuntualidad(HorasLaborales horas)
+        public bool checkPuntualidad(HorasLaborales horas, bool incluirAnticipo) // 0 Solo extra 1 Extra y anticipo
         {
-            TimeSpan span = TimeSpan.Parse("0");
+            //TimeSpan span = TimeSpan.Parse("0");
 
+            /*
             foreach (TiemposDia t in this.Dias)
             {
                 if (t.entrada1.status == "RETARDO")
@@ -162,9 +163,11 @@ namespace PreNomina
                     span += t.entrada2.Hora.Subtract(horas.entrada2);
                 }
             }
+            */
+            if (!incluirAnticipo) { if (getRetardoTotal(horas).TotalMinutes >= horas.limiteRetardo.TotalMinutes) return false; }
+            else { if ((getRetardoTotal(horas).TotalMinutes + getAnticipoTotal(horas).TotalMinutes) >= horas.limiteRetardo.TotalMinutes) return false; }
 
-            if (span >= horas.limiteRetardo) return false;
-            else return true;
+            return true;
         }
         public void setDia(TiemposDia nuevoHorario, int index)
         {
