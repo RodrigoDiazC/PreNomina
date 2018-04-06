@@ -14,20 +14,27 @@ using iTextSharp.text.pdf.parser;
 using Microsoft.Office.Interop.Excel;
 
 
-namespace TimeChecker
+namespace PreNomina
 {
     public partial class Form1 : Form
     {
         // Variables globales
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
-        HorasLaborales horasL = new HorasLaborales();
+        public HorasLaborales horasL = new HorasLaborales();
         int currentEmpleadoID = 1;
         int currentDay = 1;
 
         public Form1()
         {
             InitializeComponent();
+
+            // Setea los horarios laborales
+            this.horasL.entrada1 = DateTime.Parse("08:00");
+            this.horasL.salida1 = DateTime.Parse("13:00");
+            this.horasL.entrada2 = DateTime.Parse("14:00");
+            this.horasL.salida2 = DateTime.Parse("18:00");
+            this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
         }
 
         // Abre PDF
@@ -43,13 +50,6 @@ namespace TimeChecker
             openFileDialog.RestoreDirectory = true;
             openFileDialog.FileName = null;
             openFileDialog.ShowDialog();
-
-            // Setea los horarios laborales
-            this.horasL.entrada1 = DateTime.Parse("08:00");
-            this.horasL.salida1 = DateTime.Parse("13:00");
-            this.horasL.entrada2 = DateTime.Parse("14:00");
-            this.horasL.salida2 = DateTime.Parse("18:00");
-            this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
 
             if (openFileDialog.FileName != "")
             {
@@ -71,7 +71,6 @@ namespace TimeChecker
                 // Inicializa la tabla general
                 fillTablaGeneral(this.gEmpleados);
             }
-
         }
 
         // Despliega información del usuario
@@ -214,9 +213,6 @@ namespace TimeChecker
         // Tabla de vista general
         private void fillTablaGeneral(List<Empleado> empleados)
         {
-
-
-
             // Genera los headers (COLUMNAS)  -------------------------------------------------------
             System.Data.DataTable dt = new System.Data.DataTable();
 
@@ -371,16 +367,12 @@ namespace TimeChecker
         // Muestra en interfaz información detallada de la hora selecionada en la tabla secundaria
         private void dataGrid1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            foreach (Empleado em in gEmpleados.Where(x => x.ID == this.currentEmpleadoID))
-            {
-                this.currentDay = e.ColumnIndex - 1;
-                setEmpleadoTimeUI(em, e.ColumnIndex - 1, e.RowIndex);
-            }
-
+            this.currentDay = e.ColumnIndex - 1;
+            setEmpleadoTimeUI(this.gEmpleados[currentEmpleadoID], e.ColumnIndex - 1, e.RowIndex);
         }
 
         // Exporta tabla a excel
-        private void bt_ExpExcel_Click(object sender, EventArgs e)
+        private void tsb_Exportar_Click(object sender, EventArgs e)
         {
             if (this.gEmpleados.Count > 0)
             {
@@ -692,6 +684,30 @@ namespace TimeChecker
         {
             if (this.gEmpleados.Count != 0)
                 if (this.tabControl1.SelectedTab.Name == "tp_General") fillTablaGeneral(this.gEmpleados);
+        }
+
+        // Ventana de opciones
+        private void tsb_Opciones_Click(object sender, EventArgs e)
+        {
+            Form ventanaOpciones = new Opciones();
+            ventanaOpciones.Show();
+        }
+
+        // Vuelve a cargar todas las tablas
+        public void updateConfig()
+        {
+            if (this.gEmpleados.Count > 0)
+            {
+                foreach (Empleado em in this.gEmpleados)
+                {
+                    em.Puntualidad = em.checkPuntualidad(this.horasL);
+                }
+
+                fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
+                setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
+
+                updateHighlight();
+            }
         }
 
     }

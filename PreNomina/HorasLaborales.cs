@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeChecker
+namespace PreNomina
 {
-    class HorasLaborales
+    public class HorasLaborales
     {
         public DateTime entrada1;
         public DateTime salida1;
