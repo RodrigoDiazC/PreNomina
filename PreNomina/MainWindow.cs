@@ -21,6 +21,7 @@ namespace PreNomina
         // Variables globales
         public HorasLaborales horasL = new HorasLaborales();
         public bool retardoAnticipo = false;
+        public String rutaFolder = "";
 
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
@@ -392,13 +393,10 @@ namespace PreNomina
             {
                 if (this.gEmpleados.Count > 0)
                 {
-
-                    string rutaFolder = Directory.GetCurrentDirectory() + "\\Test";
-                    //--- Crea carpeta
-                    Directory.CreateDirectory(rutaFolder);
+                    string rutaCompleta = "";
 
                     //--- Nueva ruta del archivo
-                    string rutaNueva = rutaFolder + "\\Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + ".xls";
+                    string nombreArchivo = "\\Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + ".xls";
 
                     //--- Toolkit para Excel ----//
                     Workbook mWorkBook;
@@ -521,11 +519,21 @@ namespace PreNomina
                     // ---------------------------------------------------------------------- Guarda el nuevo reporte
                     try
                     {
-                        mWorkBook.SaveAs(rutaNueva, XlFileFormat.xlWorkbookNormal,
+                        if (this.rutaFolder == "")
+                        {
+                            var folder = new FolderBrowserDialog();
+                            folder.Description = "Seleccione el directrio de destino";
+                            folder.ShowDialog();
+                            this.rutaFolder = folder.SelectedPath;
+                            rutaCompleta = this.rutaFolder + nombreArchivo;
+                        }
+                        else rutaCompleta = this.rutaFolder + nombreArchivo;
+                       
+                        mWorkBook.SaveAs(rutaCompleta, XlFileFormat.xlWorkbookNormal,
                             Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
                             Missing.Value, Missing.Value, Missing.Value,
                             Missing.Value, Missing.Value);
-                            MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
+                            MessageBox.Show("Reporte generado exitosamente.\n " + rutaCompleta);
                     }
                     catch (System.Runtime.InteropServices.COMException ex)
                     {
@@ -540,9 +548,7 @@ namespace PreNomina
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
-
-                    // Abre documento
-                    File.Open(rutaNueva, FileMode.Open);
+                 
                 }
                 else MessageBox.Show("No hay información para exportar. Abra un archivo primero.");
             }

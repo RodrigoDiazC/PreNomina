@@ -26,6 +26,7 @@ namespace PreNomina
             this.tb_Sal2.Text = ((Form1)main).horasL.salida2.ToShortTimeString();
             this.cb_TiempoAntRet.Checked = ((Form1)main).retardoAnticipo;
             this.nud_Limite.Value = (int)((Form1)main).horasL.limiteRetardo.TotalMinutes;
+            this.tb_Ruta.Text = ((Form1)main).rutaFolder;
         }
 
         private void bt_Aplicar_Click(object sender, EventArgs e)
@@ -40,12 +41,16 @@ namespace PreNomina
                 // Retardo mas anticipo
                 ((Form1)main).retardoAnticipo = this.cb_TiempoAntRet.Checked;
 
+                // Ruta de folder
+                ((Form1)main).rutaFolder = this.tb_Ruta.Text;
+
                 // Limite de retardo
                 ((Form1)main).horasL.limiteRetardo = TimeSpan.FromMinutes((double)this.nud_Limite.Value);
 
                 // Actualiza MainForm
                 ((Form1)main).updateConfig();
 
+  
                 // Cierra esta ventana
                 this.Close();
             }
@@ -58,6 +63,13 @@ namespace PreNomina
         private void bt_Cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void bt_Examinar_Click(object sender, EventArgs e)
+        {
+            var folder = new FolderBrowserDialog();
+            folder.ShowDialog();
+            this.tb_Ruta.Text = folder.SelectedPath;
         }
     }
 }
