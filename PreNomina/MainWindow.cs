@@ -110,7 +110,7 @@ namespace TimeChecker
             dt.Columns["ID"].ReadOnly = true;
 
             // llena la ingormacion -------------------------------------------------------
-            int i = 0, k = 0;
+            int k = 0;
 
             foreach (Empleado e in empleados)
             {
@@ -119,7 +119,6 @@ namespace TimeChecker
                 dr[k++] = e.ID;
                 dr[k++] = e.Nombre;
                 dt.Rows.Add(dr);
-                i = 0;
                 k = 0;
             }
 
@@ -151,15 +150,7 @@ namespace TimeChecker
 
                 foreach (TiemposDia t in em.Dias)
                 {
-                    try
-                    {
-                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
-                    }
-                    catch (System.Data.DuplicateNameException e)
-                    {
-                        dt.Columns.Add(new DataColumn(t.dia.ToShortDateString() + " (repetido)", typeof(TimeSpan)));
-
-                    }
+                    dt.Columns.Add(new DataColumn(t.dia.ToShortDateString(), typeof(TimeSpan)));
                 }
 
                 // Propiedades de lectura escritura para cada columna
@@ -389,7 +380,7 @@ namespace TimeChecker
         }
 
         // Exporta tabla a excel
-        private void tsb_Exportar_Click(object sender, EventArgs e)
+        private void bt_ExpExcel_Click(object sender, EventArgs e)
         {
             if (this.gEmpleados.Count > 0)
             {
@@ -544,10 +535,7 @@ namespace TimeChecker
                 GC.Collect();
             }
             else MessageBox.Show("No hay información para exportar. Abra un archivo primero.");
-
-
         }
-
         // Herramientas
         private static string ExtractTextFromPdf(string path)
         {
@@ -702,10 +690,10 @@ namespace TimeChecker
         // Vuelve a cargar la tabla de preview (General)
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
             if (this.gEmpleados.Count != 0)
                 if (this.tabControl1.SelectedTab.Name == "tp_General") fillTablaGeneral(this.gEmpleados);
         }
+
     }
 }
 

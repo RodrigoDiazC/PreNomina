@@ -34,7 +34,6 @@
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
-            this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
             this.lb_Empleados = new System.Windows.Forms.Label();
             this.lb_Horarios = new System.Windows.Forms.Label();
             this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
@@ -68,11 +67,12 @@
             this.tp_Detallada = new System.Windows.Forms.TabPage();
             this.dataGrid1 = new System.Windows.Forms.DataGridView();
             this.tp_General = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.dg_General = new System.Windows.Forms.DataGridView();
+            this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
-            this.tb_Comentarios = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.bt_ExpExcel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -114,8 +114,7 @@
             // 
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_Abrir,
-            this.tsb_Exportar});
+            this.tsb_Abrir});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(988, 25);
@@ -131,17 +130,6 @@
             this.tsb_Abrir.Size = new System.Drawing.Size(79, 22);
             this.tsb_Abrir.Text = "Abrir archivo";
             this.tsb_Abrir.Click += new System.EventHandler(this.tsb_Abrir_Click);
-            // 
-            // tsb_Exportar
-            // 
-            this.tsb_Exportar.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsb_Exportar.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Exportar.Image")));
-            this.tsb_Exportar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Exportar.Name = "tsb_Exportar";
-            this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
-            this.tsb_Exportar.Text = "Exportar a Excel";
-            this.tsb_Exportar.ToolTipText = "Exportar a Excel";
-            this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
             // 
             // lb_Empleados
             // 
@@ -520,6 +508,15 @@
             this.tp_General.TabIndex = 2;
             this.tp_General.Text = "Vista Preliminar";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 225);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 13);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "Comentarios";
+            // 
             // dg_General
             // 
             this.dg_General.AllowUserToAddRows = false;
@@ -531,6 +528,15 @@
             this.dg_General.RowHeadersVisible = false;
             this.dg_General.Size = new System.Drawing.Size(678, 207);
             this.dg_General.TabIndex = 3;
+            // 
+            // tb_Comentarios
+            // 
+            this.tb_Comentarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tb_Comentarios.Location = new System.Drawing.Point(6, 241);
+            this.tb_Comentarios.Multiline = true;
+            this.tb_Comentarios.Name = "tb_Comentarios";
+            this.tb_Comentarios.Size = new System.Drawing.Size(678, 96);
+            this.tb_Comentarios.TabIndex = 17;
             // 
             // tp_PDF
             // 
@@ -552,29 +558,22 @@
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
             // 
-            // tb_Comentarios
+            // bt_ExpExcel
             // 
-            this.tb_Comentarios.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tb_Comentarios.Location = new System.Drawing.Point(6, 241);
-            this.tb_Comentarios.Multiline = true;
-            this.tb_Comentarios.Name = "tb_Comentarios";
-            this.tb_Comentarios.Size = new System.Drawing.Size(678, 96);
-            this.tb_Comentarios.TabIndex = 17;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 225);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 13);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "Comentarios";
+            this.bt_ExpExcel.Location = new System.Drawing.Point(12, 273);
+            this.bt_ExpExcel.Name = "bt_ExpExcel";
+            this.bt_ExpExcel.Size = new System.Drawing.Size(270, 23);
+            this.bt_ExpExcel.TabIndex = 17;
+            this.bt_ExpExcel.Text = "Exportar a excel";
+            this.bt_ExpExcel.UseVisualStyleBackColor = true;
+            this.bt_ExpExcel.Click += new System.EventHandler(this.bt_ExpExcel_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(988, 398);
+            this.Controls.Add(this.bt_ExpExcel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.lb_Empleados);
             this.Controls.Add(this.toolStrip1);
@@ -640,7 +639,6 @@
         private System.Windows.Forms.RadioButton rb_Vacaciones;
         private System.Windows.Forms.RadioButton rb_Permiso;
         private System.Windows.Forms.RadioButton rb_TrabajoF;
-        private System.Windows.Forms.ToolStripButton tsb_Exportar;
         private System.Windows.Forms.CheckBox cb_NoReg;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tp_Detallada;
@@ -651,6 +649,7 @@
         private System.Windows.Forms.TabPage tp_General;
         private System.Windows.Forms.DataGridView dg_General;
         private System.Windows.Forms.DataGridView dataGrid1;
+        private System.Windows.Forms.Button bt_ExpExcel;
     }
 }
 
