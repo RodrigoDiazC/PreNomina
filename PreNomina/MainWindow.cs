@@ -515,7 +515,6 @@ namespace PreNomina
                     // ----------------------------------------------------------------------- Comentarios
                     mWSheet1.Cells[3][cantRows + 1 + 5] = this.tb_Comentarios.Text;
 
-
                     // ---------------------------------------------------------------------- Guarda el nuevo reporte
                     try
                     {
