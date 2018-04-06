@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TimeChecker
+namespace PreNomina
 {
     class Empleado
     {
@@ -59,12 +59,12 @@ namespace TimeChecker
 
             foreach (TiemposDia t in this.Dias)
             {
-                if (t.entrada1.status == "RETARDO")
+                if (t.entrada1.Hora.TimeOfDay > horas.entrada1.TimeOfDay)
                 {
                     span += t.entrada1.Hora.Subtract(horas.entrada1);
                 }
 
-                if (t.entrada2.status == "RETARDO")
+                if (t.entrada2.Hora.TimeOfDay == horas.entrada2.TimeOfDay)
                 {
                     span += t.entrada2.Hora.Subtract(horas.entrada2);
                 }
