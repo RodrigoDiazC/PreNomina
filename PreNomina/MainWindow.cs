@@ -522,8 +522,12 @@ namespace PreNomina
                         {
                             var folder = new FolderBrowserDialog();
                             folder.Description = "Seleccione el directrio de destino";
-                            folder.ShowDialog();
-                            this.rutaFolder = folder.SelectedPath;
+
+                            while (this.rutaFolder == "") {
+                                folder.ShowDialog();
+                                this.rutaFolder = folder.SelectedPath;
+                            }
+
                             rutaCompleta = this.rutaFolder + nombreArchivo;
                         }
                         else rutaCompleta = this.rutaFolder + nombreArchivo;
