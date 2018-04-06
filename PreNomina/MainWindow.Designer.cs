@@ -114,12 +114,14 @@
             // toolStrip1
             // 
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsb_Abrir,
             this.tsb_Exportar,
             this.tsb_Opciones});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.Size = new System.Drawing.Size(988, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
@@ -166,7 +168,7 @@
             // lb_Horarios
             // 
             this.lb_Horarios.AutoSize = true;
-            this.lb_Horarios.Location = new System.Drawing.Point(3, 19);
+            this.lb_Horarios.Location = new System.Drawing.Point(6, 16);
             this.lb_Horarios.Name = "lb_Horarios";
             this.lb_Horarios.Size = new System.Drawing.Size(97, 13);
             this.lb_Horarios.TabIndex = 5;
@@ -548,6 +550,7 @@
             this.dg_General.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dg_General.Location = new System.Drawing.Point(6, 2);
             this.dg_General.Name = "dg_General";
+            this.dg_General.ReadOnly = true;
             this.dg_General.RowHeadersVisible = false;
             this.dg_General.Size = new System.Drawing.Size(678, 207);
             this.dg_General.TabIndex = 3;

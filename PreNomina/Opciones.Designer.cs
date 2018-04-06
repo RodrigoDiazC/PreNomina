@@ -41,8 +41,13 @@
             this.bt_Cancelar = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_TiempoAntRet = new System.Windows.Forms.CheckBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.nud_Limite = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.gb_Horarios.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Limite)).BeginInit();
             this.SuspendLayout();
             // 
             // gb_Horarios
@@ -157,7 +162,7 @@
             this.groupBox1.Controls.Add(this.cb_TiempoAntRet);
             this.groupBox1.Location = new System.Drawing.Point(200, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(234, 117);
+            this.groupBox1.Size = new System.Drawing.Size(234, 61);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Opciones de registros";
@@ -165,12 +170,50 @@
             // cb_TiempoAntRet
             // 
             this.cb_TiempoAntRet.AutoSize = true;
-            this.cb_TiempoAntRet.Location = new System.Drawing.Point(6, 23);
+            this.cb_TiempoAntRet.Location = new System.Drawing.Point(6, 26);
             this.cb_TiempoAntRet.Name = "cb_TiempoAntRet";
             this.cb_TiempoAntRet.Size = new System.Drawing.Size(194, 17);
             this.cb_TiempoAntRet.TabIndex = 1;
             this.cb_TiempoAntRet.Text = "Incluir tiempo de anticipo en retardo";
             this.cb_TiempoAntRet.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.nud_Limite);
+            this.groupBox2.Location = new System.Drawing.Point(200, 79);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(234, 50);
+            this.groupBox2.TabIndex = 6;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Limites";
+            // 
+            // nud_Limite
+            // 
+            this.nud_Limite.Location = new System.Drawing.Point(143, 22);
+            this.nud_Limite.Maximum = new decimal(new int[] {
+            500,
+            0,
+            0,
+            0});
+            this.nud_Limite.Name = "nud_Limite";
+            this.nud_Limite.Size = new System.Drawing.Size(76, 20);
+            this.nud_Limite.TabIndex = 0;
+            this.nud_Limite.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nud_Limite.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 24);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(131, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Tiempo de tolerancia (min)";
             // 
             // Opciones
             // 
@@ -180,6 +223,7 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.bt_Cancelar;
             this.ClientSize = new System.Drawing.Size(446, 181);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bt_Cancelar);
             this.Controls.Add(this.bt_Aplicar);
@@ -194,6 +238,9 @@
             this.gb_Horarios.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Limite)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -213,5 +260,8 @@
         private System.Windows.Forms.Button bt_Cancelar;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox cb_TiempoAntRet;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown nud_Limite;
     }
 }

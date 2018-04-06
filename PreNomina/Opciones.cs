@@ -25,6 +25,7 @@ namespace PreNomina
             this.tb_Ent2.Text = ((Form1)main).horasL.entrada2.ToShortTimeString();
             this.tb_Sal2.Text = ((Form1)main).horasL.salida2.ToShortTimeString();
             this.cb_TiempoAntRet.Checked = ((Form1)main).retardoAnticipo;
+            this.nud_Limite.Value = (int)((Form1)main).horasL.limiteRetardo.TotalMinutes;
         }
 
         private void bt_Aplicar_Click(object sender, EventArgs e)
@@ -38,6 +39,9 @@ namespace PreNomina
 
                 // Retardo mas anticipo
                 ((Form1)main).retardoAnticipo = this.cb_TiempoAntRet.Checked;
+
+                // Limite de retardo
+                ((Form1)main).horasL.limiteRetardo = TimeSpan.FromMinutes((double)this.nud_Limite.Value);
 
                 // Actualiza MainForm
                 ((Form1)main).updateConfig();
