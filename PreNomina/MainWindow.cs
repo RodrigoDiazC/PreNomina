@@ -74,6 +74,10 @@ namespace PreNomina
 
                 // Inicializa la tabla general
                 fillTablaGeneral(this.gEmpleados);
+
+                // Pone titulo a la ventana
+                this.Text = "Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+
             }
         }
 
@@ -394,7 +398,7 @@ namespace PreNomina
                     Directory.CreateDirectory(rutaFolder);
 
                     //--- Nueva ruta del archivo
-                    string rutaNueva = rutaFolder + "\\test.xls";
+                    string rutaNueva = rutaFolder + "\\Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + ".xls";
 
                     //--- Toolkit para Excel ----//
                     Workbook mWorkBook;
@@ -404,7 +408,7 @@ namespace PreNomina
 
                     //--- Creando objeto y configurando parametros
                     oXL = new Microsoft.Office.Interop.Excel.Application();
-                    oXL.Visible = true;    //Para que no abra la ventana de excel
+                    oXL.Visible = false;    //Para que no abra la ventana de excel
                     oXL.DisplayAlerts = false;
 
                     //--- Abre el archivo
@@ -521,13 +525,13 @@ namespace PreNomina
                             Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
                             Missing.Value, Missing.Value, Missing.Value,
                             Missing.Value, Missing.Value);
-                        MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
+                            MessageBox.Show("Reporte generado exitosamente.\n " + rutaNueva);
                     }
                     catch (System.Runtime.InteropServices.COMException ex)
                     {
                         MessageBox.Show("Por favor cierre el documento y vuelva a generar el reporte.\nError " + ex.Message.ToString());
                     }
-
+                    
                     mWorkBook.Close(Missing.Value, Missing.Value, Missing.Value);
                     mWSheet1 = null;
                     mWorkBook = null;
@@ -536,6 +540,9 @@ namespace PreNomina
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
+
+                    // Abre documento
+                    File.Open(rutaNueva, FileMode.Open);
                 }
                 else MessageBox.Show("No hay información para exportar. Abra un archivo primero.");
             }
