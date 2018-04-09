@@ -94,8 +94,13 @@ namespace PreNomina
                 // Tamaño de celda automático
                 this.dataGrid1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
 
+                // LLena tabla e información
                 fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
                 setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
+
+                // Selecciona el mismo row en la pantalla de vista general
+                this.dg_General.ClearSelection();
+                this.dg_General.Rows[this.currentEmpleadoID].Cells[0].Selected = true;
 
                 // Actualiza el highlight 
                 updateHighlight();
