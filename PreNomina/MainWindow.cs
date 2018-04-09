@@ -565,7 +565,11 @@ namespace PreNomina
                     GC.Collect();
                     GC.WaitForPendingFinalizers();
                     GC.Collect();
-                 
+
+
+                    // Abre archivo
+                    System.Diagnostics.Process.Start(rutaCompleta);
+
                 }
                 else MessageBox.Show("No hay información para exportar. Abra un archivo primero.");
             }
@@ -758,6 +762,13 @@ namespace PreNomina
      
         }
 
+        private void tsb_AbrirFolder_Click(object sender, EventArgs e)
+        {
+            if(this.rutaFolder != "")
+            {
+                System.Diagnostics.Process.Start(this.rutaFolder);
+            }
+        }
     }
 }
 

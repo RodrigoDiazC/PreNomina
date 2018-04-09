@@ -74,6 +74,7 @@
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
+            this.tsb_AbrirFolder = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -118,6 +119,7 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsb_Abrir,
             this.tsb_Exportar,
+            this.tsb_AbrirFolder,
             this.tsb_Opciones});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -584,6 +586,16 @@
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
             // 
+            // tsb_AbrirFolder
+            // 
+            this.tsb_AbrirFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_AbrirFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsb_AbrirFolder.Image")));
+            this.tsb_AbrirFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_AbrirFolder.Name = "tsb_AbrirFolder";
+            this.tsb_AbrirFolder.Size = new System.Drawing.Size(79, 22);
+            this.tsb_AbrirFolder.Text = "Abrir carpeta";
+            this.tsb_AbrirFolder.Click += new System.EventHandler(this.tsb_AbrirFolder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -667,6 +679,7 @@
         private System.Windows.Forms.DataGridView dataGrid1;
         private System.Windows.Forms.ToolStripButton tsb_Exportar;
         private System.Windows.Forms.ToolStripButton tsb_Opciones;
+        private System.Windows.Forms.ToolStripButton tsb_AbrirFolder;
     }
 }
 
