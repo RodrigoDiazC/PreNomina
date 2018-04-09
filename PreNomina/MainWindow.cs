@@ -40,6 +40,10 @@ namespace PreNomina
             this.horasL.entrada2 = DateTime.Parse("14:00");
             this.horasL.salida2 = DateTime.Parse("18:00");
             this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
+
+            // Configuración de usuario
+            Properties.Settings.Default.Reload();
+            this.rutaFolder = Properties.Settings.Default["Ruta"].ToString();
         }
 
         // Abre PDF
@@ -534,6 +538,11 @@ namespace PreNomina
                             }
 
                             rutaCompleta = this.rutaFolder + nombreArchivo;
+
+                            // Guarda ruta en archivo de configuración
+                            Properties.Settings.Default["Ruta"] = this.rutaFolder;
+                            Properties.Settings.Default.Save();
+
                         }
                         else rutaCompleta = this.rutaFolder + nombreArchivo;
                        
@@ -742,6 +751,11 @@ namespace PreNomina
 
                 updateHighlight();
             }
+
+            // Guarda configuración de usuario
+            Properties.Settings.Default["Ruta"] = this.rutaFolder;
+            Properties.Settings.Default.Save();       
+     
         }
 
     }

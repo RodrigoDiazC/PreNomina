@@ -50,8 +50,7 @@ namespace PreNomina
                 // Actualiza MainForm
                 ((Form1)main).updateConfig();
 
-  
-                // Cierra esta ventana
+                  // Cierra esta ventana
                 this.Close();
             }
             catch

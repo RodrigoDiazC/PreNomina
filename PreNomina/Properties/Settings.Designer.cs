@@ -22,5 +22,17 @@ namespace PreNomina.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Ruta {
+            get {
+                return ((string)(this["Ruta"]));
+            }
+            set {
+                this["Ruta"] = value;
+            }
+        }
     }
 }
