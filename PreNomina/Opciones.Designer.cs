@@ -46,16 +46,16 @@
             this.nud_Limite = new System.Windows.Forms.NumericUpDown();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.nud_Lim = new System.Windows.Forms.NumericUpDown();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.tb_Ruta = new System.Windows.Forms.TextBox();
             this.bt_Examinar = new System.Windows.Forms.Button();
+            this.tb_Ruta = new System.Windows.Forms.TextBox();
             this.gb_Horarios.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Limite)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lim)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -227,7 +227,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.nud_Lim);
             this.groupBox3.Location = new System.Drawing.Point(200, 79);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(234, 50);
@@ -244,19 +244,19 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Tiempo de tolerancia (min)";
             // 
-            // numericUpDown1
+            // nud_Lim
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(143, 22);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.nud_Lim.Location = new System.Drawing.Point(143, 22);
+            this.nud_Lim.Maximum = new decimal(new int[] {
             500,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(76, 20);
-            this.numericUpDown1.TabIndex = 0;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.nud_Lim.Name = "nud_Lim";
+            this.nud_Lim.Size = new System.Drawing.Size(76, 20);
+            this.nud_Lim.TabIndex = 0;
+            this.nud_Lim.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.nud_Lim.Value = new decimal(new int[] {
             30,
             0,
             0,
@@ -273,14 +273,6 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Ruta de archivo";
             // 
-            // tb_Ruta
-            // 
-            this.tb_Ruta.Location = new System.Drawing.Point(9, 19);
-            this.tb_Ruta.Name = "tb_Ruta";
-            this.tb_Ruta.ReadOnly = true;
-            this.tb_Ruta.Size = new System.Drawing.Size(293, 20);
-            this.tb_Ruta.TabIndex = 1;
-            // 
             // bt_Examinar
             // 
             this.bt_Examinar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -291,6 +283,14 @@
             this.bt_Examinar.Text = "Examinar";
             this.bt_Examinar.UseVisualStyleBackColor = true;
             this.bt_Examinar.Click += new System.EventHandler(this.bt_Examinar_Click);
+            // 
+            // tb_Ruta
+            // 
+            this.tb_Ruta.Location = new System.Drawing.Point(9, 19);
+            this.tb_Ruta.Name = "tb_Ruta";
+            this.tb_Ruta.ReadOnly = true;
+            this.tb_Ruta.Size = new System.Drawing.Size(293, 20);
+            this.tb_Ruta.TabIndex = 1;
             // 
             // Opciones
             // 
@@ -322,7 +322,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_Limite)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nud_Lim)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
@@ -349,7 +349,7 @@
         private System.Windows.Forms.NumericUpDown nud_Limite;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown nud_Lim;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button bt_Examinar;
         private System.Windows.Forms.TextBox tb_Ruta;

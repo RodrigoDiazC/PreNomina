@@ -25,7 +25,7 @@ namespace PreNomina
             this.tb_Ent2.Text = ((Form1)main).horasL.entrada2.ToShortTimeString();
             this.tb_Sal2.Text = ((Form1)main).horasL.salida2.ToShortTimeString();
             this.cb_TiempoAntRet.Checked = ((Form1)main).retardoAnticipo;
-            this.nud_Limite.Value = (int)((Form1)main).horasL.limiteRetardo.TotalMinutes;
+            this.nud_Lim.Value = (int)((Form1)main).horasL.limiteRetardo.TotalMinutes;
             this.tb_Ruta.Text = ((Form1)main).rutaFolder;
         }
 
@@ -45,7 +45,7 @@ namespace PreNomina
                 ((Form1)main).rutaFolder = this.tb_Ruta.Text;
 
                 // Limite de retardo
-                ((Form1)main).horasL.limiteRetardo = TimeSpan.FromMinutes((double)this.nud_Limite.Value);
+                ((Form1)main).horasL.limiteRetardo = TimeSpan.FromMinutes((double)this.nud_Lim.Value);
 
                 // Actualiza MainForm
                 ((Form1)main).updateConfig();
