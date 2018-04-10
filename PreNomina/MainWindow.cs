@@ -29,7 +29,6 @@ namespace PreNomina
         int currentEmpleadoID = 1;
         int currentDay = 1;
 
-
         public Form1()
         {
             InitializeComponent();
@@ -103,10 +102,10 @@ namespace PreNomina
                 setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
 
                 // Selecciona el mismo row en la pantalla de vista general y aplica formatp
-                this.dg_General.ClearSelection();
-                this.dg_General.Rows[this.currentEmpleadoID].Cells[0].Selected = true;
                 formatTablaGeneral(e.RowIndex);
-
+                this.dg_General.ClearSelection();
+                this.dg_General.Rows[e.RowIndex].Cells[0].Selected = true;
+                
                 // Actualiza el highlight 
                 updateHighlight();
             }
