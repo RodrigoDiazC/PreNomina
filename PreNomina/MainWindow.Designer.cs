@@ -35,6 +35,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
             this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
+            this.tsb_AbrirFolder = new System.Windows.Forms.ToolStripButton();
             this.tsb_Opciones = new System.Windows.Forms.ToolStripButton();
             this.lb_Empleados = new System.Windows.Forms.Label();
             this.lb_Horarios = new System.Windows.Forms.Label();
@@ -74,7 +75,6 @@
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
-            this.tsb_AbrirFolder = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -147,6 +147,16 @@
             this.tsb_Exportar.Size = new System.Drawing.Size(92, 22);
             this.tsb_Exportar.Text = "Exportar a excel";
             this.tsb_Exportar.Click += new System.EventHandler(this.tsb_Exportar_Click);
+            // 
+            // tsb_AbrirFolder
+            // 
+            this.tsb_AbrirFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsb_AbrirFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsb_AbrirFolder.Image")));
+            this.tsb_AbrirFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsb_AbrirFolder.Name = "tsb_AbrirFolder";
+            this.tsb_AbrirFolder.Size = new System.Drawing.Size(79, 22);
+            this.tsb_AbrirFolder.Text = "Abrir carpeta";
+            this.tsb_AbrirFolder.Click += new System.EventHandler(this.tsb_AbrirFolder_Click);
             // 
             // tsb_Opciones
             // 
@@ -556,6 +566,7 @@
             this.dg_General.RowHeadersVisible = false;
             this.dg_General.Size = new System.Drawing.Size(678, 207);
             this.dg_General.TabIndex = 3;
+            this.dg_General.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_General_CellClick);
             // 
             // tb_Comentarios
             // 
@@ -585,16 +596,6 @@
             this.wb_pdfViewer.Name = "wb_pdfViewer";
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
-            // 
-            // tsb_AbrirFolder
-            // 
-            this.tsb_AbrirFolder.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsb_AbrirFolder.Image = ((System.Drawing.Image)(resources.GetObject("tsb_AbrirFolder.Image")));
-            this.tsb_AbrirFolder.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_AbrirFolder.Name = "tsb_AbrirFolder";
-            this.tsb_AbrirFolder.Size = new System.Drawing.Size(79, 22);
-            this.tsb_AbrirFolder.Text = "Abrir carpeta";
-            this.tsb_AbrirFolder.Click += new System.EventHandler(this.tsb_AbrirFolder_Click);
             // 
             // Form1
             // 

@@ -25,10 +25,10 @@ namespace PreNomina
 
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
-        
+
         int currentEmpleadoID = 1;
         int currentDay = 1;
-        
+
 
         public Form1()
         {
@@ -102,12 +102,25 @@ namespace PreNomina
                 fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
                 setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
 
-                // Selecciona el mismo row en la pantalla de vista general
+                // Selecciona el mismo row en la pantalla de vista general y aplica formatp
                 this.dg_General.ClearSelection();
                 this.dg_General.Rows[this.currentEmpleadoID].Cells[0].Selected = true;
+                formatTablaGeneral(e.RowIndex);
 
                 // Actualiza el highlight 
                 updateHighlight();
+            }
+        }
+
+        // Selección en tabla general
+        private void dg_General_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex > -1)
+            {
+                this.dataGrid.ClearSelection();
+                this.dataGrid.Rows[e.RowIndex].Cells[1].Selected = true;
+                formatTablaGeneral(e.RowIndex);
+
             }
         }
 
@@ -270,7 +283,10 @@ namespace PreNomina
                 for (int t = 0; t < em.Dias.Count; t++)
                 {
                     skipCol:
-                    if (dt.Columns[i].ColumnName == em.Dias[t].dia.Day.ToString()) fila[i++] = em.Dias[t].status;
+                    if (dt.Columns[i].ColumnName == em.Dias[t].dia.Day.ToString())
+                    {   
+                        fila[i++] = em.Dias[t].status;
+                    }
                     else
                     {
                         i++;
@@ -279,7 +295,8 @@ namespace PreNomina
                 }
 
                 // TOT
-                fila[i++] = em.getRetardoTotal(horasL).TotalMinutes;
+                if (this.retardoAnticipo) fila[i++] = em.getRetardoTotal(horasL).TotalMinutes + em.getAnticipoTotal(horasL).TotalMinutes;
+                else fila[i++] = em.getRetardoTotal(horasL).TotalMinutes;
                 // Puntualidad
                 fila[i++] = em.Puntualidad;
                 // Asistencia
@@ -303,7 +320,6 @@ namespace PreNomina
 
             foreach (DataGridViewColumn col in this.dg_General.Columns)
             {
-                //col.HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
@@ -532,7 +548,8 @@ namespace PreNomina
                             var folder = new FolderBrowserDialog();
                             folder.Description = "Seleccione el directrio de destino";
 
-                            while (this.rutaFolder == "") {
+                            while (this.rutaFolder == "")
+                            {
                                 folder.ShowDialog();
                                 this.rutaFolder = folder.SelectedPath;
                             }
@@ -545,18 +562,18 @@ namespace PreNomina
 
                         }
                         else rutaCompleta = this.rutaFolder + nombreArchivo;
-                       
+
                         mWorkBook.SaveAs(rutaCompleta, XlFileFormat.xlWorkbookNormal,
                             Missing.Value, Missing.Value, Missing.Value, Missing.Value, XlSaveAsAccessMode.xlExclusive,
                             Missing.Value, Missing.Value, Missing.Value,
                             Missing.Value, Missing.Value);
-                            MessageBox.Show("Reporte generado exitosamente.\n " + rutaCompleta);
+                        MessageBox.Show("Reporte generado exitosamente.\n " + rutaCompleta);
                     }
                     catch (System.Runtime.InteropServices.COMException ex)
                     {
                         MessageBox.Show("Por favor cierre el documento y vuelva a generar el reporte.\nError " + ex.Message.ToString());
                     }
-                    
+
                     mWorkBook.Close(Missing.Value, Missing.Value, Missing.Value);
                     mWSheet1 = null;
                     mWorkBook = null;
@@ -575,6 +592,7 @@ namespace PreNomina
             }
             else MessageBox.Show("No se ha encontrado plantilla. Contacte a desarrollador.");
         }
+
         // Herramientas
         private static string ExtractTextFromPdf(string path)
         {
@@ -590,7 +608,6 @@ namespace PreNomina
                 return text.ToString();
             }
         }
-
         private void highlightTable(int mode, bool clear) // 1 Retardos 2 Anticipos 3 Excedente 4 No Registro
         {
 
@@ -758,15 +775,44 @@ namespace PreNomina
 
             // Guarda configuración de usuario
             Properties.Settings.Default["Ruta"] = this.rutaFolder;
-            Properties.Settings.Default.Save();       
-     
+            Properties.Settings.Default.Save();
+
         }
 
+        // Abre el folder donde se guardan los archivos
         private void tsb_AbrirFolder_Click(object sender, EventArgs e)
         {
-            if(this.rutaFolder != "")
+            if (this.rutaFolder != "")
             {
                 System.Diagnostics.Process.Start(this.rutaFolder);
+            }
+        }
+
+        // Formato para tabla general
+        private void formatTablaGeneral(int rowIdx)
+        {
+            // Limpia formato anterior
+            ((System.Data.DataTable)this.dg_General.DataSource).AcceptChanges();
+
+            for (int i = 1; i < this.dg_General.Columns.Count; i++)
+            {
+                // Clasificación del dia
+                if (this.dg_General.Columns[i].ValueType == typeof(string))
+                {
+                    if (this.dg_General[i, rowIdx].Value.ToString() != "A")
+                    {
+                        this.dg_General[i, rowIdx].Style.BackColor = Color.Yellow;
+                    }
+                }
+
+                // Tiempo de retardo
+                else if(this.dg_General.Columns[i].ValueType == typeof(int))
+                {
+                    if ((int)this.dg_General[i, rowIdx].Value > (int)this.horasL.limiteRetardo.TotalMinutes)
+                    {
+                        this.dg_General[i, rowIdx].Style.ForeColor = Color.Red;
+                    }
+                }
             }
         }
     }
