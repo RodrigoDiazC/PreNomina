@@ -62,25 +62,31 @@ namespace PreNomina
             if (openFileDialog.FileName != "")
             {
                 // Obtiene empleados
-                this.gEmpleados = analizador.getEmpleados(ExtractTextFromPdf(openFileDialog.FileName), horasL);
+                String archivoTexto = ExtractTextFromPdf(openFileDialog.FileName);
 
-                // Muestra empleados en tabla
-                generateTable(gEmpleados);
+                if (archivoTexto.Contains("Desglose de Registros de Asistencia"))
+                {
+                    this.gEmpleados = analizador.getEmpleados(archivoTexto, horasL);
 
-                // Abre PDF en web browser
-                this.wb_pdfViewer.Navigate(openFileDialog.FileName);
+                    // Muestra empleados en tabla
+                    generateTable(gEmpleados);
 
-                // Inicializa la tabla secundaria con el primer empleado
-                this.currentEmpleadoID = 0;
-                fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
-                setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
-                updateHighlight();
+                    // Abre PDF en web browser
+                    this.wb_pdfViewer.Navigate(openFileDialog.FileName);
 
-                // Inicializa la tabla general
-                fillTablaGeneral(this.gEmpleados);
+                    // Inicializa la tabla secundaria con el primer empleado
+                    this.currentEmpleadoID = 0;
+                    fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
+                    setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
+                    updateHighlight();
 
-                // Pone titulo a la ventana
-                this.Text = "Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+                    // Inicializa la tabla general
+                    fillTablaGeneral(this.gEmpleados);
+
+                    // Pone titulo a la ventana
+                    this.Text = "Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+                }
+                else MessageBox.Show("Formato de archivo no soportado. Compruebe el archivo seleccionado.");
 
             }
         }
@@ -105,7 +111,7 @@ namespace PreNomina
                 formatTablaGeneral(e.RowIndex);
                 this.dg_General.ClearSelection();
                 this.dg_General.Rows[e.RowIndex].Cells[0].Selected = true;
-                
+
                 // Actualiza el highlight 
                 updateHighlight();
             }
@@ -283,7 +289,7 @@ namespace PreNomina
                 {
                     skipCol:
                     if (dt.Columns[i].ColumnName == em.Dias[t].dia.Day.ToString())
-                    {   
+                    {
                         fila[i++] = em.Dias[t].status;
                     }
                     else
@@ -805,7 +811,7 @@ namespace PreNomina
                 }
 
                 // Tiempo de retardo
-                else if(this.dg_General.Columns[i].ValueType == typeof(int))
+                else if (this.dg_General.Columns[i].ValueType == typeof(int))
                 {
                     if ((int)this.dg_General[i, rowIdx].Value > (int)this.horasL.limiteRetardo.TotalMinutes)
                     {
