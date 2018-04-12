@@ -75,6 +75,7 @@
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
+            this.lb_Indicaciones = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -535,6 +536,7 @@
             // tp_General
             // 
             this.tp_General.BackColor = System.Drawing.SystemColors.Control;
+            this.tp_General.Controls.Add(this.lb_Indicaciones);
             this.tp_General.Controls.Add(this.label4);
             this.tp_General.Controls.Add(this.dg_General);
             this.tp_General.Controls.Add(this.tb_Comentarios);
@@ -597,6 +599,15 @@
             this.wb_pdfViewer.Name = "wb_pdfViewer";
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
+            // 
+            // lb_Indicaciones
+            // 
+            this.lb_Indicaciones.AutoSize = true;
+            this.lb_Indicaciones.Location = new System.Drawing.Point(401, 212);
+            this.lb_Indicaciones.Name = "lb_Indicaciones";
+            this.lb_Indicaciones.Size = new System.Drawing.Size(283, 13);
+            this.lb_Indicaciones.TabIndex = 19;
+            this.lb_Indicaciones.Text = "Hacer doble click sobre la celda para obtener más detalles";
             // 
             // Form1
             // 
@@ -682,6 +693,7 @@
         private System.Windows.Forms.ToolStripButton tsb_Exportar;
         private System.Windows.Forms.ToolStripButton tsb_Opciones;
         private System.Windows.Forms.ToolStripButton tsb_AbrirFolder;
+        private System.Windows.Forms.Label lb_Indicaciones;
     }
 }
 

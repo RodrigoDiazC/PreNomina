@@ -838,10 +838,9 @@ namespace PreNomina
         private void dg_General_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4)){
+            bool regExists = false;
 
-                // Cambia de pantalla
-                this.tabControl1.SelectedIndex = 0;
+            if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4)){
 
                 // Variable para seleccionar el día apropiado
                 int dia = int.Parse(this.dg_General.Columns[e.ColumnIndex].Name); 
@@ -857,11 +856,16 @@ namespace PreNomina
                         this.dataGrid1[col.Name,0].Selected = true;
                         this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index - 2; // -2 para que salga en medio
                         dataGrid1_CellClick(this.dataGrid1, new DataGridViewCellEventArgs(col.Index, 0));
+                        // Cambia de pantalla
+                        this.tabControl1.SelectedIndex = 0;
+                        regExists = true;
                         break;
                     }
-                }
 
+                }
             }
+
+            if(!regExists)MessageBox.Show("El empleado seleccionado no tiene registros del día " + this.dg_General.Columns[e.ColumnIndex].Name + ".");
 
         }
 
