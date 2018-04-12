@@ -813,19 +813,21 @@ namespace PreNomina
                 if (this.dg_General.Columns[i].ValueType == typeof(string))
                 {
                     if (this.dg_General[i, rowIdx].Value.ToString() != "A")
-                    {
                         this.dg_General[i, rowIdx].Style.BackColor = Color.Yellow;
-                    }
+                }
+
+                // Puntualidad asistencua desempeño
+                else if (this.dg_General.Columns[i].ValueType == typeof(Boolean))
+                {
+                    if ((bool)this.dg_General[i, rowIdx].Value) this.dg_General[i, rowIdx].Style.BackColor = Color.LightGreen;
+                    else this.dg_General[i, rowIdx].Style.BackColor = Color.LightSalmon;
                 }
             }
 
             // Formato rojo a los minutos que sobrepasen el tiempo máximi
             for (int i = 0; i < this.dg_General.Rows.Count; i++)
             {
-                if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes)
-                {
-                    this.dg_General["TOT", i].Style.ForeColor = Color.Red;
-                }
+                if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes) this.dg_General["TOT", i].Style.ForeColor = Color.Red;
             }
 
         }
