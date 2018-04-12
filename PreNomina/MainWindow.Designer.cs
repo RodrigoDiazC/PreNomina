@@ -567,6 +567,7 @@
             this.dg_General.Size = new System.Drawing.Size(678, 207);
             this.dg_General.TabIndex = 3;
             this.dg_General.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_General_CellClick);
+            this.dg_General.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dg_General_CellDoubleClick);
             // 
             // tb_Comentarios
             // 

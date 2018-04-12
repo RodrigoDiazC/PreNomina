@@ -122,9 +122,16 @@ namespace PreNomina
         {
             if (e.RowIndex > -1)
             {
+                formatTablaGeneral(e.RowIndex);
+
+                // Selecciona en la tabla de empleados tambien ejecuta el evento click
                 this.dataGrid.ClearSelection();
                 this.dataGrid.Rows[e.RowIndex].Cells[1].Selected = true;
-                formatTablaGeneral(e.RowIndex);
+                dataGrid_CellClick(this.dataGrid, new DataGridViewCellEventArgs(1, e.RowIndex));
+
+
+                // Selecciona casilla previa
+                this.dg_General.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
 
             }
         }
@@ -327,14 +334,9 @@ namespace PreNomina
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
 
-            // Formato rojo a los minutos que sobrepasen el tiempo máximi
-            for (int i = 0; i < this.dg_General.Rows.Count; i++)
-            {
-                if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes)
-                {
-                    this.dg_General["TOT", i].Style.ForeColor = Color.Red;
-                }
-            }
+            // Formatea la tabla general y selecciona la primer fila
+            formatTablaGeneral(0);
+            
         }
 
         //Setea atributos del empleado en la interfaz
@@ -831,6 +833,38 @@ namespace PreNomina
             }
 
         }
+
+        // Redirige a tabla detallada al hacer doble click sobre el día a inspeccionar
+        private void dg_General_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4)){
+
+                // Cambia de pantalla
+                this.tabControl1.SelectedIndex = 0;
+
+                // Variable para seleccionar el día apropiado
+                int dia = int.Parse(this.dg_General.Columns[e.ColumnIndex].Name); 
+
+                // Seleccciona el dia en la tabla detallada
+                foreach(DataGridViewColumn col in this.dataGrid1.Columns)
+                {
+                    if (col.ValueType == typeof(string)) continue;
+
+                    if ((DateTime.Parse(col.Name).Day == dia))
+                    {
+                        this.dataGrid1.ClearSelection();
+                        this.dataGrid1[col.Name,0].Selected = true;
+                        this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index - 2; // -2 para que salga en medio
+                        dataGrid1_CellClick(this.dataGrid1, new DataGridViewCellEventArgs(col.Index, 0));
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
     }
 }
 
