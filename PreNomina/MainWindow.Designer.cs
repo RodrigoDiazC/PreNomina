@@ -257,6 +257,8 @@
             // cb_Anticipo
             // 
             this.cb_Anticipo.AutoSize = true;
+            this.cb_Anticipo.Checked = true;
+            this.cb_Anticipo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_Anticipo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_Anticipo.Location = new System.Drawing.Point(517, 16);
             this.cb_Anticipo.Name = "cb_Anticipo";
@@ -269,6 +271,8 @@
             // cb_Excedente
             // 
             this.cb_Excedente.AutoSize = true;
+            this.cb_Excedente.Checked = true;
+            this.cb_Excedente.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_Excedente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_Excedente.Location = new System.Drawing.Point(597, 16);
             this.cb_Excedente.Name = "cb_Excedente";
