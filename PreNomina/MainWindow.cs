@@ -320,12 +320,20 @@ namespace PreNomina
 
             // Propiedades dela tabla
             this.dg_General.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            //this.dg_General.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dg_General.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
             foreach (DataGridViewColumn col in this.dg_General.Columns)
             {
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
+            }
+
+            // Formato rojo a los minutos que sobrepasen el tiempo máximi
+            for (int i = 0; i < this.dg_General.Rows.Count; i++)
+            {
+                if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes)
+                {
+                    this.dg_General["TOT", i].Style.ForeColor = Color.Red;
+                }
             }
         }
 
@@ -809,16 +817,17 @@ namespace PreNomina
                         this.dg_General[i, rowIdx].Style.BackColor = Color.Yellow;
                     }
                 }
+            }
 
-                // Tiempo de retardo
-                else if (this.dg_General.Columns[i].ValueType == typeof(int))
+            // Formato rojo a los minutos que sobrepasen el tiempo máximi
+            for (int i = 0; i < this.dg_General.Rows.Count; i++)
+            {
+                if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes)
                 {
-                    if ((int)this.dg_General[i, rowIdx].Value > (int)this.horasL.limiteRetardo.TotalMinutes)
-                    {
-                        this.dg_General[i, rowIdx].Style.ForeColor = Color.Red;
-                    }
+                    this.dg_General["TOT", i].Style.ForeColor = Color.Red;
                 }
             }
+
         }
     }
 }
