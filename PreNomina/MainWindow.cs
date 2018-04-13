@@ -736,6 +736,9 @@ namespace PreNomina
                     break;
             }
 
+            // Vuelve a analizar asistencia
+            this.gEmpleados[currentEmpleadoID].checkAsistenciaUpdate();
+        
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
         {
@@ -863,9 +866,9 @@ namespace PreNomina
                     }
 
                 }
-            }
 
-            if(!regExists)MessageBox.Show("El empleado seleccionado no tiene registros del día " + this.dg_General.Columns[e.ColumnIndex].Name + ".");
+                if (!regExists) MessageBox.Show("El empleado seleccionado no tiene registros del día " + this.dg_General.Columns[e.ColumnIndex].Name + ".");
+            }
 
         }
 
