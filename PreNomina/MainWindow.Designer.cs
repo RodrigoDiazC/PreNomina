@@ -70,12 +70,12 @@
             this.tp_Detallada = new System.Windows.Forms.TabPage();
             this.dataGrid1 = new System.Windows.Forms.DataGridView();
             this.tp_General = new System.Windows.Forms.TabPage();
+            this.lb_Indicaciones = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dg_General = new System.Windows.Forms.DataGridView();
             this.tb_Comentarios = new System.Windows.Forms.TextBox();
             this.tp_PDF = new System.Windows.Forms.TabPage();
             this.wb_pdfViewer = new System.Windows.Forms.WebBrowser();
-            this.lb_Indicaciones = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -257,8 +257,6 @@
             // cb_Anticipo
             // 
             this.cb_Anticipo.AutoSize = true;
-            this.cb_Anticipo.Checked = true;
-            this.cb_Anticipo.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_Anticipo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_Anticipo.Location = new System.Drawing.Point(517, 16);
             this.cb_Anticipo.Name = "cb_Anticipo";
@@ -271,8 +269,6 @@
             // cb_Excedente
             // 
             this.cb_Excedente.AutoSize = true;
-            this.cb_Excedente.Checked = true;
-            this.cb_Excedente.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb_Excedente.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cb_Excedente.Location = new System.Drawing.Point(597, 16);
             this.cb_Excedente.Name = "cb_Excedente";
@@ -551,6 +547,15 @@
             this.tp_General.TabIndex = 2;
             this.tp_General.Text = "Vista Preliminar";
             // 
+            // lb_Indicaciones
+            // 
+            this.lb_Indicaciones.AutoSize = true;
+            this.lb_Indicaciones.Location = new System.Drawing.Point(401, 212);
+            this.lb_Indicaciones.Name = "lb_Indicaciones";
+            this.lb_Indicaciones.Size = new System.Drawing.Size(283, 13);
+            this.lb_Indicaciones.TabIndex = 19;
+            this.lb_Indicaciones.Text = "Hacer doble click sobre la celda para obtener más detalles";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -603,15 +608,6 @@
             this.wb_pdfViewer.Name = "wb_pdfViewer";
             this.wb_pdfViewer.Size = new System.Drawing.Size(684, 337);
             this.wb_pdfViewer.TabIndex = 0;
-            // 
-            // lb_Indicaciones
-            // 
-            this.lb_Indicaciones.AutoSize = true;
-            this.lb_Indicaciones.Location = new System.Drawing.Point(401, 212);
-            this.lb_Indicaciones.Name = "lb_Indicaciones";
-            this.lb_Indicaciones.Size = new System.Drawing.Size(283, 13);
-            this.lb_Indicaciones.TabIndex = 19;
-            this.lb_Indicaciones.Text = "Hacer doble click sobre la celda para obtener más detalles";
             // 
             // Form1
             // 
