@@ -37,7 +37,7 @@ namespace PreNomina
             // Obtiene si fue puntual
             Puntualidad = this.checkPuntualidad(horarioLaboral, false);
             // Obtiene asistencia
-            Asistencia = this.checkAsistencia();
+            Asistencia = this.checkAsistenciaInicio();
         }
 
         // Metodos publicos ------------------------------
@@ -128,42 +128,43 @@ namespace PreNomina
             return span;
         }
 
-        public bool checkAsistencia()
+        public bool checkAsistenciaInicio() // Analiza asistencia al crearse el objeto. Se basa en los registros por día (modo automático)
         {
             int acc1 = 0, acc2 = 0;
 
             foreach (TiemposDia t in this.Dias)
             {
+
                 if (t.entrada1.status == "NOREGISTRO") acc1++;
                 if (t.entrada2.status == "NOREGISTRO") acc1++;
                 if (t.salida1.status == "NOREGISTRO") acc1++;
                 if (t.salida2.status == "NOREGISTRO") acc1++;
-
                 if (acc1 >= 4) acc2++;
                 acc1 = 0;
+
             }
 
             if (acc2 >= 1) return false;
             else return true;
         }
-        public bool checkPuntualidad(HorasLaborales horas, bool incluirAnticipo) // 0 Solo extra 1 Extra y anticipo
-        {
-            //TimeSpan span = TimeSpan.Parse("0");
 
-            /*
+        public void checkAsistenciaUpdate() // Analiza la asistencia al modificar el valor de los días en los controles (modo manual). Se basa en el status de los días
+        {
+            int acc1 = 0;
+
             foreach (TiemposDia t in this.Dias)
             {
-                if (t.entrada1.status == "RETARDO")
-                {
-                    span += t.entrada1.Hora.Subtract(horas.entrada1);
-                }
-
-                if (t.entrada2.status == "RETARDO")
-                {
-                    span += t.entrada2.Hora.Subtract(horas.entrada2);
-                }
+                if (t.status.Equals("F")) acc1 = 1;
             }
-            */
+
+            if (acc1 == 1) this.Asistencia = false;
+            else this.Asistencia = true;
+        }
+
+
+        public bool checkPuntualidad(HorasLaborales horas, bool incluirAnticipo) // 0 Solo extra 1 Extra y anticipo
+        {
+
             if (!incluirAnticipo) { if (getRetardoTotal(horas).TotalMinutes >= horas.limiteRetardo.TotalMinutes) return false; }
             else { if ((getRetardoTotal(horas).TotalMinutes + getAnticipoTotal(horas).TotalMinutes) >= horas.limiteRetardo.TotalMinutes) return false; }
 
