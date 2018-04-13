@@ -738,6 +738,7 @@ namespace PreNomina
 
             // Vuelve a analizar asistencia
             this.gEmpleados[currentEmpleadoID].checkAsistenciaUpdate();
+            setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
         
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
