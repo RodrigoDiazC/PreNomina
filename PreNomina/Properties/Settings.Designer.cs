@@ -34,5 +34,89 @@ namespace PreNomina.Properties {
                 this["Ruta"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Departamento {
+            get {
+                return ((string)(this["Departamento"]));
+            }
+            set {
+                this["Departamento"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool AnticipoRetardo {
+            get {
+                return ((bool)(this["AnticipoRetardo"]));
+            }
+            set {
+                this["AnticipoRetardo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("08:00 a.m.")]
+        public string Entrada1 {
+            get {
+                return ((string)(this["Entrada1"]));
+            }
+            set {
+                this["Entrada1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("01:00 p.m.")]
+        public string Salida1 {
+            get {
+                return ((string)(this["Salida1"]));
+            }
+            set {
+                this["Salida1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("02:00 p.m.")]
+        public string Entrada2 {
+            get {
+                return ((string)(this["Entrada2"]));
+            }
+            set {
+                this["Entrada2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("06:00 p.m.")]
+        public string Salida2 {
+            get {
+                return ((string)(this["Salida2"]));
+            }
+            set {
+                this["Salida2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int TiempoLimite {
+            get {
+                return ((int)(this["TiempoLimite"]));
+            }
+            set {
+                this["TiempoLimite"] = value;
+            }
+        }
     }
 }

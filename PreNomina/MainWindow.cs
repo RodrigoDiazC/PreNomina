@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -34,16 +35,33 @@ namespace PreNomina
         {
             InitializeComponent();
 
-            // Setea los horarios laborales
-            this.horasL.entrada1 = DateTime.Parse("08:00");
-            this.horasL.salida1 = DateTime.Parse("13:00");
-            this.horasL.entrada2 = DateTime.Parse("14:00");
-            this.horasL.salida2 = DateTime.Parse("18:00");
-            this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
+            try
+            {
+                // Configuración de usuario
+                Properties.Settings.Default.Reload();
+                this.rutaFolder = Properties.Settings.Default["Ruta"].ToString();
+                this.departamento = Properties.Settings.Default["Departamento"].ToString();
+                this.retardoAnticipo = (bool)Properties.Settings.Default["AnticipoRetardo"];
+                // Setea los horarios laborales            
+                String perro = Properties.Settings.Default["Entrada1"].ToString().Replace(".",String.Empty).Replace(" m", "m");
 
-            // Configuración de usuario
-            Properties.Settings.Default.Reload();
-            this.rutaFolder = Properties.Settings.Default["Ruta"].ToString();
+                this.horasL.entrada1 = DateTime.Parse(Properties.Settings.Default["Entrada1"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
+                this.horasL.salida1 = DateTime.Parse(Properties.Settings.Default["Salida1"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
+                this.horasL.entrada2 = DateTime.Parse(Properties.Settings.Default["Entrada2"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
+                this.horasL.salida2 = DateTime.Parse(Properties.Settings.Default["Salida2"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
+                this.horasL.limiteRetardo = TimeSpan.FromMinutes((int)Properties.Settings.Default["TiempoLimite"]);
+            }
+            catch (FormatException e)
+            {
+                // Setea los horarios laborales por default     
+                this.horasL.entrada1 = DateTime.Parse("08:00");
+                this.horasL.salida1 = DateTime.Parse("13:00");
+                this.horasL.entrada2 = DateTime.Parse("14:00");
+                this.horasL.salida2 = DateTime.Parse("18:00");
+                this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
+                MessageBox.Show("Ocurrio un error al leer el archivo de configuración. Parámetros por default establecidos.\n\n Error: " + e.Message);
+            }
+
         }
 
         // Abre PDF
@@ -343,7 +361,7 @@ namespace PreNomina
 
             // Formatea la tabla general y selecciona la primer fila
             formatTablaGeneral(0);
-            
+
         }
 
         //Setea atributos del empleado en la interfaz
@@ -747,7 +765,7 @@ namespace PreNomina
             // Vuelve a analizar asistencia
             this.gEmpleados[currentEmpleadoID].checkAsistenciaUpdate();
             setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
-        
+
         }
         private void cb_Puntualidad_CheckedChanged(object sender, EventArgs e)
         {
@@ -802,8 +820,16 @@ namespace PreNomina
 
             // Guarda configuración de usuario
             Properties.Settings.Default["Ruta"] = this.rutaFolder;
+            Properties.Settings.Default["Departamento"] = this.departamento;
+            Properties.Settings.Default["AnticipoRetardo"] = this.retardoAnticipo;
+            Properties.Settings.Default["Entrada1"] = this.horasL.entrada1.ToShortTimeString();
+            Properties.Settings.Default["Salida1"] = this.horasL.salida1.ToShortTimeString();
+            Properties.Settings.Default["Entrada2"] = this.horasL.entrada2.ToShortTimeString();
+            Properties.Settings.Default["Salida2"] = this.horasL.salida2.ToShortTimeString();
+            Properties.Settings.Default["TiempoLimite"] = (int)this.horasL.limiteRetardo.TotalMinutes;
+          
             Properties.Settings.Default.Save();
-
+            Properties.Settings.Default.Reload();
         }
 
         // Abre el folder donde se guardan los archivos
@@ -852,22 +878,23 @@ namespace PreNomina
 
             bool regExists = false;
 
-            if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4)){
+            if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4))
+            {
 
                 // Variable para seleccionar el día apropiado
-                int dia = int.Parse(this.dg_General.Columns[e.ColumnIndex].Name); 
+                int dia = int.Parse(this.dg_General.Columns[e.ColumnIndex].Name);
 
                 // Seleccciona el dia en la tabla detallada
-                foreach(DataGridViewColumn col in this.dataGrid1.Columns)
+                foreach (DataGridViewColumn col in this.dataGrid1.Columns)
                 {
                     if (col.ValueType == typeof(string)) continue;
 
                     if ((DateTime.Parse(col.Name).Day == dia))
                     {
                         this.dataGrid1.ClearSelection();
-                        this.dataGrid1[col.Name,0].Selected = true;
+                        this.dataGrid1[col.Name, 0].Selected = true;
 
-                        this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index > 3 ? col.Index - 2 : col.Index ;
+                        this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index > 3 ? col.Index - 2 : col.Index;
 
                         dataGrid1_CellClick(this.dataGrid1, new DataGridViewCellEventArgs(col.Index, 0));
                         // Cambia de pantalla

@@ -19,6 +19,8 @@ namespace PreNomina
         {
             InitializeComponent();
 
+            this.tb_Departamento.CharacterCasing = CharacterCasing.Upper;
+
             // Obtiene propiedades de MainWindow
             this.tb_Ent1.Text = ((Form1)main).horasL.entrada1.ToShortTimeString();
             this.tb_Sal1.Text = ((Form1)main).horasL.salida1.ToShortTimeString();

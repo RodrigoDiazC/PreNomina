@@ -5,5 +5,26 @@
     <Setting Name="Ruta" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="Departamento" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="AnticipoRetardo" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Entrada1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">08:00 a.m.</Value>
+    </Setting>
+    <Setting Name="Salida1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">01:00 p.m.</Value>
+    </Setting>
+    <Setting Name="Entrada2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">02:00 p.m.</Value>
+    </Setting>
+    <Setting Name="Salida2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">06:00 p.m.</Value>
+    </Setting>
+    <Setting Name="TiempoLimite" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
