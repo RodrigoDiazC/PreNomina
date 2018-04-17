@@ -50,6 +50,9 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.bt_Examinar = new System.Windows.Forms.Button();
             this.tb_Ruta = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tb_Departamento = new System.Windows.Forms.TextBox();
             this.gb_Horarios.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -57,6 +60,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_Lim)).BeginInit();
             this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // gb_Horarios
@@ -147,9 +151,9 @@
             // bt_Aplicar
             // 
             this.bt_Aplicar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bt_Aplicar.Location = new System.Drawing.Point(200, 191);
+            this.bt_Aplicar.Location = new System.Drawing.Point(282, 206);
             this.bt_Aplicar.Name = "bt_Aplicar";
-            this.bt_Aplicar.Size = new System.Drawing.Size(114, 23);
+            this.bt_Aplicar.Size = new System.Drawing.Size(73, 23);
             this.bt_Aplicar.TabIndex = 1;
             this.bt_Aplicar.Text = "Aplicar";
             this.bt_Aplicar.UseVisualStyleBackColor = true;
@@ -158,9 +162,9 @@
             // bt_Cancelar
             // 
             this.bt_Cancelar.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bt_Cancelar.Location = new System.Drawing.Point(320, 191);
+            this.bt_Cancelar.Location = new System.Drawing.Point(361, 207);
             this.bt_Cancelar.Name = "bt_Cancelar";
-            this.bt_Cancelar.Size = new System.Drawing.Size(114, 23);
+            this.bt_Cancelar.Size = new System.Drawing.Size(73, 23);
             this.bt_Cancelar.TabIndex = 1;
             this.bt_Cancelar.Text = "Cancelar";
             this.bt_Cancelar.UseVisualStyleBackColor = true;
@@ -189,6 +193,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.groupBox3);
             this.groupBox2.Controls.Add(this.nud_Limite);
             this.groupBox2.Location = new System.Drawing.Point(200, 79);
             this.groupBox2.Name = "groupBox2";
@@ -228,7 +233,7 @@
             // 
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.nud_Lim);
-            this.groupBox3.Location = new System.Drawing.Point(200, 79);
+            this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(234, 50);
             this.groupBox3.TabIndex = 6;
@@ -292,6 +297,33 @@
             this.tb_Ruta.Size = new System.Drawing.Size(293, 20);
             this.tb_Ruta.TabIndex = 1;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.tb_Departamento);
+            this.groupBox5.Controls.Add(this.label3);
+            this.groupBox5.Location = new System.Drawing.Point(12, 188);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(250, 50);
+            this.groupBox5.TabIndex = 7;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Seleccion de departamento";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 24);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(88, 13);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "Nombre del dpto.";
+            // 
+            // tb_Departamento
+            // 
+            this.tb_Departamento.Location = new System.Drawing.Point(100, 21);
+            this.tb_Departamento.Name = "tb_Departamento";
+            this.tb_Departamento.Size = new System.Drawing.Size(144, 20);
+            this.tb_Departamento.TabIndex = 2;
+            // 
             // Opciones
             // 
             this.AcceptButton = this.bt_Aplicar;
@@ -299,9 +331,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CancelButton = this.bt_Cancelar;
-            this.ClientSize = new System.Drawing.Size(443, 223);
+            this.ClientSize = new System.Drawing.Size(438, 245);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.bt_Cancelar);
@@ -325,6 +357,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nud_Lim)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -353,5 +387,8 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button bt_Examinar;
         private System.Windows.Forms.TextBox tb_Ruta;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.TextBox tb_Departamento;
+        private System.Windows.Forms.Label label3;
     }
 }
