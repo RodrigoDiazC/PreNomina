@@ -27,6 +27,7 @@ namespace PreNomina
             this.cb_TiempoAntRet.Checked = ((Form1)main).retardoAnticipo;
             this.nud_Lim.Value = (int)((Form1)main).horasL.limiteRetardo.TotalMinutes;
             this.tb_Ruta.Text = ((Form1)main).rutaFolder;
+            this.tb_Departamento.Text = ((Form1)main).departamento;
         }
 
         private void bt_Aplicar_Click(object sender, EventArgs e)
@@ -37,6 +38,9 @@ namespace PreNomina
                 ((Form1)main).horasL.salida1 = DateTime.Parse(this.tb_Sal1.Text);
                 ((Form1)main).horasL.entrada2 = DateTime.Parse(this.tb_Ent2.Text);
                 ((Form1)main).horasL.salida2 = DateTime.Parse(this.tb_Sal2.Text);
+
+                // Nombre de departamento
+                ((Form1)main).departamento = this.tb_Departamento.Text;
 
                 // Retardo mas anticipo
                 ((Form1)main).retardoAnticipo = this.cb_TiempoAntRet.Checked;

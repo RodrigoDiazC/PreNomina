@@ -22,6 +22,7 @@ namespace PreNomina
         public HorasLaborales horasL = new HorasLaborales();
         public bool retardoAnticipo = false;
         public String rutaFolder = "";
+        public String departamento = "";
 
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
@@ -473,11 +474,12 @@ namespace PreNomina
                         line.Insert();
                     }
 
-                    //--------------------------------------------- Nombres de los empleados
+                    //--------------------------------------------- Nombres de los empleados y departamento
                     int k = 0;
                     int cantRows = 0;
                     foreach (Empleado em in this.gEmpleados)
                     {
+                        mWSheet1.Cells[3][5 + (k)] = this.departamento;
                         mWSheet1.Cells[2][5 + (k++)] = em.Nombre;
                     }
                     cantRows = k;

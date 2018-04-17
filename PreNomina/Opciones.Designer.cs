@@ -323,6 +323,7 @@
             this.tb_Departamento.Name = "tb_Departamento";
             this.tb_Departamento.Size = new System.Drawing.Size(144, 20);
             this.tb_Departamento.TabIndex = 2;
+            this.tb_Departamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Opciones
             // 
