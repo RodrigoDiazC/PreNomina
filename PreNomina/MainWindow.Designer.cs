@@ -135,8 +135,8 @@
             this.tsb_Abrir.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Abrir.Image")));
             this.tsb_Abrir.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsb_Abrir.Name = "tsb_Abrir";
-            this.tsb_Abrir.Size = new System.Drawing.Size(79, 22);
-            this.tsb_Abrir.Text = "Abrir archivo";
+            this.tsb_Abrir.Size = new System.Drawing.Size(61, 22);
+            this.tsb_Abrir.Text = "Abrir PDF";
             this.tsb_Abrir.Click += new System.EventHandler(this.tsb_Abrir_Click);
             // 
             // tsb_Exportar

@@ -245,6 +245,12 @@ namespace PreNomina
                 // Inmoviliza columna de nombre
                 this.dataGrid1.Columns[0].Frozen = true;
 
+                // Deshabilita ordenamiento de columnas
+                foreach (DataGridViewColumn column in this.dataGrid1.Columns)
+                {
+                    column.SortMode = DataGridViewColumnSortMode.NotSortable;
+                }
+
             }
             catch // Cuando se hace sort tambien se llama a este evento y provoca una exepción
             {
@@ -858,7 +864,9 @@ namespace PreNomina
                     {
                         this.dataGrid1.ClearSelection();
                         this.dataGrid1[col.Name,0].Selected = true;
-                        this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index - 2; // -2 para que salga en medio
+
+                        this.dataGrid1.FirstDisplayedScrollingColumnIndex = col.Index > 3 ? col.Index - 2 : col.Index ;
+
                         dataGrid1_CellClick(this.dataGrid1, new DataGridViewCellEventArgs(col.Index, 0));
                         // Cambia de pantalla
                         this.tabControl1.SelectedIndex = 0;

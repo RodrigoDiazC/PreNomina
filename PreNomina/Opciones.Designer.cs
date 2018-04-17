@@ -271,7 +271,7 @@
             this.groupBox4.Size = new System.Drawing.Size(422, 47);
             this.groupBox4.TabIndex = 7;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Ruta de archivo";
+            this.groupBox4.Text = "Guardar en";
             // 
             // bt_Examinar
             // 
