@@ -33,10 +33,10 @@
             this.bt_Abrir = new System.Windows.Forms.Button();
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.tsb_Abrir = new System.Windows.Forms.ToolStripButton();
             this.tsb_Exportar = new System.Windows.Forms.ToolStripButton();
             this.tsb_AbrirFolder = new System.Windows.Forms.ToolStripButton();
             this.tsb_Opciones = new System.Windows.Forms.ToolStripButton();
+            this.tsd_Archivo = new System.Windows.Forms.ToolStripDropDownButton();
             this.lb_Empleados = new System.Windows.Forms.Label();
             this.lb_Horarios = new System.Windows.Forms.Label();
             this.cb_Puntualidad = new System.Windows.Forms.CheckBox();
@@ -118,7 +118,7 @@
             this.toolStrip1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsb_Abrir,
+            this.tsd_Archivo,
             this.tsb_Exportar,
             this.tsb_AbrirFolder,
             this.tsb_Opciones});
@@ -128,16 +128,6 @@
             this.toolStrip1.Size = new System.Drawing.Size(988, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // tsb_Abrir
-            // 
-            this.tsb_Abrir.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsb_Abrir.Image = ((System.Drawing.Image)(resources.GetObject("tsb_Abrir.Image")));
-            this.tsb_Abrir.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.tsb_Abrir.Name = "tsb_Abrir";
-            this.tsb_Abrir.Size = new System.Drawing.Size(61, 22);
-            this.tsb_Abrir.Text = "Abrir PDF";
-            this.tsb_Abrir.Click += new System.EventHandler(this.tsb_Abrir_Click);
             // 
             // tsb_Exportar
             // 
@@ -168,6 +158,15 @@
             this.tsb_Opciones.Size = new System.Drawing.Size(61, 22);
             this.tsb_Opciones.Text = "Opciones";
             this.tsb_Opciones.Click += new System.EventHandler(this.tsb_Opciones_Click);
+            // 
+            // tsd_Archivo
+            // 
+            this.tsd_Archivo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsd_Archivo.Image = ((System.Drawing.Image)(resources.GetObject("tsd_Archivo.Image")));
+            this.tsd_Archivo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsd_Archivo.Name = "tsd_Archivo";
+            this.tsd_Archivo.Size = new System.Drawing.Size(61, 22);
+            this.tsd_Archivo.Text = "Archivo";
             // 
             // lb_Empleados
             // 
@@ -651,7 +650,6 @@
         private System.Windows.Forms.Button bt_Abrir;
         private System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton tsb_Abrir;
         private System.Windows.Forms.Label lb_Empleados;
         private System.Windows.Forms.Label lb_Horarios;
         private System.Windows.Forms.CheckBox cb_Puntualidad;
@@ -694,6 +692,7 @@
         private System.Windows.Forms.ToolStripButton tsb_Opciones;
         private System.Windows.Forms.ToolStripButton tsb_AbrirFolder;
         private System.Windows.Forms.Label lb_Indicaciones;
+        private System.Windows.Forms.ToolStripDropDownButton tsd_Archivo;
     }
 }
 

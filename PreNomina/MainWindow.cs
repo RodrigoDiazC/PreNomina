@@ -28,6 +28,8 @@ namespace PreNomina
         List<Empleado> gEmpleados = new List<Empleado>();
         Analizador analizador = new Analizador();
 
+        ToolStripDropDown dropDown = new ToolStripDropDown();
+
         int currentEmpleadoID = 1;
         int currentDay = 1;
 
@@ -35,10 +37,18 @@ namespace PreNomina
         {
             InitializeComponent();
 
+            // Botones del toolstripdown
+            this.tsd_Archivo.DropDown = dropDown;
+            ToolStripButton botonAbrirPDF = new ToolStripButton();
+            botonAbrirPDF.Text = "Abrir PDF";
+            botonAbrirPDF.Click += new EventHandler(archivoDropDownClick);
+            this.dropDown.Items.Add(botonAbrirPDF);
+
             try
             {
                 // Configuración de usuario
                 Properties.Settings.Default.Reload();
+
                 this.rutaFolder = Properties.Settings.Default["Ruta"].ToString();
                 this.departamento = Properties.Settings.Default["Departamento"].ToString();
                 this.retardoAnticipo = (bool)Properties.Settings.Default["AnticipoRetardo"];
@@ -48,6 +58,19 @@ namespace PreNomina
                 this.horasL.entrada2 = DateTime.Parse(Properties.Settings.Default["Entrada2"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
                 this.horasL.salida2 = DateTime.Parse(Properties.Settings.Default["Salida2"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
                 this.horasL.limiteRetardo = TimeSpan.FromMinutes((int)Properties.Settings.Default["TiempoLimite"]);
+
+                // LLena la lista de archivos en el historial
+                if (Properties.Settings.Default.Archivos != null)
+                {
+                    foreach (string archivo in Properties.Settings.Default.Archivos)
+                    {
+                        ToolStripButton botonArchivo = new ToolStripButton();
+                        botonArchivo.Text = archivo;
+                        botonArchivo.Click += new EventHandler(archivoDropDownClick);
+                        this.dropDown.Items.Add(botonArchivo);
+                    }
+                }
+
             }
             catch (FormatException e)
             {
@@ -59,24 +82,35 @@ namespace PreNomina
                 this.horasL.limiteRetardo = TimeSpan.Parse("00:30:00");
                 MessageBox.Show("Ocurrio un error al leer el archivo de configuración. Parámetros por default establecidos.\n\n Error: " + e.Message);
             }
+        }
 
+        // Menu dropdown Archivo
+        private void archivoDropDownClick(object sender, EventArgs e)
+        {
+            ToolStripButton senderButton = (ToolStripButton)sender;
+            if (senderButton.Text.Equals("Abrir PDF")) abrirArchivo();
+            else abrirArchivo(senderButton.Text);
         }
 
         // Abre PDF
-        private void tsb_Abrir_Click(object sender, EventArgs e)
+        private void abrirArchivo(string fileName = null)
         {
-            // Abre archivo PDF
-            openFileDialog.InitialDirectory = @"C:\";
-            openFileDialog.Title = "Seleccionar el PDF a escanear";
-            openFileDialog.CheckFileExists = true;
-            openFileDialog.CheckPathExists = true;
-            openFileDialog.DefaultExt = "pdf";
-            openFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
-            openFileDialog.RestoreDirectory = true;
-            openFileDialog.FileName = null;
-            openFileDialog.ShowDialog();
+            if (fileName == null)
+            {
+                // Abre archivo PDF
+                openFileDialog.InitialDirectory = @"C:\";
+                openFileDialog.Title = "Seleccionar el PDF a escanear";
+                openFileDialog.CheckFileExists = true;
+                openFileDialog.CheckPathExists = true;
+                openFileDialog.DefaultExt = "pdf";
+                openFileDialog.Filter = "Archivos PDF (*.pdf)|*.pdf";
+                openFileDialog.RestoreDirectory = true;
+                openFileDialog.FileName = null;
+                openFileDialog.ShowDialog();
+            }
+            else openFileDialog.FileName = fileName;
 
-            if (openFileDialog.FileName != "")
+            if (openFileDialog.FileName != "" )
             {
                 // Obtiene empleados
                 String archivoTexto = ExtractTextFromPdf(openFileDialog.FileName);
@@ -102,9 +136,48 @@ namespace PreNomina
 
                     // Pone titulo a la ventana
                     this.Text = "Prenomina " + analizador.fechaInicio.Day + " " + analizador.fechaInicio.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture) + " al " + analizador.fechaFin.Day + " " + analizador.fechaFin.ToString("MMMM", System.Globalization.CultureInfo.CurrentCulture);
+
+                    // Guarda el nombre del archivo en el historial
+                    addHistorialArchivo(openFileDialog.FileName);
+
                 }
                 else MessageBox.Show("Formato de archivo no soportado. Compruebe el archivo seleccionado.");
+            }
+        }
 
+        // Guarda el nombre del archivo en el historial
+        private void addHistorialArchivo(string fileName)
+        {
+            bool alreadyExists = false;
+
+            if (Properties.Settings.Default.Archivos == null) Properties.Settings.Default.Archivos = new System.Collections.Specialized.StringCollection();
+
+            foreach (ToolStripButton item in this.dropDown.Items)
+            {
+                var perro = item.Text;
+                if (item.Text == fileName) alreadyExists = true;
+            }
+
+            if (!alreadyExists)
+            {
+                ToolStripButton boton = new ToolStripButton();
+                boton.Text = fileName;
+                boton.Click += new EventHandler(archivoDropDownClick);
+                if (this.dropDown.Items.Count < 4)
+                {
+                    Properties.Settings.Default.Archivos.Add(fileName);
+                    this.dropDown.Items.Add(boton);
+                }
+                else
+                {
+                    Properties.Settings.Default.Archivos.RemoveAt(0);
+                    Properties.Settings.Default.Archivos.Add(fileName);
+
+                    this.dropDown.Items.RemoveAt(1);
+                    this.dropDown.Items.Add(boton);
+                }
+
+                Properties.Settings.Default.Save();
             }
         }
 
@@ -124,12 +197,12 @@ namespace PreNomina
                 fillTablaRegistros(this.gEmpleados[currentEmpleadoID]);
                 setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
 
-                // Selecciona el mismo row en la pantalla de vista general y aplica formatp
+                // Selecciona el mismo row en la pantalla de vista general y aplica formato
                 if (tabControl1.SelectedIndex == 1 && sender == this.dataGrid) // Restringe a que sea el el que llama a la funcion para evitar loops
                 {
                     dg_General_CellClick(this.dataGrid, new DataGridViewCellEventArgs(0, this.currentEmpleadoID));
                 }
-                
+
                 // Actualiza el highlight 
                 updateHighlight();
             }
@@ -148,7 +221,6 @@ namespace PreNomina
                 // Selecciona casilla previa
                 this.dg_General.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
             }
-
         }
 
         // Cambios en vista preliminar

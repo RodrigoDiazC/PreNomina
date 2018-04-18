@@ -118,5 +118,16 @@ namespace PreNomina.Properties {
                 this["TiempoLimite"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection Archivos {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["Archivos"]));
+            }
+            set {
+                this["Archivos"] = value;
+            }
+        }
     }
 }
