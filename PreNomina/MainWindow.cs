@@ -43,8 +43,6 @@ namespace PreNomina
                 this.departamento = Properties.Settings.Default["Departamento"].ToString();
                 this.retardoAnticipo = (bool)Properties.Settings.Default["AnticipoRetardo"];
                 // Setea los horarios laborales            
-                String perro = Properties.Settings.Default["Entrada1"].ToString().Replace(".",String.Empty).Replace(" m", "m");
-
                 this.horasL.entrada1 = DateTime.Parse(Properties.Settings.Default["Entrada1"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
                 this.horasL.salida1 = DateTime.Parse(Properties.Settings.Default["Salida1"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
                 this.horasL.entrada2 = DateTime.Parse(Properties.Settings.Default["Entrada2"].ToString().Replace(".", string.Empty).Replace(" m", "m"));
@@ -127,10 +125,11 @@ namespace PreNomina
                 setEmpleadoPropiedadesUI(this.gEmpleados[currentEmpleadoID]);
 
                 // Selecciona el mismo row en la pantalla de vista general y aplica formatp
-                formatTablaGeneral(e.RowIndex);
-                this.dg_General.ClearSelection();
-                this.dg_General.Rows[e.RowIndex].Cells[0].Selected = true;
-
+                if (tabControl1.SelectedIndex == 1 && sender == this.dataGrid) // Restringe a que sea el el que llama a la funcion para evitar loops
+                {
+                    dg_General_CellClick(this.dataGrid, new DataGridViewCellEventArgs(0, this.currentEmpleadoID));
+                }
+                
                 // Actualiza el highlight 
                 updateHighlight();
             }
@@ -139,19 +138,38 @@ namespace PreNomina
         // Selección en tabla general
         private void dg_General_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > -1)
+            if (e.RowIndex > -1 && e.RowIndex != this.currentEmpleadoID || sender != this.dg_General)
             {
                 formatTablaGeneral(e.RowIndex);
-
                 // Selecciona en la tabla de empleados tambien ejecuta el evento click
                 this.dataGrid.ClearSelection();
                 this.dataGrid.Rows[e.RowIndex].Cells[1].Selected = true;
-                dataGrid_CellClick(this.dataGrid, new DataGridViewCellEventArgs(1, e.RowIndex));
-
-
+                dataGrid_CellClick(this.dg_General, new DataGridViewCellEventArgs(1, e.RowIndex));
                 // Selecciona casilla previa
                 this.dg_General.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+            }
 
+        }
+
+        // Cambios en vista preliminar
+        private void dg_General_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (this.dg_General.Columns[e.ColumnIndex].Name.Equals("Puntualidad") || this.dg_General.Columns[e.ColumnIndex].Name.Equals("Asistencia") || this.dg_General.Columns[e.ColumnIndex].Name.Equals("Desempeño"))
+            {
+                switch (this.dg_General.Columns[e.ColumnIndex].Name)
+                {
+                    case "Puntualidad":
+                        this.gEmpleados[currentEmpleadoID].Puntualidad = (bool)this.dg_General[e.ColumnIndex, e.RowIndex].Value;
+                        break;
+                    case "Asistencia":
+                        this.gEmpleados[currentEmpleadoID].Asistencia = (bool)this.dg_General[e.ColumnIndex, e.RowIndex].Value;
+                        break;
+                    case "Desempeño":
+                        this.gEmpleados[currentEmpleadoID].Desempeno = (bool)this.dg_General[e.ColumnIndex, e.RowIndex].Value;
+                        break;
+                }
+
+                fillTablaGeneral(this.gEmpleados, e.RowIndex);
             }
         }
 
@@ -279,7 +297,7 @@ namespace PreNomina
         }
 
         // Tabla de vista general
-        private void fillTablaGeneral(List<Empleado> empleados)
+        private void fillTablaGeneral(List<Empleado> empleados, int setSelection = 0)
         {
             // Genera los headers (COLUMNAS)  -------------------------------------------------------
             System.Data.DataTable dt = new System.Data.DataTable();
@@ -297,7 +315,6 @@ namespace PreNomina
                     emID = em.ID;
                 }
             }
-
             foreach (TiemposDia t in empleados[emID].Dias)
             {
                 dt.Columns.Add(new DataColumn(t.dia.Day.ToString(), typeof(string)));
@@ -315,7 +332,7 @@ namespace PreNomina
                 int i = 0;
 
                 // Departamento
-                fila[i++] = "INGENIERIA";
+                fila[i++] = this.departamento;
 
                 for (int t = 0; t < em.Dias.Count; t++)
                 {
@@ -344,9 +361,6 @@ namespace PreNomina
                 dt.Rows.Add(fila);
             }
 
-            // Propiedades de lectura escritura para cada columna
-            dt.Columns[0].ReadOnly = true;
-
             // Pasa a tabla
             this.dg_General.DataSource = dt;
 
@@ -357,11 +371,12 @@ namespace PreNomina
             foreach (DataGridViewColumn col in this.dg_General.Columns)
             {
                 col.SortMode = DataGridViewColumnSortMode.NotSortable;
+                col.ReadOnly = true;
+                if (col.Name.Equals("Puntualidad") || col.Name.Equals("Asistencia") || col.Name.Equals("Desempeño")) col.ReadOnly = false;
             }
 
-            // Formatea la tabla general y selecciona la primer fila
-            formatTablaGeneral(0);
-
+            // Formatea la tabla general y selecciona la fila correspondiente
+            formatTablaGeneral(setSelection);
         }
 
         //Setea atributos del empleado en la interfaz
@@ -792,7 +807,12 @@ namespace PreNomina
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.gEmpleados.Count != 0)
-                if (this.tabControl1.SelectedTab.Name == "tp_General") fillTablaGeneral(this.gEmpleados);
+            {
+                if (this.tabControl1.SelectedTab.Name == "tp_General")
+                {
+                    fillTablaGeneral(this.gEmpleados, this.currentEmpleadoID);
+                }
+            }
         }
 
         // Ventana de opciones
@@ -827,7 +847,7 @@ namespace PreNomina
             Properties.Settings.Default["Entrada2"] = this.horasL.entrada2.ToShortTimeString();
             Properties.Settings.Default["Salida2"] = this.horasL.salida2.ToShortTimeString();
             Properties.Settings.Default["TiempoLimite"] = (int)this.horasL.limiteRetardo.TotalMinutes;
-          
+
             Properties.Settings.Default.Save();
             Properties.Settings.Default.Reload();
         }
@@ -846,6 +866,7 @@ namespace PreNomina
         {
             // Limpia formato anterior
             ((System.Data.DataTable)this.dg_General.DataSource).AcceptChanges();
+            this.dg_General.ClearSelection();
 
             for (int i = 1; i < this.dg_General.Columns.Count; i++)
             {
@@ -870,17 +891,16 @@ namespace PreNomina
                 if ((int)this.dg_General["TOT", i].Value > horasL.limiteRetardo.TotalMinutes) this.dg_General["TOT", i].Style.ForeColor = Color.Red;
             }
 
+            this.dg_General[0, rowIdx].Selected = true;
         }
 
         // Redirige a tabla detallada al hacer doble click sobre el día a inspeccionar
         private void dg_General_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
             bool regExists = false;
 
             if ((e.ColumnIndex > 0) && (e.ColumnIndex < this.dg_General.ColumnCount - 4))
             {
-
                 // Variable para seleccionar el día apropiado
                 int dia = int.Parse(this.dg_General.Columns[e.ColumnIndex].Name);
 
@@ -909,6 +929,7 @@ namespace PreNomina
             }
 
         }
+
 
     }
 }
