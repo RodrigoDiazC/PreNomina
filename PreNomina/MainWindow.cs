@@ -40,7 +40,7 @@ namespace PreNomina
             // Botones del toolstripdown
             this.tsd_Archivo.DropDown = dropDown;
             ToolStripButton botonAbrirPDF = new ToolStripButton();
-            botonAbrirPDF.Text = "Abrir PDF";
+            botonAbrirPDF.Text = "Abrir Nuevo PDF";
             botonAbrirPDF.Click += new EventHandler(archivoDropDownClick);
             this.dropDown.Items.Add(botonAbrirPDF);
 
@@ -88,7 +88,7 @@ namespace PreNomina
         private void archivoDropDownClick(object sender, EventArgs e)
         {
             ToolStripButton senderButton = (ToolStripButton)sender;
-            if (senderButton.Text.Equals("Abrir PDF")) abrirArchivo();
+            if (senderButton.Text.Equals("Abrir Nuevo PDF")) abrirArchivo();
             else abrirArchivo(senderButton.Text);
         }
 
